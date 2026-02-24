@@ -2,6 +2,7 @@
   "extends": "@react-native/typescript-config",
   "compilerOptions": {
     "types": ["jest"],
+     "lib": ["DOM", "ES2020"]
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["**/node_modules", "**/Pods"]

@@ -1,0 +1,313 @@
+import {
+  TouchableOpacity,
+  View,
+  FlatList,
+  Image,
+  Text,
+  Modal,
+  StyleSheet,
+} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { InboxStyles } from './styles';
+import { CreatedMockData } from './created-mock-data';
+import { useState } from 'react';
+import { Button } from '../../components/button';
+import { RHFTextInput } from '../../hookform/rhfTextInput';
+import { FormProvider, useForm } from 'react-hook-form';
+import RatingScreen from '../../components/ratingScreen';
+
+export const Created = () => {
+  const [dialog, setDialog] = useState<boolean>(false);
+  const [rating, setRating] = useState<number>(0);
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const methods = useForm();
+
+  function handleActiveCard(id: number) {
+    setActiveIdx(id);
+  }
+  return (
+    <FormProvider {...methods}>
+      <Modal transparent={true} visible={dialog}>
+        <View style={Styles.modalContainer}>
+          <View style={Styles.modalCard}>
+            <Text style={Styles.modalLeaveReviewText}>Leave a review</Text>
+
+            <RHFTextInput
+              placeholder="Your Review"
+              name="review"
+              style={Styles.modalInput}
+            />
+
+            <View style={Styles.RatingContainer}>
+              <Text style={Styles.modalYourMarkText}>Your Mark</Text>
+              <RatingScreen rating={rating} setRating={setRating} />
+            </View>
+
+            <View style={Styles.modalBtnContainer}>
+              <TouchableOpacity
+                style={[Styles.button, Styles.modalSendBtnBg]}
+                onPress={() => {
+                  setDialog(false);
+                  setActiveIdx(null);
+                }}
+              >
+                <Text style={[Styles.buttonText, Styles.modalSendBtnColor]}>
+                  Send
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  setDialog(false);
+                  setActiveIdx(null);
+                }}
+                style={[Styles.button, Styles.modalCancelBtnBg]}
+              >
+                <Text style={Styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      <FlatList
+        data={CreatedMockData}
+        horizontal={false}
+        contentContainerStyle={Styles.allOfferListContainer}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => {
+          return (
+            <>
+              <View
+                style={[Styles.allOfferListCard, Styles.MainContainerExtraItem]}
+              >
+                <View style={Styles.allOfferListContent}>
+                  <View>
+                    <Image
+                      source={{ uri: item.photoUrl }}
+                      style={Styles.ListContentImage}
+                      resizeMode="cover"
+                    />
+                    <View style={Styles.checkImageContainer}>
+                      <Image
+                        source={require('../../assets/Check.png')}
+                        style={Styles.checkImage}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  </View>
+
+                  <View style={Styles.contentContainer}>
+                    <Text style={Styles.contentNameText}>{item.name}</Text>
+
+                    <View style={Styles.contentRatingContainer}>
+                      <MaterialCommunityIcons
+                        name="star-outline"
+                        size={25}
+                        color="#07C0E0"
+                      />
+                      <Text style={Styles.contentRatingText}>
+                        {item.rating}
+                      </Text>
+                    </View>
+
+                    <Text>Search:Lawyer</Text>
+                  </View>
+
+                  <View>
+                    {item.status === 'pending' && (
+                      <View style={Styles.pendingImageContainer}>
+                        <Image
+                          source={require('../../assets/pendingStatus.png')}
+                          resizeMode="contain"
+                          style={Styles.pedningAndFullFillContent}
+                        />
+                      </View>
+                    )}
+
+                    {item.status === 'fulfilled' && (
+                      <TouchableOpacity
+                        onPress={() => handleActiveCard(item.id)}
+                      >
+                        <View style={Styles.fullFillImageContainer}>
+                          <Image
+                            source={require('../../assets/fullfillStatus.png')}
+                            resizeMode="contain"
+                            style={Styles.pedningAndFullFillContent}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </View>
+
+                <Text numberOfLines={2}>{item.description}</Text>
+
+                {item.status === 'pending' && (
+                  <View style={Styles.RejectContainer}>
+                    <TouchableOpacity style={Styles.RejectBtnContainer}>
+                      <Text style={Styles.RejectText}>Reject application</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+
+                {activeIdx === item.id && (
+                  <View style={Styles.CardSecondLayerContainer}>
+                    <View style={Styles.SecondLayerCard}>
+                      <Text style={Styles.SecondLayerApplicationText}>
+                        Application completed
+                      </Text>
+                      <Button
+                        title="Leave a review"
+                        styleBtn={Styles.SecondCardLeaveAReviewBtn}
+                        handleBtn={() => setDialog(true)}
+                      />
+                    </View>
+                  </View>
+                )}
+              </View>
+            </>
+          );
+        }}
+      />
+    </FormProvider>
+  );
+};
+
+const Styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+  },
+  modalCard: {
+    backgroundColor: '#F5F6F9',
+    height: 410,
+    margin: 25,
+    borderRadius: 20,
+    padding: 30,
+    alignItems: 'center',
+    gap: 25,
+  },
+  modalLeaveReviewText: { fontSize: 30, fontWeight: 700 },
+  modalInput: {
+    height: 100,
+    width: '90%',
+    backgroundColor: '#FFF',
+    borderRadius: 20,
+    justifyContent: 'flex-start',
+  },
+  RatingContainer: { alignItems: 'center', gap: 18 },
+  modalYourMarkText: { fontSize: 20, fontWeight: 700 },
+  modalBtnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    gap: 5,
+  },
+  modalSendBtnBg: { backgroundColor: '#02D1AC' },
+  modalSendBtnColor: { color: '#FFF' },
+  modalCancelBtnBg: { backgroundColor: '#F5F6F9' },
+
+  allOfferContainer: { width: '100%', paddingHorizontal: 20 },
+  allOfferText: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  allOfferListContainer: { gap: 10, padding: 20 },
+  allOfferListCard: {
+    width: '100%',
+    backgroundColor: '#FFF',
+    borderRadius: 20,
+    padding: 20,
+    gap: 20,
+  },
+  allOfferListContent: {
+    flexDirection: 'row',
+    gap: 18,
+    width: '100%',
+  },
+  MainContainerExtraItem: { position: 'relative' },
+  ListContentImage: {
+    width: 95,
+    height: 96,
+    borderRadius: 15,
+    position: 'relative',
+  },
+  checkImageContainer: { position: 'absolute', right: -43, top: -8 },
+  checkImage: { height: 30 },
+
+  contentContainer: { width: '54%', gap: 6 },
+  contentNameText: {
+    color: '#141414',
+    fontSize: 19,
+    fontWeight: '700',
+  },
+
+  contentRatingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+  },
+
+  contentRatingText: { fontSize: 15, color: '#07C0E0' },
+  pendingImageContainer: {
+    backgroundColor: '#FFA23A',
+    height: 30,
+    width: 30,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pedningAndFullFillContent: { height: 18, width: 18 },
+  fullFillImageContainer: {
+    backgroundColor: '#38C976',
+    height: 30,
+    width: 30,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    padding: 15,
+    flex: 1,
+    alignItems: 'center',
+    borderRadius: 30,
+  },
+  buttonText: {
+    fontSize: 20,
+  },
+  RejectContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+    gap: 5,
+  },
+  RejectBtnContainer: {
+    backgroundColor: '#F5F6F9',
+    borderRadius: 40,
+    width: 250,
+    paddingVertical: 17,
+    alignItems: 'center',
+  },
+  RejectText: { fontSize: 20 },
+
+  CardSecondLayerContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+  },
+  SecondLayerCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  SecondLayerApplicationText: { fontWeight: 900, fontSize: 30 },
+  SecondCardLeaveAReviewBtn: { width: '60%' },
+});
