@@ -4,13 +4,20 @@ import { ProfileBottom } from '../screens/profile/profile-home';
 import TopNavigation from './top-bar-navigation';
 import { Image } from 'react-native';
 import FavouriteScreen from '../screens/favourite/Favourite';
+import { useContext } from 'react';
+import { ThemeContext } from '../theme/themecontext';
 
 const Tab = createBottomTabNavigator();
 
 export const BottomNavigation = () => {
+  const { theme } = useContext(ThemeContext);
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false, tabBarShowLabel: false }}
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: theme.background },
+      }}
     >
       <Tab.Screen
         name="Home-bottom"
@@ -25,7 +32,7 @@ export const BottomNavigation = () => {
                   height: 29,
                   width: 29,
                   marginTop: 10,
-                  tintColor: focused ? '#07C0E0' : '#D5DDE5',
+                  tintColor: focused ? '#07C0E0' : theme.bottomTab,
                 }}
               />
             );
@@ -45,7 +52,7 @@ export const BottomNavigation = () => {
                   height: 29,
                   width: 29,
                   marginTop: 10,
-                  tintColor: focused ? '#07C0E0' : '#D5DDE5',
+                  tintColor: focused ? '#07C0E0' : theme.bottomTab,
                 }}
               />
             );
@@ -65,7 +72,7 @@ export const BottomNavigation = () => {
                   height: 29,
                   width: 29,
                   marginTop: 10,
-                  tintColor: focused ? '#07C0E0' : '#D5DDE5',
+                  tintColor: focused ? '#07C0E0' : theme.bottomTab,
                 }}
               />
             );
@@ -85,7 +92,7 @@ export const BottomNavigation = () => {
                   height: 29,
                   width: 29,
                   marginTop: 10,
-                  tintColor: focused ? '#07C0E0' : '#D5DDE5',
+                  tintColor: focused ? '#07C0E0' : theme.bottomTab,
                 }}
               />
             );

@@ -1,0 +1,34 @@
+export const LightTheme = {
+  background: '#FFFFFF',
+  background2:"#F5F6F9",
+  input: '#FFFFFF',
+  text: '#141414',
+  primaryText: '#07C0E0',
+  secondaryText: '#66737F',
+  card: '#FFF',
+  card2:"#EDF4FF",
+  icon: '#07C0E0',
+  heart: '#FE5050',
+  btnBg: '#02D1AC',
+  bottomTab:"#D5DDE5",
+   modalBg: 'rgba(0,0,0,0.5)',
+   endSessionBg:'#FFE2E2',
+   
+};
+
+export const DarkTheme = {
+  background: '#151515',
+  background2: '#151515',
+  input: '#0D0D0D',
+  text: '#FFFFFF',
+  primaryText: '#07C0E0',
+  secondaryText: '#7A7C7D',
+  card: '#0D0D0D',
+   card2:"#1C222B",
+  icon: '#07C0E0',
+  heart: '#FE5050',
+  btnBg: '#02D1AC',
+  bottomTab:"#424649",
+   modalBg: 'rgba(255,255,255,0.5)',
+ endSessionBg:"#560F0F"
+};

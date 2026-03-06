@@ -81,8 +81,9 @@ export const SelectDropStyles = StyleSheet.create({
     gap: 15,
   },
   input: {
-    backgroundColor: 'white',
-    elevation: 5,
+    elevation:3,
+    borderBottomWidth:1,
+
     width: '80%',
     borderRadius: 30,
     height: 60,
@@ -94,9 +95,9 @@ export const SelectDropStyles = StyleSheet.create({
     position: 'absolute',
     top: 60,
     width: '80%',
-    backgroundColor: 'white',
-    borderRadius: 50,
+    borderRadius: 20,
     zIndex: 1,
+    
   },
   extraDropDownItem: { width: '100%', borderRadius: 0 },
   selectedContainer: {
@@ -113,6 +114,7 @@ export const SelectDropStyles = StyleSheet.create({
 });
 
 export const RHFTextInputStyles = StyleSheet.create({
+  container: { width: '100%', alignItems: 'center', gap: 10 },
   input: {
     backgroundColor: 'white',
     elevation: 5,
@@ -120,6 +122,11 @@ export const RHFTextInputStyles = StyleSheet.create({
     borderRadius: 30,
     height: 60,
     paddingHorizontal: 20,
-    color: 'black',
+  
+    borderWidth: 1,
   },
+  errorBorder:{
+    borderColor:"red"
+  },
+  bordercolor:{borderColor:"#FFF"}
 });

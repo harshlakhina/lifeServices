@@ -74,7 +74,7 @@ export const HomeStyles = StyleSheet.create({
   },
 
   topSearchBox: {
-    backgroundColor: '#FFF',
+    
     width: '92%',
     elevation: 5,
     alignSelf: 'center',
@@ -92,11 +92,11 @@ export const HomeStyles = StyleSheet.create({
   topSearchBoxContainerImageBg: {
     height: 60,
     width: 60,
-    backgroundColor: '#EDF4FF',
+    // backgroundColor: '#EDF4FF',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
   },
-  topSearchBoxContentContainerImage: { height: 40, width: 40 },
+  topSearchBoxContentContainerImage: { height: 35, width: 35 },
   topSearchBoxContentContainerDrop: { width: '80%' },
 });

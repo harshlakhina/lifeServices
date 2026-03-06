@@ -7,53 +7,60 @@ import {
   Modal,
   StyleSheet,
 } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { InboxStyles } from './styles';
 import { CreatedMockData } from './created-mock-data';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button } from '../../components/button';
 import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { FormProvider, useForm } from 'react-hook-form';
 import RatingScreen from '../../components/ratingScreen';
+import { ThemeContext } from '../../theme/themecontext';
 
 export const Created = () => {
   const [dialog, setDialog] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const methods = useForm();
+  const { theme } = useContext(ThemeContext);
 
   function handleActiveCard(id: number) {
     setActiveIdx(id);
   }
+
   return (
     <FormProvider {...methods}>
       <Modal transparent={true} visible={dialog}>
-        <View style={Styles.modalContainer}>
-          <View style={Styles.modalCard}>
-            <Text style={Styles.modalLeaveReviewText}>Leave a review</Text>
+        <View
+          style={[Styles.modalContainer, { backgroundColor: theme.modalBg }]}
+        >
+          <View
+            style={[Styles.modalCard, { backgroundColor: theme.background }]}
+          >
+            <Text style={[Styles.modalLeaveReviewText, { color: theme.text }]}>
+              Leave a review
+            </Text>
 
             <RHFTextInput
               placeholder="Your Review"
               name="review"
-              style={Styles.modalInput}
+              style={[Styles.modalInput]}
+              multiline
             />
 
             <View style={Styles.RatingContainer}>
-              <Text style={Styles.modalYourMarkText}>Your Mark</Text>
+              <Text style={[Styles.modalYourMarkText, { color: theme.text }]}>Your Mark</Text>
               <RatingScreen rating={rating} setRating={setRating} />
             </View>
 
             <View style={Styles.modalBtnContainer}>
               <TouchableOpacity
-                style={[Styles.button, Styles.modalSendBtnBg]}
                 onPress={() => {
                   setDialog(false);
                   setActiveIdx(null);
                 }}
+                style={[Styles.modalBtn, Styles.modalSendBtnBg]}
               >
-                <Text style={[Styles.buttonText, Styles.modalSendBtnColor]}>
-                  Send
-                </Text>
+                <Text style={Styles.modalSendBtnText}>Send</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -61,9 +68,9 @@ export const Created = () => {
                   setDialog(false);
                   setActiveIdx(null);
                 }}
-                style={[Styles.button, Styles.modalCancelBtnBg]}
+                style={[Styles.modalBtn, { backgroundColor: theme.card}]}
               >
-                <Text style={Styles.buttonText}>Cancel</Text>
+                <Text style={[Styles.modalCancelText,{color:theme.text}]}>Cancel</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -73,13 +80,20 @@ export const Created = () => {
       <FlatList
         data={CreatedMockData}
         horizontal={false}
-        contentContainerStyle={Styles.allOfferListContainer}
+        contentContainerStyle={[
+          Styles.allOfferListContainer,
+          { backgroundColor: theme.background2 },
+        ]}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => {
           return (
             <>
               <View
-                style={[Styles.allOfferListCard, Styles.MainContainerExtraItem]}
+                style={[
+                  Styles.allOfferListCard,
+                  Styles.MainContainerExtraItem,
+                  { backgroundColor: theme.card },
+                ]}
               >
                 <View style={Styles.allOfferListContent}>
                   <View>
@@ -97,21 +111,17 @@ export const Created = () => {
                     </View>
                   </View>
 
-                  <View style={Styles.contentContainer}>
-                    <Text style={Styles.contentNameText}>{item.name}</Text>
+                  <View style={Styles.infoContainer}>
+                    <Text style={[Styles.nameText, { color: theme.text }]}>
+                      {item.name}
+                    </Text>
 
-                    <View style={Styles.contentRatingContainer}>
-                      <MaterialCommunityIcons
-                        name="star-outline"
-                        size={25}
-                        color="#07C0E0"
-                      />
-                      <Text style={Styles.contentRatingText}>
-                        {item.rating}
-                      </Text>
+                    <Text style={Styles.addressText}>st. Tverskaya, 13</Text>
+
+                    <View style={Styles.searchRow}>
+                      <Text style={Styles.searchLabel}>Search:</Text>
+                      <Text style={Styles.searchValue}>Lawyer</Text>
                     </View>
-
-                    <Text>Search:Lawyer</Text>
                   </View>
 
                   <View>
@@ -141,12 +151,21 @@ export const Created = () => {
                   </View>
                 </View>
 
-                <Text numberOfLines={2}>{item.description}</Text>
+                <Text numberOfLines={2} style={{ color: theme.secondaryText }}>
+                  {item.description}
+                </Text>
 
                 {item.status === 'pending' && (
                   <View style={Styles.RejectContainer}>
-                    <TouchableOpacity style={Styles.RejectBtnContainer}>
-                      <Text style={Styles.RejectText}>Reject application</Text>
+                    <TouchableOpacity
+                      style={[
+                        Styles.RejectBtnContainer,
+                        { backgroundColor: theme.input },
+                      ]}
+                    >
+                      <Text style={[Styles.RejectText, { color: theme.text }]}>
+                        Reject application
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -154,7 +173,12 @@ export const Created = () => {
                 {activeIdx === item.id && (
                   <View style={Styles.CardSecondLayerContainer}>
                     <View style={Styles.SecondLayerCard}>
-                      <Text style={Styles.SecondLayerApplicationText}>
+                      <Text
+                        style={[
+                          Styles.SecondLayerApplicationText,
+                          { color: theme.text },
+                        ]}
+                      >
                         Application completed
                       </Text>
                       <Button
@@ -177,12 +201,11 @@ export const Created = () => {
 const Styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+
     justifyContent: 'center',
   },
   modalCard: {
     backgroundColor: '#F5F6F9',
-    height: 410,
     margin: 25,
     borderRadius: 20,
     padding: 30,
@@ -192,23 +215,62 @@ const Styles = StyleSheet.create({
   modalLeaveReviewText: { fontSize: 30, fontWeight: 700 },
   modalInput: {
     height: 100,
-    width: '90%',
-    backgroundColor: '#FFF',
+    width: '100%',
     borderRadius: 20,
     justifyContent: 'flex-start',
   },
-  RatingContainer: { alignItems: 'center', gap: 18 },
+  infoContainer: {
+    width: '55%',
+    gap: 10,
+  },
+
+  nameText: {
+    fontSize: 19,
+    fontWeight: '700',
+  },
+
+  addressText: {
+    color: '#66737F',
+    fontSize: 13,
+  },
+
+  searchRow: {
+    flexDirection: 'row',
+  },
+
+  searchLabel: {
+    fontSize: 20,
+    color: '#66737F',
+  },
+
+  searchValue: {
+    fontSize: 20,
+    color: '#07C0E0',
+  },
   modalYourMarkText: { fontSize: 20, fontWeight: 700 },
   modalBtnContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
-    gap: 5,
+    gap: 12,
+  },
+  modalBtn: {
+    flex: 1,
+    paddingVertical: 18,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalSendBtnBg: { backgroundColor: '#02D1AC' },
-  modalSendBtnColor: { color: '#FFF' },
-  modalCancelBtnBg: { backgroundColor: '#F5F6F9' },
-
+  modalSendBtnText: { color: '#FFF', fontSize: 17 },
+  modalCancelBtnBg: { backgroundColor: '#e8e9ee' },
+  modalCancelText: {
+    color: '#141414',
+    fontSize: 17,
+  },
+  RatingContainer: {
+    alignItems: 'center',
+    gap: 15,
+  },
   allOfferContainer: { width: '100%', paddingHorizontal: 20 },
   allOfferText: {
     fontSize: 20,
@@ -284,7 +346,6 @@ const Styles = StyleSheet.create({
     gap: 5,
   },
   RejectBtnContainer: {
-    backgroundColor: '#F5F6F9',
     borderRadius: 40,
     width: 250,
     paddingVertical: 17,

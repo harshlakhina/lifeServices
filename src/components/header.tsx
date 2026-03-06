@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { useNavigation, DrawerActions } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ThemeContext } from '../theme/themecontext';
 
-export const Header = ({ title, isExpanded }: any) => {
+export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
   const navigation = useNavigation();
+  const {theme}=useContext(ThemeContext)
   return (
     <>
       {title === 'Home' && (
-        <View style={{ height: 137, width: '100%' }}>
+        <View style={{ height: 140, width: '100%' ,backgroundColor:theme.background2}}>
           <Image
             source={require('../assets/BGImage.png')}
             resizeMode="cover"
@@ -17,7 +19,7 @@ export const Header = ({ title, isExpanded }: any) => {
         </View>
       )}
       {title === 'Profile' && (
-        <View style={{ height: 137, width: '100%' }}>
+        <View style={{ height: 137, width: '100%',backgroundColor:theme.background2 }}>
           <Image
             source={require('../assets/BGImage.png')}
             resizeMode="cover"
@@ -27,20 +29,38 @@ export const Header = ({ title, isExpanded }: any) => {
       )}
 
       {title === 'Application' && (
-        <View style={{ height: 150, width: '100%' }}>
+        <View style={{ height: 150, width: '100%'}}>
           <Image
             source={require('../assets/BGImage.png')}
             resizeMode="cover"
-            style={{ width: '100%', height: 300 }}
+            style={{ width: '100%', height: 300,backgroundColor:theme.background2 }}
           />
         </View>
       )}
       {title === 'Favourites' && (
-        <View style={{ height: 100, width: '100%' }}>
+        <View style={{ height: 150, width: '100%',backgroundColor:theme.background2 }}>
           <Image
             source={require('../assets/BGImage.png')}
             resizeMode="cover"
             style={{ width: '100%', height: 200 }}
+          />
+        </View>
+      )}
+      {title === 'Create an Application' && (
+        <View style={{ height: 140, width: '100%',backgroundColor:theme.background }}>
+          <Image
+            source={require('../assets/BGImage.png')}
+            resizeMode="cover"
+            style={{ width: '100%', height: 180 }}
+          />
+        </View>
+      )}
+      {title === 'Edit an Application' && (
+        <View style={{ height: 140, width: '100%',backgroundColor:theme.background }}>
+          <Image
+            source={require('../assets/BGImage.png')}
+            resizeMode="cover"
+            style={{ width: '100%', height: 180 }}
           />
         </View>
       )}
@@ -54,10 +74,11 @@ export const Header = ({ title, isExpanded }: any) => {
           width: '100%',
           padding: 20,
           alignItems: 'center',
+          // backgroundColor:"red"
         }}
       >
         {title === 'Home' && (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleFunction}>
             <Image
               source={require('../assets/MapIcon.png')}
               resizeMode="contain"
@@ -66,17 +87,52 @@ export const Header = ({ title, isExpanded }: any) => {
           </TouchableOpacity>
         )}
 
-        {title === 'Profile' && (
+        {title === 'Profile' && !setting && (
           <TouchableOpacity
             style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}
+            onPress={handleFunction}
           >
             <Image
               source={require('../assets/EditIcon.png')}
-              style={{ height: 29, width: 29 }}
+              style={{ height: 29, width: 29, tintColor: '#FFF' }}
             />
             <Text style={{ color: '#FFF', fontSize: 14 }}>Edit</Text>
           </TouchableOpacity>
         )}
+
+        {title === 'Profile' && setting && (
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            // style={{ width: '30%' }}
+          >
+            <Image
+              source={require('../assets/arrow-back-outline.png')}
+              resizeMode="contain"
+              style={{ height: 20, width: 30, tintColor: '#FFF' }}
+            />
+          </TouchableOpacity>
+        )}
+
+        {title === 'Create an Application' && (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+              source={require('../assets/arrow-back-outline.png')}
+              resizeMode="contain"
+              style={{ height: 20, width: 30, tintColor: '#FFF' }}
+            />
+          </TouchableOpacity>
+        )}
+
+        {title === 'Edit an Application' && (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+              source={require('../assets/arrow-back-outline.png')}
+              resizeMode="contain"
+              style={{ height: 20, width: 30, tintColor: '#FFF' }}
+            />
+          </TouchableOpacity>
+        )}
+
         {title === 'Application' && (
           <Image
             source={require('../assets/imageDemo.png')}

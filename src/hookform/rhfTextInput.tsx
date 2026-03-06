@@ -1,8 +1,11 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { Text, TextInput, View } from 'react-native';
 import { RHFTextInputStyles } from '../screens/styles';
+import { ThemeContext } from '../theme/themecontext';
+import { useContext } from 'react';
 
 export const RHFTextInput = (props: any) => {
+  const {theme}=useContext(ThemeContext);
   const {
     control,
     formState: { errors },
@@ -12,18 +15,20 @@ export const RHFTextInput = (props: any) => {
       control={control}
       name={props.name}
       render={({ field: { onChange, value } }) => (
-        <View style={{ width: '100%', alignItems: 'center', gap: 10 }}>
+        <View style={RHFTextInputStyles.container}>
           <TextInput
             {...props}
             placeholder={props.placeholder}
-            
+            textAlignVertical={props.multiline ? 'top' : 'center'}
             placeholderTextColor={errors?.[props.name] ? 'red' : '#66737F'}
             onChangeText={onChange}
             style={[
               RHFTextInputStyles.input,
+              {backgroundColor:theme.input,color:theme.text,borderColor:theme.background},
               props.style,
-              { borderWidth: 1 },
-              { borderColor: errors?.[props.name] ? 'red' : '#FFF' },
+
+              { borderColor: errors?.[props.name] ? 'red' : '' },
+              props.multiline && { height: 120 },
             ]}
             value={value}
           />

@@ -11,12 +11,17 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { HomeMockData } from '../home-mock-data';
 import { Select } from '../../hookform/select';
 import { professions } from '../../constants/profession';
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { Header } from '../../components/header';
 import { HomeStyles } from './style';
+import { useNavigation } from '@react-navigation/native';
+import { ThemeContext } from '../../theme/themecontext';
+// import { ThemeContext } from '../../theme/themecontext';
 
 export const Home = () => {
   const methods = useForm();
+  const navigation = useNavigation();
+  const {theme}=useContext(ThemeContext)
 
   const [selectedHeart, setSelectedHeart] = useState<number[]>([]);
   const [selectedHeartBestOffer, setSelectedHeartBestOffer] = useState<
@@ -45,11 +50,14 @@ export const Home = () => {
   return (
     <FormProvider {...methods}>
       {/* Header */}
-      <Header title="Home" isExpanded={hideBox} />
+      <Header
+        title="Home"
+        isExpanded={hideBox}
+        handleFunction={() => navigation.navigate('Map' as never)}
+      />
 
       {/* Scrollable Content */}
       <ScrollView
-        scrollEventThrottle={16}
         onScroll={event => {
           const scrollY = event.nativeEvent.contentOffset.y;
 
@@ -61,10 +69,11 @@ export const Home = () => {
             setHideBox(true);
           }
         }}
+        contentContainerStyle={{backgroundColor:theme.background2}}
       >
         {/* Best Offers */}
         <View style={HomeStyles.bestOfferContainer}>
-          <Text style={HomeStyles.bestOfferText}> Best Offers</Text>
+          <Text style={[HomeStyles.bestOfferText,{color:theme.text}]}> Best Offers</Text>
 
           <FlatList
             horizontal
@@ -146,12 +155,12 @@ export const Home = () => {
 
         {/* All Offers */}
         <View style={HomeStyles.allOfferContainer}>
-          <Text style={HomeStyles.allOfferText}>All Offers</Text>
+         <Text style={[HomeStyles.allOfferText,{color:theme.text}]}>All Offers</Text>
 
           {HomeMockData.map(item => {
             const active = selectedHeart.includes(item.id);
             return (
-              <View style={HomeStyles.allOfferListCard} key={item.id}>
+              <View style={[HomeStyles.allOfferListCard,{backgroundColor:theme.card}]} key={item.id}>
                 <View style={HomeStyles.allOfferListContent}>
                   <View>
                     <Image
@@ -176,8 +185,8 @@ export const Home = () => {
                   <View style={{ width: '55%', gap: 3 }}>
                     <Text
                       style={{
-                        color: '#141414',
-                        fontSize: 16,
+                        color: theme.text,
+                        fontSize: 17,
                         fontWeight: '700',
                       }}
                     >
@@ -225,9 +234,9 @@ export const Home = () => {
 
       {/* Top Search Box */}
       {hideBox && (
-        <View style={HomeStyles.topSearchBox}>
+        <View style={[HomeStyles.topSearchBox,{backgroundColor:theme.background}]}>
           <View style={HomeStyles.topSearchBoxContentContainer}>
-            <View style={HomeStyles.topSearchBoxContainerImageBg}>
+            <View style={[HomeStyles.topSearchBoxContainerImageBg,{backgroundColor:theme.card2}]}>
               <Image
                 source={require('../../assets/MoscowIcon.png')}
                 resizeMode="cover"
@@ -244,7 +253,7 @@ export const Home = () => {
           </View>
 
           <View style={HomeStyles.topSearchBoxContentContainer}>
-            <View style={HomeStyles.topSearchBoxContainerImageBg}>
+            <View style={[HomeStyles.topSearchBoxContainerImageBg,{backgroundColor:theme.card2}]}>
               <Image
                 source={require('../../assets/workIcon.png')}
                 resizeMode="contain"
@@ -255,7 +264,7 @@ export const Home = () => {
               name="sphere"
               title="Sphere"
               options={professions}
-              style={HomeStyles.topSearchBoxContentContainerDrop}
+              style={[HomeStyles.topSearchBoxContentContainerDrop]}
             />
           </View>
         </View>

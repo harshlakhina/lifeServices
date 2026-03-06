@@ -1,23 +1,23 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ThemeContext } from '../theme/themecontext';
 
-export default function SplashScreen({navigation}:any) {
-  useEffect(()=>{
-      setTimeout(()=>{
-        navigation.replace("Onboarding")
-    },3000)
-  },[navigation])
-
+export default function SplashScreen({ navigation }: any) {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.replace('Onboarding');
+    }, 3000);
+  }, [navigation]);
+  const { theme, isDark } = useContext(ThemeContext);
 
   return (
-    <KeyboardAwareScrollView
-          contentContainerStyle={Styles.container}
-          enableOnAndroid={true}
-          extraScrollHeight={50}
-        >
+    <View style={[Styles.container, { backgroundColor: theme.background }]}>
       <Image
-        source={require('../assets/lifeservice.png')}
+        source={
+          !isDark
+            ? require('../assets/lifeservice.png')
+            : require('../assets/Object.png')
+        }
         style={Styles.lifeServiceImage}
         resizeMode="cover"
       />
@@ -29,12 +29,12 @@ export default function SplashScreen({navigation}:any) {
           resizeMode="contain"
         />
 
-        <Text style={{fontSize:40,}}>
-          <Text style={{ color: '#141414' ,fontWeight:700}}>Life</Text>
-          <Text style={{ color: '#141414' }}>Services</Text>
+        <Text style={{ fontSize: 37 }}>
+          <Text style={{ color: theme.text, fontWeight: 700 }}>Life</Text>
+          <Text style={{ color: theme.text }}>Services</Text>
         </Text>
       </View>
-    </KeyboardAwareScrollView>
+    </View>
   );
 }
 
@@ -44,13 +44,13 @@ const Styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   lifeServiceImage: {
-    height:400,
+    height: 400,
     width: '100%',
   },
   content: {
-    flex:1,
+    flex: 1,
     alignItems: 'center',
-    paddingTop:150
+    paddingTop: 150,
   },
   profileLogoImage: {
     height: 100,

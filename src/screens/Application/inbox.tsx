@@ -5,86 +5,62 @@ import {
   Image,
   Text,
   StyleSheet,
+  // StyleSheet,
 } from 'react-native';
 import { HomeMockData } from '../home-mock-data';
-import { InboxStyles } from './styles';
+import { useContext } from 'react';
+import { ThemeContext } from '../../theme/themecontext';
 
 export const Inbox = () => {
+    const {theme}=useContext(ThemeContext);
+  
   return (
     <FlatList
       data={HomeMockData}
-      contentContainerStyle={InboxStyles.allOfferListContainer}
+      contentContainerStyle={[Styles.flatListContainer,{backgroundColor:theme.background2}]}
       keyExtractor={item => item.id.toString()}
       renderItem={({ item }) => {
         return (
-          <View style={InboxStyles.allOfferListCard}>
-            <View style={InboxStyles.allOfferListContent}>
+          <View style={[Styles.menuItemContainer,{  backgroundColor:theme.card,}]}>
+            <View style={Styles.menuItemBodyContainer}>
               <View>
                 <Image
                   source={{ uri: item.photoUrl }}
-                  style={{
-                    width: 95,
-                    height: 96,
-                    borderRadius: 15,
-                    position: 'relative',
-                  }}
+                  style={Styles.menuItemImage}
                   resizeMode="cover"
                 />
-                <View style={{ position: 'absolute', right: -43, top: -8 }}>
+                <View style={Styles.checkImageContainer}>
                   <Image
                     source={require('../../assets/Check.png')}
-                    style={{ height: 30 }}
+                    style={Styles.checkImage}
                     resizeMode="contain"
                   />
                 </View>
               </View>
 
-              <View style={{ width: '55%', gap: 10 }}>
-                <Text
-                  style={{
-                    color: '#141414',
-                    fontSize: 19,
-                    fontWeight: '700',
-                  }}
-                >
-                  {item.name}
-                </Text>
+              <View style={Styles.infoContainer}>
+                <Text style={[Styles.nameText,{color:theme.text}]}>{item.name}</Text>
 
-                <Text>st. Tverskaya, 13</Text>
+                <Text style={Styles.addressText}>st. Tverskaya, 13</Text>
 
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontSize: 20, color: '#66737F' }}>
-                    Search:
-                  </Text>
-                  <Text style={{ fontSize: 20, color: '#07C0E0' }}>Lawyer</Text>
+                <View style={Styles.searchRow}>
+                  <Text style={Styles.searchLabel}>Search:</Text>
+                  <Text style={Styles.searchValue}>Lawyer</Text>
                 </View>
               </View>
             </View>
 
-            <Text style={{ fontSize: 15, color: '#66737F' }} numberOfLines={2}>
+            <Text style={Styles.description} numberOfLines={2}>
               {item.description}
             </Text>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '100%',
-                gap: 5,
-              }}
-            >
-              <TouchableOpacity
-                style={[Styles.button, { backgroundColor: '#02D1AC' }]}
-              >
-                <Text style={[Styles.buttonText, { color: '#FFF' }]}>
-                  Accept
-                </Text>
+            <View style={Styles.BtnsContainer}>
+              <TouchableOpacity style={[Styles.Btns, Styles.acceptBtn]}>
+                <Text style={Styles.acceptText}>Accept</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={[Styles.button, { backgroundColor: '#F5F6F9' }]}
-              >
-                <Text style={Styles.buttonText}>Reject</Text>
+              <TouchableOpacity style={[Styles.Btns,{backgroundColor:theme.background}]}>
+                <Text style={[Styles.rejectText,{color:theme.text}]}>Reject</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -95,13 +71,79 @@ export const Inbox = () => {
 };
 
 const Styles = StyleSheet.create({
-  button: {
-    padding: 15,
-    flex: 1,
-    alignItems: 'center',
-    borderRadius: 30,
+  flatListContainer: { gap: 10, padding: 20 },
+  menuItemContainer: {
+    width: '100%',
+    borderRadius: 20,
+    padding: 20,
+    gap: 20,
   },
-  buttonText: {
+  menuItemBodyContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  menuItemImage: {
+    width: 95,
+    height: 96,
+    borderRadius: 15,
+    position: 'relative',
+  },
+  checkImageContainer: { position: 'absolute', right: -43, top: -8 },
+  checkImage: { height: 30 },
+  infoContainer: {
+    width: '65%',
+    gap: 10,
+  },
+
+  nameText: {
+    fontSize: 19,
+    fontWeight: '700',
+  },
+
+  addressText: {
+    color: '#66737F',
+    fontSize: 13,
+  },
+
+  searchRow: {
+    flexDirection: 'row',
+  },
+
+  searchLabel: {
     fontSize: 20,
+    color: '#66737F',
+  },
+
+  searchValue: {
+    fontSize: 20,
+    color: '#07C0E0',
+  },
+  description: {
+    color: '#66737F',
+    fontSize: 16,
+  },
+  BtnsContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    gap: 12,
+  },
+  Btns: {
+    flex: 1,
+    paddingVertical: 18,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  acceptBtn: {
+    backgroundColor: '#02D1AC',
+  },
+
+  acceptText: {
+    color: '#FFFFFF',
+    fontSize:19
+  },
+
+  rejectText: {
+     fontSize:19
   },
 });

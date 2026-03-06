@@ -2,88 +2,54 @@ import { Header } from '../../components/header';
 import {
   TouchableOpacity,
   View,
-  FlatList,
   Image,
   Text,
   ScrollView,
+  StyleSheet,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HomeMockData } from '../home-mock-data';
-import { FavouriteStyles } from './styles';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { ThemeContext } from '../../theme/themecontext';
 
 function FavouriteScreen() {
-  // const [selectedHeart,setSelectedHeart]=useState<number []>([])
-  // function handleSelectedHeart(id:number){
-  //   setSelectedHeart((prev)=>{
-  //     return prev.includes(id)?prev.filter((id1)=>id1!==id):[...prev,id]
-  //   })
-
+  const {theme}=useContext(ThemeContext);
   return (
     <View>
       <Header title="Favourites" />
-      <ScrollView
-        contentContainerStyle={{
-          gap: 10,
-          paddingHorizontal: 20,
-          paddingVertical: 60,
-          paddingBottom: 110,
-        }}
-      >
+      <ScrollView contentContainerStyle={[Styles.scrollContainer,{backgroundColor:theme.background2}]}>
         {HomeMockData.map(item => {
-          // const activeHeart=selectedHeart.includes(item.id)
           return (
-            <View style={FavouriteStyles.allOfferListCard} key={item.id}>
-              <View style={FavouriteStyles.allOfferListContent}>
+            <View style={[Styles.menuItemContainer,{  backgroundColor:theme.card,}]} key={item.id}>
+              <View style={Styles.menuItemBodyContainer}>
                 <View>
                   <Image
                     source={{ uri: item.photoUrl }}
-                    style={{
-                      width: 95,
-                      height: 96,
-                      borderRadius: 15,
-                      position: 'relative',
-                    }}
+                    style={Styles.menuItemImage}
                     resizeMode="cover"
                   />
-                  <View style={{ position: 'absolute', right: -43, top: -8 }}>
+                  <View style={Styles.menuItemCheckImageContainer}>
                     <Image
                       source={require('../../assets/Check.png')}
-                      style={{ height: 30 }}
+                      style={Styles.menuItemCheckImage}
                       resizeMode="contain"
                     />
                   </View>
                 </View>
 
-                <View style={{ width: '55%', gap: 3 }}>
-                  <Text
-                    style={{
-                      color: '#141414',
-                      fontSize: 19,
-                      fontWeight: '700',
-                    }}
-                  >
-                    {item.name}
-                  </Text>
+                <View style={Styles.menuItemContentContainer}>
+                  <Text style={[Styles.menuItemNameText,{color:theme.text}]}>{item.name}</Text>
 
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 3,
-                    }}
-                  >
+                  <View style={Styles.menuItemRatingContainer}>
                     <MaterialCommunityIcons
                       name="star-outline"
                       size={25}
                       color="#07C0E0"
                     />
-                    <Text style={{ fontSize: 15, color: '#07C0E0' }}>
-                      {item.rating}
-                    </Text>
+                    <Text style={Styles.menuItemRatingText}>{item.rating}</Text>
                   </View>
 
-                  <Text style={{ color: '#66737F' }} numberOfLines={2}>
+                  <Text style={Styles.menuItemDescription} numberOfLines={2}>
                     {item.description}
                   </Text>
                 </View>
@@ -91,7 +57,7 @@ function FavouriteScreen() {
                 <TouchableOpacity>
                   <MaterialCommunityIcons
                     name="heart"
-                    size={29}
+                    size={25}
                     color="#FE5050"
                   />
                 </TouchableOpacity>
@@ -105,3 +71,44 @@ function FavouriteScreen() {
 }
 
 export default FavouriteScreen;
+
+const Styles = StyleSheet.create({
+  scrollContainer: {
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingBottom: 160,
+  },
+  menuItemContainer: {
+    width: '100%',
+    height: 125,
+    borderRadius: 20,
+  },
+  menuItemBodyContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 18,
+    padding: 15,
+    width: '97%',
+  },
+  menuItemImage: {
+    width: 95,
+    height: 96,
+    borderRadius: 15,
+    position: 'relative',
+  },
+  menuItemCheckImageContainer: { position: 'absolute', right: -43, top: -8 },
+  menuItemCheckImage: { height: 30 },
+  menuItemContentContainer: { width: '57%', gap: 3 },
+  menuItemNameText: {
+    fontSize: 19,
+    fontWeight: '700',
+  },
+  menuItemRatingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+  },
+  menuItemRatingText: { fontSize: 15, color: '#07C0E0' },
+  menuItemDescription: { color: '#66737F' },
+});

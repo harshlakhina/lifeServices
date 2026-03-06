@@ -12,21 +12,31 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RHFTextInput } from '../../hookform/rhfTextInput';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { ThemeContext } from '../../theme/themecontext';
 
 export const ProfileBottom = () => {
+  const {theme}=useContext(ThemeContext)
+  const navigation = useNavigation();
   const methods = useForm();
   const hideProfilePhto = useRef(true);
   const [isHideProfile, setHideProfile] = useState<boolean>(true);
   return (
     <FormProvider {...methods}>
-      <Header title="Profile" isExpanded={isHideProfile} />
+      <Header
+        title="Profile"
+        isExpanded={isHideProfile}
+        handleFunction={() => navigation.navigate('ProfileSetting' as never)}
+      />
+
       <KeyboardAwareScrollView
         contentContainerStyle={{
-          marginTop: isHideProfile ? 400 : 180,
+          paddingTop: isHideProfile ? 420 : 180,
+          padding: 20,
+          backgroundColor:theme.background2
         }}
         enableOnAndroid={true}
-        // extraScrollHeight={50}
         keyboardShouldPersistTaps="always"
         onScroll={event => {
           const scrollY = event.nativeEvent.contentOffset.y;
@@ -40,41 +50,46 @@ export const ProfileBottom = () => {
           }
         }}
       >
-        <View style={Styles.aboutMeContainer}>
-          <Text style={Styles.aboutMeTitle}>About me</Text>
+        <View style={[Styles.aboutMeContainer]}>
+          <Text style={[Styles.aboutMeTitle,{color:theme.text}]}>About me</Text>
 
-          <Text style={Styles.aboutMeDecription}>
+          <Text style={[Styles.aboutMeDecription,{ backgroundColor:theme.card,color:theme.text}]}>
             Hello, I am a lawyer, I do this more than 3 years, I will help with
             the task of any complexity, please contact.
           </Text>
         </View>
 
-        <View style={{ paddingHorizontal: 25, gap: 10 }}>
-          <Text style={Styles.diplomaText}>Documents</Text>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: 17,
+            }}
+          >
+            <Text style={[Styles.diplomaText,{color:theme.text}]}>Documents</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ViewDocument' as never)}
+            >
+              <Text style={{ color: '#07C0E0', fontSize: 20 }}>View All</Text>
+            </TouchableOpacity>
+          </View>
 
           <FlatList
             horizontal
             data={DiplomaMockData}
             keyExtractor={item => item.id.toString()}
-            contentContainerStyle={{ gap: 10 }}
+            contentContainerStyle={{ gap: 15 }}
             renderItem={({ item }) => {
               return (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    width: 320,
-                    backgroundColor: '#FFF',
-                    padding: 15,
-                    borderRadius: 25,
-                    gap: 10,
-                  }}
-                >
+                <View style={[Styles.documentCardContainer,{ backgroundColor:theme.card,}]}>
                   <Image
-                    source={require('../../assets/imageDemo.png')}
+                    source={require('../../assets/Diploma.png')}
                     resizeMode="cover"
                     style={{ height: 100, width: 100, borderRadius: 20 }}
                   />
-                  <View style={{ position: 'absolute', right: -38, top: 0 }}>
+                  <View style={{ position: 'absolute', right: -41, top: -7 }}>
                     <Image
                       source={require('../../assets/Check.png')}
                       style={{ height: 30 }}
@@ -83,7 +98,7 @@ export const ProfileBottom = () => {
                   </View>
 
                   <View style={{ width: 170, gap: 5 }}>
-                    <Text style={{ fontWeight: 900, fontSize: 16 }}>
+                    <Text style={{ fontWeight: 900, fontSize: 16,color:theme.text }}>
                       {item.diplomaName}
                     </Text>
 
@@ -101,54 +116,17 @@ export const ProfileBottom = () => {
         </View>
 
         <View style={Styles.sphereContainer}>
-          <Text style={Styles.sphereTitle}>Spheres of activity</Text>
+          <Text style={[Styles.sphereTitle,{color:theme.text}]}>Spheres of activity</Text>
 
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
-            <View
-              style={{
-                backgroundColor: '#07C0E0',
-                paddingHorizontal: 10,
-                paddingVertical: 16,
-                width: 150,
-                flexDirection: 'row',
-                borderRadius: 50,
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Text style={{ paddingLeft: 10, fontSize: 20, color: '#FFF' }}>
-                Lawyer
-              </Text>
+          <View style={Styles.sphereBodyContainer}>
+            <View style={Styles.sphereBtnContainer}>
+              <Text style={Styles.sphereBtnText}>Lawyer</Text>
 
               <TouchableOpacity>
                 <MaterialCommunityIcons
                   name="close"
                   size={21}
-                  style={{ paddingRight: 8, color: '#FFF' }}
-                />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                backgroundColor: '#07C0E0',
-                paddingVertical: 16,
-                paddingHorizontal: 10,
-                width: 150,
-                flexDirection: 'row',
-                borderRadius: 50,
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Text style={{ paddingLeft: 10, fontSize: 20, color: '#FFF' }}>
-                Lawyer
-              </Text>
-
-              <TouchableOpacity>
-                <MaterialCommunityIcons
-                  name="close"
-                  size={21}
-                  style={{ paddingRight: 8, color: '#FFF' }}
+                  style={Styles.sphereBtnCrossBtn}
                 />
               </TouchableOpacity>
             </View>
@@ -156,50 +134,36 @@ export const ProfileBottom = () => {
         </View>
 
         <View style={Styles.phoneNoContainer}>
-          <Text style={Styles.phoneNoText}>Phone number</Text>
+          <Text style={[Styles.phoneNoText,{color:theme.text}]}>Phone number</Text>
           <RHFTextInput
             name="phoneNo"
-            style={{ width: '99%', elevation: 2 }}
+            style={Styles.phonoNoInput}
             placeholder="+ 7 (495) 510 55 55"
+            keyboardType="phone-pad"
           />
         </View>
 
-        <View
-          style={{
-            paddingHorizontal: 25,
-            gap: 10,
-            paddingVertical: 20,
-            marginBottom: 25,
-          }}
-        >
-          <Text style={Styles.diplomaText}>My reviews</Text>
-
+        <View>
+          <Text style={[Styles.myReviewText,{color:theme.text}]}>My reviews</Text>
           {DiplomaMockData.map(item => (
             <View
-            key={item.id}
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                backgroundColor: '#FFF',
-                padding: 15,
-                borderRadius: 20,
-                gap: 10,
-              }}
+              key={item.id}
+              style={[Styles.myReviewCardContainer,{backgroundColor:theme.card}]}
             >
               <Image
                 source={require('../../assets/imageDemo.png')}
                 resizeMode="cover"
-                style={{ height: 100, width: 100, borderRadius: 20 }}
+                style={Styles.myReviewCardImage}
               />
 
-              <View style={{ width: '65%', gap: 5 }}>
-                <Text style={{ fontWeight: 700, fontSize: 16 }}>
+              <View style={Styles.myReviewContentContainer}>
+                <Text style={[Styles.myReviewCardNameText,{color:theme.text}]}>
                   {item.diplomaName}
                 </Text>
 
                 <Text
                   numberOfLines={3}
-                  style={{ color: '#9999AA', fontSize: 13 }}
+                  style={Styles.myReviewCardNameDescription}
                 >
                   {item.description}
                 </Text>
@@ -211,58 +175,29 @@ export const ProfileBottom = () => {
 
       {isHideProfile && (
         <>
-          <View style={{ position: 'absolute', top: 130 }}>
+          <View style={Styles.mainProfileImageContainer}>
             <Image
               source={require('../../assets/ProfilePhoto.png')}
               resizeMode="contain"
-              style={{ height: 400, width: 413, position: 'relative' }}
+              style={Styles.mainProfileImage}
             />
-            <View
-              style={{
-                position: 'absolute',
-                top: 20,
-                left: 42,
-                width: '100%',
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  backgroundColor: '#A280CA',
-                  paddingHorizontal: 15,
-                  paddingVertical: 7,
-                  gap: 4,
-                  borderRadius: 30,
-                  alignSelf: 'flex-start',
-                }}
-              >
+            <View style={Styles.mainProfileImageTopContentContainer}>
+              <View style={Styles.mainProfileTopContentBodyContainer}>
                 <MaterialCommunityIcons
                   name="star-outline"
                   size={27}
                   color="#FFF"
                 />
-                <Text style={{ fontSize: 17, color: '#FFF' }}>4.9</Text>
+                <Text style={Styles.mainProfileTopContentText}>4.9</Text>
               </View>
             </View>
-            <View
-              style={{
-                // backgroundColor: 'red',
-                position: 'absolute',
-                top: 300,
-                left: 55,
-                width: '100%',
-                // padding: 20,
-                // margin: 20,
-              }}
-            >
-              <Text style={{ color: '#FFF', fontWeight: 700, fontSize: 24 }}>
+
+            <View style={Styles.mainProfileBottomContainer}>
+              <Text style={Styles.mainProfileBottomNameText}>
                 Maria Minogarova
               </Text>
-              <Text style={{ color: '#FFF', fontSize: 17 }}>
-                Moscow, Russia
-              </Text>
-              <Text style={{ color: '#FFF', fontSize: 17 }}>
+              <Text style={Styles.mainProfileBottomText}>Moscow, Russia</Text>
+              <Text style={Styles.mainProfileBottomText}>
                 st, Novy Arbat, 193
               </Text>
             </View>
@@ -274,9 +209,40 @@ export const ProfileBottom = () => {
 };
 
 const Styles = StyleSheet.create({
+  mainProfileImageContainer: {
+    position: 'absolute',
+    top: 130,
+    height: 410,
+    width: 413,
+    alignItems: 'center',
+  },
+  mainProfileImage: { position: 'relative', height: '100%', width: '100%' },
+  mainProfileImageTopContentContainer: {
+    position: 'absolute',
+    top: 20,
+    left: 40,
+  },
+  mainProfileTopContentBodyContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#A280CA',
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    gap: 4,
+    borderRadius: 30,
+    alignSelf: 'flex-start',
+  },
+  mainProfileTopContentText: { fontSize: 17, color: '#FFF' },
+  mainProfileBottomContainer: {
+    position: 'absolute',
+    top: 315,
+    left: 40,
+    width: '100%',
+  },
+  mainProfileBottomNameText: { color: '#FFF', fontWeight: 700, fontSize: 24 },
+  mainProfileBottomText: { color: '#FFF', fontSize: 17 },
   aboutMeContainer: {
-    paddingHorizontal: 25,
-    gap: 10,
+    gap: 15,
   },
   aboutMeTitle: {
     color: '#141414',
@@ -284,26 +250,63 @@ const Styles = StyleSheet.create({
     fontSize: 18,
   },
   aboutMeDecription: {
-    backgroundColor: '#FFF',
+   
     padding: 20,
     borderRadius: 22,
     lineHeight: 23,
     color: '#141414',
   },
   diplomaContainer: { width: '96%', gap: 10 },
+  documentCardContainer: {
+    flexDirection: 'row',
+    width: 320,
+    backgroundColor: '#FFF',
+    padding: 15,
+    borderRadius: 25,
+    gap: 15,
+    marginTop: 17,
+    marginRight: 9,
+  },
   diplomaText: { fontSize: 20, fontWeight: 700 },
   sphereContainer: {
-    padding: 25,
-    gap: 10,
+    gap: 15,
+    marginVertical: 17,
   },
   sphereTitle: {
     color: '#141414',
     fontWeight: 700,
     fontSize: 18,
   },
+  sphereBodyContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  sphereBtnContainer: {
+    backgroundColor: '#07C0E0',
+    paddingHorizontal: 10,
+    paddingVertical: 16,
+    width: 150,
+    flexDirection: 'row',
+    borderRadius: 50,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  sphereBtnText: { paddingLeft: 10, fontSize: 20, color: '#FFF' },
+  sphereBtnCrossBtn: { paddingRight: 8, color: '#FFF' },
   phoneNoContainer: {
-    paddingHorizontal: 25,
-    gap: 10,
+    gap: 17,
   },
   phoneNoText: { fontSize: 20, fontWeight: 700 },
+  phonoNoInput: { width: '100%', elevation: 2 },
+  myReviewText: { fontSize: 20, fontWeight: 700, marginVertical: 17 },
+  myReviewCardContainer:{
+                flexDirection: 'row',
+                width: '100%',
+                backgroundColor: '#FFF',
+                padding: 15,
+                borderRadius: 20,
+                gap: 10,
+                marginBottom: 15,
+              },
+              myReviewCardImage:{ height: 100, width: 100, borderRadius: 20 },
+              myReviewContentContainer:{ width: '65%', gap: 5 },
+              myReviewCardNameText:{ fontWeight: 700, fontSize: 16 },
+              myReviewCardNameDescription:{ color: '#9999AA', fontSize: 13 }
 });

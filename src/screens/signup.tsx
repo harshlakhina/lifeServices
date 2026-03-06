@@ -5,7 +5,7 @@ import { Select } from '../hookform/select';
 import { professions } from '../constants/profession';
 import { countries } from '../constants/countries';
 import { cities } from '../constants/cities';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { launchImageLibrary } from 'react-native-image-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RHFTextInput } from '../hookform/rhfTextInput';
@@ -14,8 +14,10 @@ import { SignUpStyles } from './styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignUpSchema } from '../schema/SignUpSchema';
 import { SelectDropStyles } from '../screens/styles';
+import { ThemeContext } from '../theme/themecontext';
 
 export default function SignUp({ navigation }: any) {
+  const { theme } = useContext(ThemeContext);
   const methods = useForm({
     resolver: yupResolver(SignUpSchema),
   });
@@ -44,7 +46,12 @@ export default function SignUp({ navigation }: any) {
 
   return (
     <FormProvider {...methods}>
-      <View style={SignUpStyles.profileImageWrapper}>
+      <View
+        style={[
+          SignUpStyles.profileImageWrapper,
+          { backgroundColor: theme.background },
+        ]}
+      >
         <Image
           source={require('../assets/profile-logo.png')}
           style={SignUpStyles.profileLogoImage}
@@ -52,10 +59,17 @@ export default function SignUp({ navigation }: any) {
         />
 
         <Text>
-          <Text style={[SignUpStyles.lifeSevicesText, { fontWeight: 700 }]}>
+          <Text
+            style={[
+              SignUpStyles.lifeSevicesText,
+              { fontWeight: 700, color: theme.text },
+            ]}
+          >
             Life
           </Text>
-          <Text style={SignUpStyles.lifeSevicesText}>Services</Text>
+          <Text style={[SignUpStyles.lifeSevicesText, { color: theme.text }]}>
+            Services
+          </Text>
         </Text>
       </View>
 
@@ -63,29 +77,33 @@ export default function SignUp({ navigation }: any) {
         enableOnAndroid={true}
         extraScrollHeight={50}
         keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ backgroundColor: theme.background }}
       >
         {!image ? (
-          <View style={{ alignItems: 'center', paddingTop: 20, gap: 15 }}>
+          <TouchableOpacity
+            style={{ alignItems: 'center', paddingTop: 20, gap: 15 }}
+          >
             <View>
-              <View
+              <TouchableOpacity
+              onPress={pickImage}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: theme.input,
                   height: 120,
                   width: 120,
                   borderRadius: 20,
                   justifyContent: 'center',
                   alignItems: 'center',
+                  elevation: 2,
                 }}
               >
                 <Image
-                  source={require('../assets/profile.png')}
-                  style={{ height: 55, width: 55 }}
+                  source={require('../assets/imageLogo.png')}
+                  style={{ height: 55, width: 55, tintColor: theme.bottomTab }}
                   resizeMode="contain"
                 />
-              </View>
+              </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={pickImage}
+              <View
                 style={{
                   position: 'absolute',
                   right: -8,
@@ -98,13 +116,17 @@ export default function SignUp({ navigation }: any) {
                   alignItems: 'center',
                 }}
               >
-                <MaterialCommunityIcons name="plus" size={24} color="#FFF" />
-              </TouchableOpacity>
+                <MaterialCommunityIcons
+                  name="plus"
+                  size={24}
+                  color={theme.background}
+                />
+              </View>
             </View>
             <Text style={{ color: '#07C0E0', fontSize: 20 }}>
               Add your photo
             </Text>
-          </View>
+          </TouchableOpacity>
         ) : (
           <View
             style={{
@@ -150,30 +172,27 @@ export default function SignUp({ navigation }: any) {
             title="Choose your profession"
             options={professions}
             name="profession"
-            style={
-            [    SelectDropStyles.input,
-                SelectDropStyles.extraInputItem,]
-            }
-            wrapperStyle={{ alignItems: 'center'}}
-
-             selected={true}
+            style={[SelectDropStyles.input, SelectDropStyles.extraInputItem]}
+            wrapperStyle={{ alignItems: 'center' }}
+            selected={true}
           />
-          <Select title="Choose a country" options={countries} name="country" 
-           style={
-            [    SelectDropStyles.input,
-                SelectDropStyles.extraInputItem,]
-            } 
-            wrapperStyle={{ alignItems: 'center'}}
-              selected={true}/>
-          <Select title="Choose your City" options={cities} name="city"  
-          style={
-              [   
-               SelectDropStyles.input,
-                SelectDropStyles.extraInputItem,
-                
-              ]
-            }
-            wrapperStyle={{ alignItems: 'center'}}   selected={true}/>
+          <Select
+            title="Choose a country"
+            options={countries}
+            name="country"
+            style={[SelectDropStyles.input, SelectDropStyles.extraInputItem]}
+            wrapperStyle={{ alignItems: 'center' }}
+            selected={true}
+          />
+
+          <Select
+            title="Choose your City"
+            options={cities}
+            name="city"
+            style={[SelectDropStyles.input, SelectDropStyles.extraInputItem]}
+            wrapperStyle={{ alignItems: 'center' }}
+            selected={true}
+          />
 
           <RHFTextInput placeholder="Enter your Address" name="address" />
           <RHFTextInput
@@ -218,7 +237,7 @@ export default function SignUp({ navigation }: any) {
           <Button title="Sign Up" handleBtn={handleSubmit(onSubmit)} />
 
           <View style={{ flexDirection: 'row', gap: 8, marginBottom: 30 }}>
-            <Text style={{ color: '#141414', fontSize: 18 }}>
+            <Text style={{ fontSize: 18, color: theme.text }}>
               Do you already have an account?
             </Text>
 

@@ -1,16 +1,26 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button } from '../components/button';
+import { useContext } from 'react';
+import { ThemeContext } from '../theme/themecontext';
 
 export default function OnboardingScreen({ navigation }: any) {
+  const { theme, isDark } = useContext(ThemeContext);
   return (
     <KeyboardAwareScrollView
-      contentContainerStyle={Styles.container}
+      contentContainerStyle={[
+        Styles.container,
+        { backgroundColor: theme.background },
+      ]}
       enableOnAndroid={true}
       extraScrollHeight={50}
     >
       <Image
-        source={require('../assets/lifeservice.png')}
+        source={
+          !isDark
+            ? require('../assets/lifeservice.png')
+            : require('../assets/Object.png')
+        }
         style={Styles.lifeServiceImage}
         resizeMode="cover"
       />
@@ -23,11 +33,18 @@ export default function OnboardingScreen({ navigation }: any) {
         />
 
         <Text style={{ fontSize: 37 }}>
-          <Text style={{ color: '#141414', fontWeight: 700 }}>Life</Text>
-          <Text style={{ color: '#141414' }}>Services</Text>
+          <Text style={{ color: theme.text, fontWeight: 700 }}>Life</Text>
+          <Text style={{ color: theme.text }}>Services</Text>
         </Text>
 
-        <Text style={{ color: '#66737F', paddingTop: 28, paddingBottom:60,fontSize: 18 }}>
+        <Text
+          style={{
+            color: theme.secondaryText,
+            paddingTop: 28,
+            paddingBottom: 60,
+            fontSize: 18,
+          }}
+        >
           Hello, we will help you find your specialist!
         </Text>
 
@@ -40,7 +57,7 @@ export default function OnboardingScreen({ navigation }: any) {
             title="Sign Up "
             handleBtn={() => navigation.navigate('SignUp')}
             styleText={{ color: '#3EAEFF', fontWeight: 500, fontSize: 18 }}
-            styleBtn={{ backgroundColor: '#FFF' }}
+            styleBtn={{ backgroundColor: theme.background }}
           />
         </View>
       </View>
@@ -51,7 +68,6 @@ export default function OnboardingScreen({ navigation }: any) {
 const Styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#fff',
   },
   lifeServiceImage: {
     width: '100%',
@@ -69,5 +85,15 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
+  },
+  darkShadow: {
+    shadowColor: '#fff',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 10, // Android
   },
 });

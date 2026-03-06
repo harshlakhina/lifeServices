@@ -1,16 +1,12 @@
-import {
-  View,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignInSchema } from '../schema/signInSchema';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button } from '../components/button';
+import { useContext } from 'react';
+import { ThemeContext } from '../theme/themecontext';
+import { RHFTextInput } from '../hookform/rhfTextInput';
 
 interface SignInFormData {
   email: string;
@@ -18,6 +14,8 @@ interface SignInFormData {
 }
 
 export default function SignIn({ navigation }: any) {
+  const { theme } = useContext(ThemeContext);
+
   const methods = useForm<SignInFormData>({
     // resolver: yupResolver(SignInSchema),
     defaultValues: {
@@ -25,11 +23,8 @@ export default function SignIn({ navigation }: any) {
       password: '',
     },
   });
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = methods;
+
+  const { handleSubmit } = methods;
 
   const onSubmit = (data: SignInFormData) => {
     console.log(data);
@@ -39,7 +34,10 @@ export default function SignIn({ navigation }: any) {
   return (
     <FormProvider {...methods}>
       <KeyboardAwareScrollView
-        contentContainerStyle={Styles.container}
+        contentContainerStyle={[
+          Styles.container,
+          { backgroundColor: theme.background2 },
+        ]}
         enableOnAndroid={true}
         extraScrollHeight={50}
         keyboardShouldPersistTaps="handled"
@@ -51,68 +49,13 @@ export default function SignIn({ navigation }: any) {
         />
 
         <Text style={{ fontSize: 40 }}>
-          <Text style={{ color: '#141414', fontWeight: 700 }}>Life</Text>
-          <Text style={{ color: '#141414' }}>Services</Text>
+          <Text style={{ color: theme.text, fontWeight: 700 }}>Life</Text>
+          <Text style={{ color: theme.text }}>Services</Text>
         </Text>
 
         <View style={Styles.inputContainer}>
-          <View style={{ width: '100%', alignItems: 'center', gap: 5 }}>
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <TextInput
-                    placeholder="E-mail"
-                    keyboardType="email-address"
-                    autoComplete="email"
-                    placeholderTextColor={errors.email ? 'red' : '#66737F'}
-                    style={[
-                      Styles.input,
-                      errors.email
-                        ? { color: 'red', borderWidth: 1, borderColor: 'red' }
-                        : {},
-                    ]}
-                    value={value}
-                    onChangeText={onChange}
-                  />
-                  {errors.email && (
-                    <Text style={Styles.errorText}>{errors.email.message}</Text>
-                  )}
-                </>
-              )}
-            />
-          </View>
-
-          <View style={{ width: '100%', alignItems: 'center', gap: 5 }}>
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <TextInput
-                    placeholder="Password"
-                    placeholderTextColor={errors.password ? 'red' : '#66737F'}
-                    style={[
-                      Styles.input,
-                      errors.password
-                        ? { color: 'red', borderWidth: 1, borderColor: 'red' }
-                        : { color: 'black' },
-                    ]}
-                    value={value}
-                    secureTextEntry
-                    onChangeText={onChange}
-                  />
-
-                  {errors.password && (
-                    <Text style={Styles.errorText}>
-                      {errors.password.message}
-                    </Text>
-                  )}
-                </>
-              )}
-            />
-          </View>
+          <RHFTextInput name="email" placeholder="E-Mail" />
+          <RHFTextInput placeholder="Password" name="password" />
         </View>
 
         <View
@@ -130,7 +73,7 @@ export default function SignIn({ navigation }: any) {
         <Button title="Sign In " handleBtn={handleSubmit(onSubmit)} />
 
         <View style={{ alignItems: 'center', gap: 2, padding: 25 }}>
-          <Text style={{ color: '#141414', fontSize: 22 }}>
+          <Text style={{ color: theme.text, fontSize: 22 }}>
             Don't have an account yet?
           </Text>
 
@@ -150,7 +93,6 @@ const Styles = StyleSheet.create({
     flexGrow: 1,
     paddingTop: 150,
     alignItems: 'center',
-    backgroundColor: '#F5F6F9',
   },
   profileLogoImage: {
     height: 100,
