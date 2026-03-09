@@ -13,6 +13,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import Header2 from '../../components/header2';
 import { ThemeContext } from '../../theme/themecontext';
+import RHFSwitch from '../../hookform/rhfSwitch';
+import { iconSource, imageSource } from '../../constants';
 
 function Setting() {
   const { theme, isDark, toggleTheme } = useContext(ThemeContext);
@@ -24,7 +26,10 @@ function Setting() {
 
   function handleDeletBtn(name: string) {
     if (name === 'Delete account') setIsDelete(true);
-    else if (name === 'Dark Mode') toggleTheme();
+  }
+
+  function handleRadioBtn(name: string) {
+    if (name === 'Dark Mode') toggleTheme();
   }
   return (
     <FormProvider {...methods}>
@@ -39,7 +44,7 @@ function Setting() {
             ]}
           >
             <Image
-              source={require('../../assets/logout.png')}
+              source={imageSource.logout}
               resizeMode="contain"
               style={Styles.modalImage}
             />
@@ -83,7 +88,7 @@ function Setting() {
             ]}
           >
             <Image
-              source={require('../../assets/delete.png')}
+              source={imageSource.delete}
               resizeMode="contain"
               style={Styles.modalImage}
             />
@@ -148,11 +153,18 @@ function Setting() {
               </View>
 
               <View>
-                <Image
-                  source={item.icon}
-                  resizeMode="contain"
-                  style={Styles.menuItemRightIcon}
-                />
+                {item.label === 'Dark Mode' || item.label === 'Notification' ? (
+                  <RHFSwitch
+                    name={item.label}
+                    handleRadioBtn={handleRadioBtn}
+                  />
+                ) : (
+                  <Image
+                    source={item.icon}
+                    resizeMode="contain"
+                    style={Styles.menuItemRightIcon}
+                  />
+                )}
               </View>
             </TouchableOpacity>
           ))}
@@ -233,7 +245,7 @@ function Setting() {
             onPress={() => setIsEndSession(true)}
           >
             <Image
-              source={require('../../assets/log-out-outline.png')}
+              source={iconSource.logOutOutline}
               resizeMode="cover"
               style={Styles.EndSessionBtnImage}
             />
@@ -294,8 +306,8 @@ const Styles = StyleSheet.create({
   menuItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 18,
-
+    padding: 16,
+    alignItems: 'center',
     elevation: 5,
     borderRadius: 50,
   },

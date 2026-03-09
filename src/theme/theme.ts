@@ -13,7 +13,7 @@ export const LightTheme = {
   bottomTab:"#D5DDE5",
    modalBg: 'rgba(0,0,0,0.5)',
    endSessionBg:'#FFE2E2',
-   
+   map:'rgba(255,255,255,0.8)'
 };
 
 export const DarkTheme = {
@@ -30,5 +30,6 @@ export const DarkTheme = {
   btnBg: '#02D1AC',
   bottomTab:"#424649",
    modalBg: 'rgba(255,255,255,0.5)',
- endSessionBg:"#560F0F"
+ endSessionBg:"#560F0F",
+ map:'rgba(0,0,0,0.8)'
 };

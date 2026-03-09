@@ -3,40 +3,48 @@ import { useContext } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../theme/themecontext';
+import { iconSource, imageSource } from '../constants';
 
 function CustomDrawerContent(props: any) {
-  const {theme}=useContext(ThemeContext)
+  const currentRoute = props.state.routeNames[props.state.index];
+  const { theme } = useContext(ThemeContext);
   const drawerItems = [
     {
       name: 'Home-Main',
       label: 'Home',
-      icon: require('../assets/arrow-back-outline.png'),
-      symbol: require('../assets/homeIcon.png'),
+      icon: iconSource.backIcon,
+      symbol: iconSource.homeIcon,
     },
     {
       name: 'Setting',
       label: 'Setting',
-      icon: require('../assets/arrow-back-outline.png'),
-      symbol: require('../assets/settings.png'),
+      icon: iconSource.backIcon,
+      symbol: iconSource.settings,
     },
     {
       name: 'Contact developers',
       label: 'Contact developers',
-      icon: require('../assets/arrow-back-outline.png'),
-      symbol: require('../assets/Contactpeople.png'),
+      icon: iconSource.backIcon,
+      symbol: imageSource.contactPeople,
     },
     {
       name: 'Notifications',
       label: 'Notifications',
-      icon: require('../assets/arrow-back-outline.png'),
-      symbol: require('../assets/bell-outline.png'),
+      icon: iconSource.backIcon,
+      symbol: iconSource.bellIcon,
     },
   ];
   return (
-    <DrawerContentScrollView contentContainerStyle={{ paddingTop: 0,backgroundColor:theme.background}}>
+    <DrawerContentScrollView
+      contentContainerStyle={{
+        paddingTop: 0,
+        backgroundColor: theme.background,
+        flexGrow: 1,
+      }}
+    >
       <View style={{ marginHorizontal: -20 }}>
         <Image
-          source={require('../assets/BGImage.png')}
+          source={imageSource.bgImage}
           style={{ width: '100%', height: 350 }}
           resizeMode="cover"
         />
@@ -51,7 +59,7 @@ function CustomDrawerContent(props: any) {
           }}
         >
           <Image
-            source={require('../assets/imageDemo.png')}
+            source={imageSource.imageDemo2}
             resizeMode="cover"
             style={{ height: 85, width: 90, borderRadius: 10 }}
           />
@@ -73,42 +81,46 @@ function CustomDrawerContent(props: any) {
       </View>
 
       <View style={{ marginTop: -60, marginLeft: -15 }}>
-        {drawerItems.map(item => (
-          <TouchableOpacity
-            key={item.name}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-              paddingHorizontal: 20,
-            }}
-            onPress={() => props.navigation.navigate(item.name)}
-          >
-            <View
-              style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}
+        {drawerItems
+          .filter(item => item.name !== currentRoute)
+          .map(item => (
+            <TouchableOpacity
+              key={item.name}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingVertical: 15,
+                paddingHorizontal: 20,
+              }}
+              onPress={() => props.navigation.navigate(item.name)}
             >
-              <Image
-                source={item.symbol}
-                resizeMode="contain"
-                style={{ height: 25, width: 25, tintColor: '#07C0E0' }}
-              />
-              <Text style={{ fontSize: 20 ,color:theme.text}}>{item.label}</Text>
-            </View>
-            <View>
-              <Image
-                source={item.icon}
-                resizeMode="contain"
-                style={{
-                  height: 20,
-                  width: 20,
-                  transform: [{ rotate: '180deg' }],
-                  tintColor: '#8F9CA9',
-                }}
-              />
-            </View>
-          </TouchableOpacity>
-        ))}
+              <View
+                style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}
+              >
+                <Image
+                  source={item.symbol}
+                  resizeMode="contain"
+                  style={{ height: 25, width: 25, tintColor: '#07C0E0' }}
+                />
+                <Text style={{ fontSize: 20, color: theme.text }}>
+                  {item.label}
+                </Text>
+              </View>
+              <View>
+                <Image
+                  source={item.icon}
+                  resizeMode="contain"
+                  style={{
+                    height: 20,
+                    width: 20,
+                    transform: [{ rotate: '180deg' }],
+                    tintColor: '#8F9CA9',
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+          ))}
       </View>
 
       <View style={{ alignItems: 'flex-end' }}>
@@ -127,7 +139,7 @@ function CustomDrawerContent(props: any) {
             onPress={() => props.navigation.navigate('SignIn')}
           >
             <Image
-              source={require('../assets/log-out-outline.png')}
+              source={iconSource.logOutOutline}
               resizeMode="cover"
               style={{ height: 19, width: 24, tintColor: '#FE5050' }}
             />

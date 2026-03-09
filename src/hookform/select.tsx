@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { ThemeContext } from '../theme/themecontext';
 
 export const Select = (props: any) => {
-  const {theme}=useContext(ThemeContext)
+  const { theme, isDark } = useContext(ThemeContext);
   const [isDrop, setIsDrop] = useState<boolean>(false);
   const [isSelected, setIsSelected] = useState<string[]>([]);
   const {
@@ -34,9 +34,15 @@ export const Select = (props: any) => {
             <View style={[SelectDropStyles.wrapper, props.wrapperStyle]}>
               <TouchableOpacity
                 style={[
-                  { borderColor: errors?.[props.name] ? 'red' : '' },
+                  {
+                    borderColor: errors?.[props.name]
+                      ? 'red'
+                      : theme.background,
+                  },
+                  SelectDropStyles.input,
+                  SelectDropStyles.extraInputItem,
                   props.style,
-                  {backgroundColor:theme.input,borderColor:theme.background}
+                  { backgroundColor: theme.input },
                 ]}
                 onPress={() => setIsDrop(prev => !prev)}
               >
@@ -72,7 +78,12 @@ export const Select = (props: any) => {
               </TouchableOpacity>
 
               {isDrop && (
-                <View style={[SelectDropStyles.dropdown,{backgroundColor:theme.background}]}>
+                <View
+                  style={[
+                    SelectDropStyles.dropdown,
+                    { backgroundColor: theme.background },
+                  ]}
+                >
                   {props.options.map((option: string, idx: number) => {
                     const isFirst = idx === 0;
                     const isLast = idx === props.options.length - 1;
@@ -83,7 +94,11 @@ export const Select = (props: any) => {
                         style={[
                           SelectDropStyles.input,
                           SelectDropStyles.extraDropDownItem,
-                           {borderColor:theme.secondaryText},
+                        
+                          {
+                            borderColor: theme.secondaryText,
+                            elevation: isDark ? 3 : 0,
+                          },
                           isFirst && {
                             borderTopLeftRadius: 25,
                             borderTopRightRadius: 25,
@@ -98,7 +113,7 @@ export const Select = (props: any) => {
                           setIsDrop(false);
                         }}
                       >
-                        <Text style={{color:theme.text}}>{option}</Text>
+                        <Text style={{ color: theme.text }}>{option}</Text>
                       </TouchableOpacity>
                     );
                   })}

@@ -11,7 +11,7 @@ import { Header } from '../../components/header';
 // import { HomeStyles } from '../home/style';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Select } from '../../hookform/select';
-import { SelectDropStyles } from '../styles';
+// import { SelectDropStyles } from '../styles';
 import { professions } from '../../constants/profession';
 import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -20,6 +20,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
+import { iconSource } from '../../constants';
 
 function CreateNewDocument() {
   const { theme } = useContext(ThemeContext);
@@ -51,18 +52,22 @@ function CreateNewDocument() {
         enableOnAndroid={true}
         extraScrollHeight={50}
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flexGrow:1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
-        <View style={{ padding: 20, gap: 20, alignItems: 'center',backgroundColor: theme.background,flex:1 }}>
+        <View
+          style={{
+            padding: 20,
+            gap: 20,
+            alignItems: 'center',
+            backgroundColor: theme.background,
+            flex: 1,
+          }}
+        >
           <Select
             title="Choose your profession"
             options={professions}
             name="profession"
-            style={[
-              SelectDropStyles.input,
-              SelectDropStyles.extraInputItem,
-              { width: '100%' },
-            ]}
+            style={[{ width: '100%' }]}
             wrapperStyle={{ alignItems: 'center' }}
             selected={true}
           />
@@ -102,9 +107,13 @@ function CreateNewDocument() {
                       <View style={Styles.trashContainer}>
                         <TouchableOpacity onPress={() => setActiveTrash(null)}>
                           <Image
-                            source={require('../../assets/trash-2-outline.png')}
+                            source={iconSource.trashOutline}
                             resizeMode="cover"
-                            style={{ height: 50, width: 50 ,tintColor:theme.text}}
+                            style={{
+                              height: 50,
+                              width: 50,
+                              tintColor: theme.text,
+                            }}
                           />
                         </TouchableOpacity>
                       </View>
@@ -141,8 +150,8 @@ function CreateNewDocument() {
               }}
             >
               <Image
-                source={require('../../assets/imageLogo.png')}
-                style={{ height: 65, width: 65 ,tintColor:theme.bottomTab}}
+                source={iconSource.addPhotoIcon}
+                style={{ height: 65, width: 65, tintColor: theme.bottomTab }}
                 resizeMode="contain"
               />
             </TouchableOpacity>
@@ -161,7 +170,11 @@ function CreateNewDocument() {
                 alignItems: 'center',
               }}
             >
-              <MaterialCommunityIcons name="plus" size={24} color={theme.background}/>
+              <MaterialCommunityIcons
+                name="plus"
+                size={24}
+                color={theme.background}
+              />
             </TouchableOpacity>
             <Text
               style={{

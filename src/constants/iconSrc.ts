@@ -1,0 +1,17 @@
+export const iconSource = {
+  backIcon: require('../assets/icon/backIcon.png'),
+  bellIcon: require('../assets/icon/bellIcon.png'),
+  editIcon: require('../assets/icon/EditIcon.png'),
+  heartIcon: require('../assets/icon/heartIcon.png'),
+  homeIcon: require('../assets/icon/homeIcon.png'),
+  addPhotoIcon: require('../assets/icon/addPhotoIcon.png'),
+  inboxIcon: require('../assets/icon/inboxIcon.png'),
+  logOutOutline: require('../assets/icon/log-out-outline.png'),
+  mapIcon: require('../assets/icon/mapIcon.png'),
+  moonIcon: require('../assets/icon/moonIcon.png'),
+  profileWhiteColor: require('../assets/icon/profileWhiteColor.png'),
+  profileBlackColor: require('../assets/icon/profileIconBlackColor.png'),
+  questionMarkCircleOutline: require('../assets/icon/question-mark-circle-outline.png'),
+  settings: require('../assets/icon/settings.png'),
+  trashOutline: require('../assets/icon/trashOutline.png'),
+};

@@ -6,6 +6,7 @@ import { Button } from '../../components/button';
 import Header2 from '../../components/header2';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
+import { imageSource } from '../../constants';
 
 function ViewAllDocument() {
   const navigation = useNavigation();
@@ -37,14 +38,14 @@ function ViewAllDocument() {
               onPress={() => navigation.navigate('EditApplication' as never)}
             >
               <Image
-                source={require('../../assets/Diploma.png')}
+                source={imageSource.diploma}
                 resizeMode="cover"
                 style={{ height: 100, width: 100, borderRadius: 20 }}
               />
               <View style={{ position: 'absolute', right: -10, top: -7 }}>
                 {item.status === 'fulfilled' && (
                   <Image
-                    source={require('../../assets/Check.png')}
+                    source={imageSource.checkFill}
                     style={{ height: 31, width: 31 }}
                     resizeMode="contain"
                   />
@@ -62,7 +63,7 @@ function ViewAllDocument() {
                     }}
                   >
                     <Image
-                      source={require('../../assets/pendingStatus.png')}
+                      source={imageSource.pending}
                       style={{ height: 19, width: 30 }}
                       resizeMode="contain"
                     />

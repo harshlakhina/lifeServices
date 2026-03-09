@@ -15,6 +15,7 @@ import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { useContext, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
+import { imageSource } from '../../constants';
 
 export const ProfileBottom = () => {
   const {theme}=useContext(ThemeContext)
@@ -85,13 +86,13 @@ export const ProfileBottom = () => {
               return (
                 <View style={[Styles.documentCardContainer,{ backgroundColor:theme.card,}]}>
                   <Image
-                    source={require('../../assets/Diploma.png')}
+                    source={imageSource.diploma}
                     resizeMode="cover"
                     style={{ height: 100, width: 100, borderRadius: 20 }}
                   />
                   <View style={{ position: 'absolute', right: -41, top: -7 }}>
                     <Image
-                      source={require('../../assets/Check.png')}
+                      source={imageSource.checkFill}
                       style={{ height: 30 }}
                       resizeMode="contain"
                     />
@@ -151,7 +152,7 @@ export const ProfileBottom = () => {
               style={[Styles.myReviewCardContainer,{backgroundColor:theme.card}]}
             >
               <Image
-                source={require('../../assets/imageDemo.png')}
+                source={imageSource.imageDemo2}
                 resizeMode="cover"
                 style={Styles.myReviewCardImage}
               />
@@ -177,7 +178,7 @@ export const ProfileBottom = () => {
         <>
           <View style={Styles.mainProfileImageContainer}>
             <Image
-              source={require('../../assets/ProfilePhoto.png')}
+              source={imageSource.imageDemo3}
               resizeMode="contain"
               style={Styles.mainProfileImage}
             />

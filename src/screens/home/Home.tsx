@@ -16,12 +16,13 @@ import { Header } from '../../components/header';
 import { HomeStyles } from './style';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
+import { imageSource } from '../../constants';
 // import { ThemeContext } from '../../theme/themecontext';
 
 export const Home = () => {
   const methods = useForm();
   const navigation = useNavigation();
-  const {theme}=useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext);
 
   const [selectedHeart, setSelectedHeart] = useState<number[]>([]);
   const [selectedHeartBestOffer, setSelectedHeartBestOffer] = useState<
@@ -69,11 +70,14 @@ export const Home = () => {
             setHideBox(true);
           }
         }}
-        contentContainerStyle={{backgroundColor:theme.background2}}
+        contentContainerStyle={{ backgroundColor: theme.background2 }}
       >
         {/* Best Offers */}
         <View style={HomeStyles.bestOfferContainer}>
-          <Text style={[HomeStyles.bestOfferText,{color:theme.text}]}> Best Offers</Text>
+          <Text style={[HomeStyles.bestOfferText, { color: theme.text }]}>
+            {' '}
+            Best Offers
+          </Text>
 
           <FlatList
             horizontal
@@ -106,7 +110,7 @@ export const Home = () => {
 
                   <View style={HomeStyles.bestOfferCardTopContent}>
                     <Image
-                      source={require('../../assets/Check.png')}
+                      source={imageSource.checkFill}
                       style={{ height: 40 }}
                       resizeMode="contain"
                     />
@@ -155,12 +159,20 @@ export const Home = () => {
 
         {/* All Offers */}
         <View style={HomeStyles.allOfferContainer}>
-         <Text style={[HomeStyles.allOfferText,{color:theme.text}]}>All Offers</Text>
+          <Text style={[HomeStyles.allOfferText, { color: theme.text }]}>
+            All Offers
+          </Text>
 
           {HomeMockData.map(item => {
             const active = selectedHeart.includes(item.id);
             return (
-              <View style={[HomeStyles.allOfferListCard,{backgroundColor:theme.card}]} key={item.id}>
+              <View
+                style={[
+                  HomeStyles.allOfferListCard,
+                  { backgroundColor: theme.card },
+                ]}
+                key={item.id}
+              >
                 <View style={HomeStyles.allOfferListContent}>
                   <View>
                     <Image
@@ -175,7 +187,7 @@ export const Home = () => {
                     />
                     <View style={{ position: 'absolute', right: -43, top: -8 }}>
                       <Image
-                        source={require('../../assets/Check.png')}
+                        source={imageSource.checkFill}
                         style={{ height: 30 }}
                         resizeMode="contain"
                       />
@@ -234,38 +246,43 @@ export const Home = () => {
 
       {/* Top Search Box */}
       {hideBox && (
-        <View style={[HomeStyles.topSearchBox,{backgroundColor:theme.background}]}>
+        <View
+          style={[
+            HomeStyles.topSearchBox,
+            { backgroundColor: theme.background },
+          ]}
+        >
           <View style={HomeStyles.topSearchBoxContentContainer}>
-            <View style={[HomeStyles.topSearchBoxContainerImageBg,{backgroundColor:theme.card2}]}>
+            <View
+              style={[
+                HomeStyles.topSearchBoxContainerImageBg,
+                { backgroundColor: theme.card2 },
+              ]}
+            >
               <Image
-                source={require('../../assets/MoscowIcon.png')}
+                source={imageSource.moscow}
                 resizeMode="cover"
                 style={HomeStyles.topSearchBoxContentContainerImage}
               />
             </View>
 
-            <Select
-              name="moscow"
-              title="Moscow"
-              options={professions}
-              style={HomeStyles.topSearchBoxContentContainerDrop}
-            />
+            <Select name="moscow" title="Moscow" options={professions} />
           </View>
 
           <View style={HomeStyles.topSearchBoxContentContainer}>
-            <View style={[HomeStyles.topSearchBoxContainerImageBg,{backgroundColor:theme.card2}]}>
+            <View
+              style={[
+                HomeStyles.topSearchBoxContainerImageBg,
+                { backgroundColor: theme.card2 },
+              ]}
+            >
               <Image
-                source={require('../../assets/workIcon.png')}
+                source={imageSource.sphere}
                 resizeMode="contain"
                 style={HomeStyles.topSearchBoxContentContainerImage}
               />
             </View>
-            <Select
-              name="sphere"
-              title="Sphere"
-              options={professions}
-              style={[HomeStyles.topSearchBoxContentContainerDrop]}
-            />
+            <Select name="sphere" title="Sphere" options={professions} isDropstyle={{elevation:3}}/>
           </View>
         </View>
       )}

@@ -1,58 +1,59 @@
+import { iconSource, imageSource } from '../../constants';
+
 export const SupportItems = [
   {
     label: 'Report an issue',
-    icon: require('../../assets/arrow-back-outline.png'),
-    symbol: require('../../assets/EditIcon.png'),
+    icon: iconSource.backIcon,
+    symbol: iconSource.editIcon,
   },
   {
     label: 'Support Center',
-    icon: require('../../assets/arrow-back-outline.png'),
-    symbol: require('../../assets/question-mark-circle-outline.png'),
+    icon: iconSource.backIcon,
+    symbol: iconSource.questionMarkCircleOutline,
   },
 ];
 
 export const InformationItem = [
   {
     label: 'Terms of Use',
-    icon: require('../../assets/arrow-back-outline.png'),
-    symbol: require('../../assets/termsOfUse.png'),
-    navigate:"TermOfUse"
+    icon: iconSource.backIcon,
+    symbol: imageSource.termsOfUse,
+    navigate: 'TermOfUse',
   },
   {
     label: 'Community Rules',
-    icon: require('../../assets/arrow-back-outline.png'),
-    symbol: require('../../assets/checkmark-square-2-outline.png'),
-    navigate:"CommunityRules"
-    
+    icon: iconSource.backIcon,
+    symbol: imageSource.checkMarkSquare,
+    navigate: 'CommunityRules',
   },
   {
     label: 'Privacy Policy',
-    icon: require('../../assets/arrow-back-outline.png'),
-    symbol: require('../../assets/privacyPolicy.png'),
-     navigate:"PrivacyPolicy"
+    icon: iconSource.backIcon,
+    symbol: imageSource.privacyPolicy,
+    navigate: 'PrivacyPolicy',
   },
   {
     label: 'Copyright',
-    icon: require('../../assets/arrow-back-outline.png'),
-    symbol: require('../../assets/copyRight.png'),
-    navigate:"CopyRight"
+    icon: iconSource.backIcon,
+    symbol: imageSource.copyRight,
+    navigate: 'CopyRight',
   },
 ];
 
 export const ExtraItems = [
   {
     label: 'Dark Mode',
-    symbol: require('../../assets/moonIcon.png'),
-     icon: require('../../assets/arrow-back-outline.png'),
+    symbol: iconSource.moonIcon,
+    icon: iconSource.backIcon,
   },
   {
     label: 'Notification',
-    symbol: require('../../assets/bell-outline.png'),
-     icon: require('../../assets/arrow-back-outline.png'),
+    symbol: iconSource.bellIcon,
+    icon: iconSource.backIcon,
   },
   {
     label: 'Delete account',
-    symbol: require('../../assets/trash-2-outline.png'),
-    icon: require('../../assets/arrow-back-outline.png'),
+    symbol: iconSource.trashOutline,
+    icon: iconSource.backIcon,
   },
 ];

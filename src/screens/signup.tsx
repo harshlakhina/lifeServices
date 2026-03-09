@@ -13,8 +13,9 @@ import { Button } from '../components/button';
 import { SignUpStyles } from './styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignUpSchema } from '../schema/SignUpSchema';
-import { SelectDropStyles } from '../screens/styles';
+// import { SelectDropStyles } from '../screens/styles';
 import { ThemeContext } from '../theme/themecontext';
+import { iconSource, imageSource } from '../constants';
 
 export default function SignUp({ navigation }: any) {
   const { theme } = useContext(ThemeContext);
@@ -53,7 +54,7 @@ export default function SignUp({ navigation }: any) {
         ]}
       >
         <Image
-          source={require('../assets/profile-logo.png')}
+          source={imageSource.profileLogo}
           style={SignUpStyles.profileLogoImage}
           resizeMode="contain"
         />
@@ -77,7 +78,10 @@ export default function SignUp({ navigation }: any) {
         enableOnAndroid={true}
         extraScrollHeight={50}
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ backgroundColor: theme.background }}
+        contentContainerStyle={{
+          backgroundColor: theme.background,
+          padding: 5,
+        }}
       >
         {!image ? (
           <TouchableOpacity
@@ -85,7 +89,7 @@ export default function SignUp({ navigation }: any) {
           >
             <View>
               <TouchableOpacity
-              onPress={pickImage}
+                onPress={pickImage}
                 style={{
                   backgroundColor: theme.input,
                   height: 120,
@@ -97,7 +101,7 @@ export default function SignUp({ navigation }: any) {
                 }}
               >
                 <Image
-                  source={require('../assets/imageLogo.png')}
+                  source={iconSource.profileWhiteColor}
                   style={{ height: 55, width: 55, tintColor: theme.bottomTab }}
                   resizeMode="contain"
                 />
@@ -165,14 +169,18 @@ export default function SignUp({ navigation }: any) {
           </View>
         )}
 
-        <View style={SignUpStyles.inputWrapper}>
-          <RHFTextInput placeholder="Name" name="name" />
+        <View style={[SignUpStyles.inputWrapper, , { padding: 20 }]}>
+          <RHFTextInput
+            placeholder="Name"
+            name="name"
+            style={{ width: '100%' }}
+          />
 
           <Select
             title="Choose your profession"
             options={professions}
             name="profession"
-            style={[SelectDropStyles.input, SelectDropStyles.extraInputItem]}
+            style={[{ width: '100%' }]}
             wrapperStyle={{ alignItems: 'center' }}
             selected={true}
           />
@@ -180,7 +188,7 @@ export default function SignUp({ navigation }: any) {
             title="Choose a country"
             options={countries}
             name="country"
-            style={[SelectDropStyles.input, SelectDropStyles.extraInputItem]}
+            style={[{ width: '100%' }]}
             wrapperStyle={{ alignItems: 'center' }}
             selected={true}
           />
@@ -189,20 +197,24 @@ export default function SignUp({ navigation }: any) {
             title="Choose your City"
             options={cities}
             name="city"
-            style={[SelectDropStyles.input, SelectDropStyles.extraInputItem]}
+            style={[{ width: '100%' }]}
             wrapperStyle={{ alignItems: 'center' }}
             selected={true}
           />
 
-          <RHFTextInput placeholder="Enter your Address" name="address" />
+          <RHFTextInput
+            placeholder="Enter your Address"
+            name="address"
+            style={{ width: '100%' }}
+          />
           <RHFTextInput
             placeholder="Your phone number"
             name="phoneNo"
             keyboardType="number-pad"
-            style={{ width: '80%' }}
+            style={{ width: '100%' }}
           />
 
-          <View style={{ width: '80%', gap: 20 }}>
+          <View style={{ width: '100%', gap: 20 }}>
             {!isPhone ? (
               <TouchableOpacity
                 onPress={() => setIsPhone(true)}
@@ -223,20 +235,39 @@ export default function SignUp({ navigation }: any) {
             )}
           </View>
 
-          <RHFTextInput placeholder="Email" name="email" />
+          <RHFTextInput
+            placeholder="Email"
+            name="email"
+            style={{ width: '100%' }}
+          />
+
           <RHFTextInput
             placeholder="Password"
             name="password"
             secureTextEntry
+            style={{ width: '100%' }}
           />
           <RHFTextInput
             placeholder=" Confirm Password"
             name="confirmPassword"
             secureTextEntry
+            style={{ width: '100%' }}
           />
-          <Button title="Sign Up" handleBtn={handleSubmit(onSubmit)} />
+          <Button
+            title="Sign Up"
+            handleBtn={handleSubmit(onSubmit)}
+            styleBtn={{ width: '100%' }}
+          />
 
-          <View style={{ flexDirection: 'row', gap: 8, marginBottom: 30 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 8,
+              marginBottom: 30,
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
             <Text style={{ fontSize: 18, color: theme.text }}>
               Do you already have an account?
             </Text>

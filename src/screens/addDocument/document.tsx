@@ -19,9 +19,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import RequestCameraPermission from '../../components/cameraPermission';
 import Header2 from '../../components/header2';
 import { ThemeContext } from '../../theme/themecontext';
+import { iconSource } from '../../constants';
 
 function AddDocument() {
-  const {theme}=useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const methods = useForm();
   const [image, setImage] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -114,11 +115,11 @@ function AddDocument() {
                 style={Styles.modalContainerPhotoPicker}
                 onPress={openPicker}
               >
-                <Image
+                {/* <Image
                   source={require('../../assets/imageLogo.png')}
                   resizeMode="contain"
                   style={{ height: 28, width: 28, tintColor: '#07C0E0' }}
-                />
+                /> */}
                 <Text
                   style={{ fontSize: 17, color: '#141414', fontWeight: 600 }}
                 >
@@ -141,10 +142,18 @@ function AddDocument() {
         </View>
       </Modal>
 
-     <Header2 title="Add Document"/>
+      <Header2 title="Add Document" />
 
-      <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1}}>
-        <View style={{ padding: 20, gap: 20, alignItems: 'center',backgroundColor:theme.background2 ,flex:1}}>
+      <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View
+          style={{
+            padding: 20,
+            gap: 20,
+            alignItems: 'center',
+            backgroundColor: theme.background2,
+            flex: 1,
+          }}
+        >
           <RHFTextInput
             name="email"
             style={{ width: '100%' }}
@@ -176,7 +185,7 @@ function AddDocument() {
               <TouchableOpacity
                 onPress={() => setOpenModal(true)}
                 style={{
-                  backgroundColor:theme.input,
+                  backgroundColor: theme.input,
                   height: 120,
                   width: 120,
                   borderRadius: 20,
@@ -185,8 +194,8 @@ function AddDocument() {
                 }}
               >
                 <Image
-                  source={require('../../assets/imageLogo.png')}
-                  style={{ height: 55, width: 55 ,tintColor:theme.bottomTab}}
+                  source={iconSource.addPhotoIcon}
+                  style={{ height: 55, width: 55, tintColor: theme.bottomTab }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -205,7 +214,11 @@ function AddDocument() {
                   alignItems: 'center',
                 }}
               >
-                <MaterialCommunityIcons name="plus" size={24} color={theme.background} />
+                <MaterialCommunityIcons
+                  name="plus"
+                  size={24}
+                  color={theme.background}
+                />
               </TouchableOpacity>
               <Text
                 style={{

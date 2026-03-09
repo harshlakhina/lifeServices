@@ -6,6 +6,7 @@ import { Image } from 'react-native';
 import FavouriteScreen from '../screens/favourite/Favourite';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
+import {iconSource} from "../constants/iconSrc"
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +27,7 @@ export const BottomNavigation = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <Image
-                source={require('../assets/homeIcon.png')}
+                source={iconSource.homeIcon}
                 resizeMode="contain"
                 style={{
                   height: 29,
@@ -46,7 +47,7 @@ export const BottomNavigation = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <Image
-                source={require('../assets/profileIcon.png')}
+                source={iconSource.profileBlackColor}
                 resizeMode="contain"
                 style={{
                   height: 29,
@@ -66,7 +67,7 @@ export const BottomNavigation = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <Image
-                source={require('../assets/inboxIcon.png')}
+                source={iconSource.inboxIcon}
                 resizeMode="contain"
                 style={{
                   height: 29,
@@ -86,7 +87,7 @@ export const BottomNavigation = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <Image
-                source={require('../assets/heartIcon.png')}
+                source={iconSource.heartIcon}
                 resizeMode="contain"
                 style={{
                   height: 29,

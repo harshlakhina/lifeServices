@@ -10,6 +10,7 @@ import {
 import { HomeMockData } from '../home-mock-data';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
+import { imageSource } from '../../constants';
 
 export const Inbox = () => {
     const {theme}=useContext(ThemeContext);
@@ -31,7 +32,7 @@ export const Inbox = () => {
                 />
                 <View style={Styles.checkImageContainer}>
                   <Image
-                    source={require('../../assets/Check.png')}
+                    source={imageSource.checkFill}
                     style={Styles.checkImage}
                     resizeMode="contain"
                   />

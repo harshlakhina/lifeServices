@@ -16,6 +16,7 @@ import { Button } from '../../components/button';
 import { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
+import { iconSource, imageSource } from '../../constants';
 
 function EditDocument() {
   const { theme } = useContext(ThemeContext);
@@ -75,7 +76,7 @@ function EditDocument() {
               </View>
 
               <Image
-                source={require('../../assets/Check.png')}
+                source={imageSource.checkFill}
                 style={{ height: 35, width: 35 }}
                 resizeMode="contain"
               />
@@ -118,7 +119,7 @@ function EditDocument() {
                     <View style={Styles.trashContainer}>
                       <TouchableOpacity onPress={() => setActiveTrash(null)}>
                         <Image
-                          source={require('../../assets/trash-2-outline.png')}
+                          source={iconSource.trashOutline}
                           resizeMode="cover"
                           style={{ height: 50, width: 50,tintColor:theme.text }}
                         />

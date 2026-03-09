@@ -7,6 +7,7 @@ import { Button } from '../components/button';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
 import { RHFTextInput } from '../hookform/rhfTextInput';
+import { imageSource } from '../constants';
 
 interface SignInFormData {
   email: string;
@@ -43,7 +44,7 @@ export default function SignIn({ navigation }: any) {
         keyboardShouldPersistTaps="handled"
       >
         <Image
-          source={require('../assets/profile-logo.png')}
+          source={imageSource.profileLogo}
           style={Styles.profileLogoImage}
           resizeMode="contain"
         />
@@ -54,8 +55,16 @@ export default function SignIn({ navigation }: any) {
         </Text>
 
         <View style={Styles.inputContainer}>
-          <RHFTextInput name="email" placeholder="E-Mail" />
-          <RHFTextInput placeholder="Password" name="password" />
+          <RHFTextInput
+            name="email"
+            placeholder="E-Mail"
+            style={{ width: '100%' }}
+          />
+          <RHFTextInput
+            placeholder="Password"
+            name="password"
+            style={{ width: '100%' }}
+          />
         </View>
 
         <View
@@ -70,7 +79,11 @@ export default function SignIn({ navigation }: any) {
           </TouchableOpacity>
         </View>
 
-        <Button title="Sign In " handleBtn={handleSubmit(onSubmit)} />
+        <Button
+          title="Sign In "
+          handleBtn={handleSubmit(onSubmit)}
+          styleBtn={{ width: '89%' }}
+        />
 
         <View style={{ alignItems: 'center', gap: 2, padding: 25 }}>
           <Text style={{ color: theme.text, fontSize: 22 }}>
@@ -103,6 +116,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 32,
     paddingBottom: 20,
+    padding: 25,
   },
   input: {
     backgroundColor: 'white',

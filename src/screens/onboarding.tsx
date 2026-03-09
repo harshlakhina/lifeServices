@@ -3,6 +3,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Button } from '../components/button';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
+import { imageSource } from '../constants';
 
 export default function OnboardingScreen({ navigation }: any) {
   const { theme, isDark } = useContext(ThemeContext);
@@ -18,8 +19,8 @@ export default function OnboardingScreen({ navigation }: any) {
       <Image
         source={
           !isDark
-            ? require('../assets/lifeservice.png')
-            : require('../assets/Object.png')
+            ? imageSource.imageDemo1
+            : imageSource.imageDemo1black
         }
         style={Styles.lifeServiceImage}
         resizeMode="cover"
@@ -27,7 +28,7 @@ export default function OnboardingScreen({ navigation }: any) {
 
       <View style={Styles.content}>
         <Image
-          source={require('../assets/profile-logo.png')}
+          source={imageSource.profileLogo}
           style={Styles.profileLogoImage}
           resizeMode="contain"
         />

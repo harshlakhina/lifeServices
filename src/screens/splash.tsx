@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { ThemeContext } from '../theme/themecontext';
+import { imageSource } from '../constants';
 
 export default function SplashScreen({ navigation }: any) {
   useEffect(() => {
@@ -15,8 +16,8 @@ export default function SplashScreen({ navigation }: any) {
       <Image
         source={
           !isDark
-            ? require('../assets/lifeservice.png')
-            : require('../assets/Object.png')
+            ?imageSource.imageDemo1
+            : imageSource.imageDemo1black
         }
         style={Styles.lifeServiceImage}
         resizeMode="cover"
@@ -24,7 +25,7 @@ export default function SplashScreen({ navigation }: any) {
 
       <View style={Styles.content}>
         <Image
-          source={require('../assets/profile-logo.png')}
+          source={imageSource.profileLogo}
           style={Styles.profileLogoImage}
           resizeMode="contain"
         />

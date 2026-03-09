@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,10 +11,14 @@ import MapView, { Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HomeMockData } from '../screens/home-mock-data';
+import { ThemeContext } from '../theme/themecontext';
+import { iconSource, imageSource } from '../constants';
 
 const MapScreen = () => {
+  const { theme } = useContext(ThemeContext);
   const navigation = useNavigation();
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [activeMapPage, setActiveMapPage] = useState<string>('');
   const [selectedHeartBestOffer, setSelectedHeartBestOffer] = useState<
     number[]
   >([]);
@@ -27,9 +31,24 @@ const MapScreen = () => {
 
   const cardwidth = 170;
   const ITEM_SIZE = cardwidth;
+
+  const skills = [
+    'Pediatrician',
+    'Stylist',
+    'Lawyer',
+    'Teacher',
+    'Engineer',
+    'Software Developer',
+    'Graphic Designer',
+    'Photographer',
+    'Accountant',
+    'Chef',
+  ];
+
   return (
     <View style={HomeStyles.container}>
       <MapView
+        provider="google"
         style={HomeStyles.map}
         initialRegion={{
           latitude: 28.6139,
@@ -69,7 +88,7 @@ const MapScreen = () => {
             return (
               <View style={HomeStyles.ListCard}>
                 <View>
-                  <View style={HomeStyles.cardImageContainer}> 
+                  <View style={HomeStyles.cardImageContainer}>
                     <Image
                       source={{ uri: item.photoUrl }}
                       style={[
@@ -82,7 +101,7 @@ const MapScreen = () => {
 
                   <View style={HomeStyles.CardTopContent}>
                     <Image
-                      source={require('../assets/Check.png')}
+                      source={imageSource.checkFill}
                       style={{ height: 30, width: 30 }}
                       resizeMode="contain"
                     />
@@ -138,7 +157,7 @@ const MapScreen = () => {
           alignItems: 'center',
           gap: 12,
           position: 'absolute',
-          backgroundColor: 'rgba(255,255,255,0.8)',
+          backgroundColor: theme.map,
           width: '100%',
         }}
       >
@@ -147,7 +166,7 @@ const MapScreen = () => {
           style={{ width: '30%' }}
         >
           <Image
-            source={require('../assets/arrow-back-outline.png')}
+            source={iconSource.backIcon}
             resizeMode="contain"
             style={{ height: 22, width: 40, tintColor: '#07C0E0' }}
           />
@@ -155,7 +174,7 @@ const MapScreen = () => {
         <Text
           style={{
             fontSize: 25,
-            color: '#141414',
+            color: theme.text,
             fontWeight: 700,
             width: '60%',
           }}
@@ -163,6 +182,44 @@ const MapScreen = () => {
         >
           Next to me
         </Text>
+      </View>
+
+      <View
+        style={{
+          top: 100,
+          position: 'absolute',
+          padding: 10,
+        }}
+      >
+        <FlatList
+          data={skills}
+          keyExtractor={item => item.toString()}
+          horizontal
+          contentContainerStyle={{ gap: 15 }}
+          renderItem={({ item }) => {
+            const activePage = item === activeMapPage;
+            return (
+              <TouchableOpacity
+                onPress={() => setActiveMapPage(item)}
+                style={{
+                  backgroundColor: activePage ? '#07C0E0' : theme.background,
+                  padding: 13,
+                  borderRadius: 30,
+                  paddingHorizontal: 35,
+                }}
+              >
+                <Text
+                  style={{
+                    color: activePage ? '#FFF' : theme.primaryText,
+                    fontSize: 17,
+                  }}
+                >
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
+        />
       </View>
     </View>
   );
@@ -178,7 +235,7 @@ const HomeStyles = StyleSheet.create({
     flex: 1,
   },
   ListCard: { paddingLeft: 17, justifyContent: 'center' },
-  cardImageContainer:{backgroundColor:"#FFF",borderRadius:30},
+  cardImageContainer: { backgroundColor: '#FFF', borderRadius: 30 },
   CardImage: {
     width: 180,
     height: 200,

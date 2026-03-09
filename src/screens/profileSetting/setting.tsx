@@ -20,6 +20,7 @@ import { Button } from '../../components/button';
 import { cities } from '../../constants/cities';
 import { countries } from '../../constants/countries';
 import { ThemeContext } from '../../theme/themecontext';
+import { iconSource, imageSource } from '../../constants';
 
 export const ProfileSetting = () => {
   const { theme } = useContext(ThemeContext);
@@ -152,7 +153,7 @@ export const ProfileSetting = () => {
                   }}
                 >
                   <Image
-                    source={require('../../assets/imageDemo.png')}
+                    source={imageSource.diploma}
                     resizeMode="cover"
                     style={{ height: 100, width: 100, borderRadius: 20 }}
                   />
@@ -169,7 +170,7 @@ export const ProfileSetting = () => {
                     }}
                   >
                     <Image
-                      source={require('../../assets/trash-2-outline.png')}
+                      source={iconSource.trashOutline}
                       style={{ height: 28, width: 18, tintColor: '#FFF' }}
                       resizeMode="contain"
                     />
@@ -241,7 +242,7 @@ export const ProfileSetting = () => {
             />
           ) : (
             <Image
-              source={require('../../assets/ProfilePhoto.png')}
+              source={imageSource.imageDemo3}
               resizeMode="contain"
               style={{ height: 400, width: 370, position: 'relative' }}
             />

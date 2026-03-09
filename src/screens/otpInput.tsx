@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import OtpInputs from 'react-native-otp-inputs';
+import { useContext } from 'react';
+import { ThemeContext } from '../theme/themecontext';
 
-export const OtpInput = ({ control }: any) => {
+export const OtpInput = () => {
+  const {control}=useFormContext();
+  const {theme}=useContext(ThemeContext); 
   return (
     <View style={Styles.container}>
       <Text style={Styles.text}>Enter the received code</Text>
@@ -11,7 +15,7 @@ export const OtpInput = ({ control }: any) => {
         name="otp"
         render={({ field: { onChange } }) => (
           <OtpInputs
-            inputStyles={Styles.otpInputs}
+            inputStyles={[Styles.otpInputs,{backgroundColor:theme.input,borderColor:theme.input,color:theme.text}]}
             keyboardType="phone-pad"
             autofillFromClipboard={false}
             handleChange={onChange}
@@ -37,11 +41,11 @@ const Styles = StyleSheet.create({
     width: 55,
     fontSize: 18,
     borderWidth: 1,
-    borderColor: '#FFFFFF',
+  
     borderRadius: 20,
     textAlign: 'center',
     marginHorizontal: 5,
-    backgroundColor: '#FFFFFF',
+   
     elevation: 10,
   },
 });

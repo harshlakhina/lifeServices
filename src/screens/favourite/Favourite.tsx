@@ -11,6 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { HomeMockData } from '../home-mock-data';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
+import { imageSource } from '../../constants';
 
 function FavouriteScreen() {
   const {theme}=useContext(ThemeContext);
@@ -30,7 +31,7 @@ function FavouriteScreen() {
                   />
                   <View style={Styles.menuItemCheckImageContainer}>
                     <Image
-                      source={require('../../assets/Check.png')}
+                      source={imageSource.checkFill}
                       style={Styles.menuItemCheckImage}
                       resizeMode="contain"
                     />

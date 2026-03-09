@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, Text, TouchableOpacity ,View} from 'react-native';
 import { ThemeContext } from '../theme/themecontext';
 import { useContext } from 'react';
+import { iconSource } from '../constants';
 
 type Header2Props = {
   title: string;
@@ -18,7 +19,7 @@ function Header2({ title }: Header2Props) {
         style={Styles.headerBackBtn}
       >
         <Image
-          source={require('../assets/arrow-back-outline.png')}
+          source={iconSource.backIcon}
           resizeMode="contain"
           style={Styles.headerBackBtnImage}
         />

@@ -1,24 +1,11 @@
-import { View, TextInput, StyleSheet } from 'react-native';
-import { Controller } from 'react-hook-form';
+import { View, StyleSheet } from 'react-native';
 
-export const Email = ({ control }: any) => {
+import { RHFTextInput } from '../hookform/rhfTextInput';
+
+export const Email = () => {
   return (
-    <View style={Styles.container}>
-      <Controller
-        control={control}
-        name="email"
-        render={({ field: { onChange, value } }) => (
-          <>
-            <TextInput
-              placeholder="Enter your E-mail"
-              placeholderTextColor="#66737F"
-              style={Styles.input}
-              value={value}
-              onChangeText={onChange}
-            />
-          </>
-        )}
-      />
+    <View style={[Styles.container]}>
+      <RHFTextInput name="email" placeholder="Enter your E-mail" />
     </View>
   );
 };

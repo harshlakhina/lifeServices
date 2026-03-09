@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 export const ForgotPassWordStyles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    paddingTop: 140,
+    paddingTop: 100,
     alignItems: 'center',
-    marginBottom: 45,
+    // marginBottom: 45,
   },
   logo: {
     height: 100,
@@ -82,7 +82,7 @@ export const SelectDropStyles = StyleSheet.create({
   },
   input: {
     elevation:3,
-    borderBottomWidth:1,
+    borderBottomWidth: 1,
 
     width: '80%',
     borderRadius: 30,
@@ -97,7 +97,6 @@ export const SelectDropStyles = StyleSheet.create({
     width: '80%',
     borderRadius: 20,
     zIndex: 1,
-    
   },
   extraDropDownItem: { width: '100%', borderRadius: 0 },
   selectedContainer: {
@@ -122,11 +121,11 @@ export const RHFTextInputStyles = StyleSheet.create({
     borderRadius: 30,
     height: 60,
     paddingHorizontal: 20,
-  
+
     borderWidth: 1,
   },
-  errorBorder:{
-    borderColor:"red"
+  errorBorder: {
+    borderColor: 'red',
   },
-  bordercolor:{borderColor:"#FFF"}
+  bordercolor: { borderColor: '#FFF' },
 });

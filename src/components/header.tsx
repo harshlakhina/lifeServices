@@ -3,25 +3,39 @@ import { Image, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { useNavigation, DrawerActions } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../theme/themecontext';
+import {imageSource} from '../constants/imageSrc';
+import { iconSource } from '../constants';
 
 export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
   const navigation = useNavigation();
-  const {theme}=useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext);
   return (
     <>
       {title === 'Home' && (
-        <View style={{ height: 140, width: '100%' ,backgroundColor:theme.background2}}>
+        <View
+          style={{
+            height: 140,
+            width: '100%',
+            backgroundColor: theme.background2,
+          }}
+        >
           <Image
-            source={require('../assets/BGImage.png')}
+            source={imageSource.bgImage}
             resizeMode="cover"
             style={{ width: '100%', height: isExpanded ? 320 : 180 }}
           />
         </View>
       )}
       {title === 'Profile' && (
-        <View style={{ height: 137, width: '100%',backgroundColor:theme.background2 }}>
+        <View
+          style={{
+            height: 137,
+            width: '100%',
+            backgroundColor: theme.background2,
+          }}
+        >
           <Image
-            source={require('../assets/BGImage.png')}
+            source={imageSource.bgImage}
             resizeMode="cover"
             style={{ width: '100%', height: isExpanded ? 450 : 180 }}
           />
@@ -29,36 +43,58 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
       )}
 
       {title === 'Application' && (
-        <View style={{ height: 150, width: '100%'}}>
+        <View style={{ height: 150, width: '100%' }}>
           <Image
-            source={require('../assets/BGImage.png')}
+           source={imageSource.bgImage}
             resizeMode="cover"
-            style={{ width: '100%', height: 300,backgroundColor:theme.background2 }}
+            style={{
+              width: '100%',
+              height: 300,
+              backgroundColor: theme.background2,
+            }}
           />
         </View>
       )}
       {title === 'Favourites' && (
-        <View style={{ height: 150, width: '100%',backgroundColor:theme.background2 }}>
+        <View
+          style={{
+            height: 150,
+            width: '100%',
+            backgroundColor: theme.background2,
+          }}
+        >
           <Image
-            source={require('../assets/BGImage.png')}
+            source={imageSource.bgImage}
             resizeMode="cover"
             style={{ width: '100%', height: 200 }}
           />
         </View>
       )}
       {title === 'Create an Application' && (
-        <View style={{ height: 140, width: '100%',backgroundColor:theme.background }}>
+        <View
+          style={{
+            height: 140,
+            width: '100%',
+            backgroundColor: theme.background,
+          }}
+        >
           <Image
-            source={require('../assets/BGImage.png')}
+            source={imageSource.bgImage}
             resizeMode="cover"
             style={{ width: '100%', height: 180 }}
           />
         </View>
       )}
       {title === 'Edit an Application' && (
-        <View style={{ height: 140, width: '100%',backgroundColor:theme.background }}>
+        <View
+          style={{
+            height: 140,
+            width: '100%',
+            backgroundColor: theme.background,
+          }}
+        >
           <Image
-            source={require('../assets/BGImage.png')}
+            source={imageSource.bgImage}
             resizeMode="cover"
             style={{ width: '100%', height: 180 }}
           />
@@ -80,7 +116,7 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
         {title === 'Home' && (
           <TouchableOpacity onPress={handleFunction}>
             <Image
-              source={require('../assets/MapIcon.png')}
+              source={iconSource.mapIcon}
               resizeMode="contain"
               style={{ height: 35, width: 30 }}
             />
@@ -93,7 +129,7 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
             onPress={handleFunction}
           >
             <Image
-              source={require('../assets/EditIcon.png')}
+              source={iconSource.editIcon}
               style={{ height: 29, width: 29, tintColor: '#FFF' }}
             />
             <Text style={{ color: '#FFF', fontSize: 14 }}>Edit</Text>
@@ -106,7 +142,7 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
             // style={{ width: '30%' }}
           >
             <Image
-              source={require('../assets/arrow-back-outline.png')}
+              source={iconSource.backIcon}
               resizeMode="contain"
               style={{ height: 20, width: 30, tintColor: '#FFF' }}
             />
@@ -116,7 +152,7 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
         {title === 'Create an Application' && (
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-              source={require('../assets/arrow-back-outline.png')}
+              source={iconSource.backIcon}
               resizeMode="contain"
               style={{ height: 20, width: 30, tintColor: '#FFF' }}
             />
@@ -126,7 +162,7 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
         {title === 'Edit an Application' && (
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-              source={require('../assets/arrow-back-outline.png')}
+                 source={iconSource.backIcon}
               resizeMode="contain"
               style={{ height: 20, width: 30, tintColor: '#FFF' }}
             />
@@ -135,7 +171,7 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
 
         {title === 'Application' && (
           <Image
-            source={require('../assets/imageDemo.png')}
+            source={imageSource.imageDemo2}
             resizeMode="cover"
             style={{ height: 50, width: 50, borderRadius: 10 }}
           />
@@ -143,11 +179,13 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
 
         <Text style={Styles.headerText}>{title}</Text>
 
-        <TouchableOpacity
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-        >
-          <MaterialCommunityIcons name="menu" size={35} color="#FFF" />
-        </TouchableOpacity>
+        {
+          <TouchableOpacity
+            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+          >
+            <MaterialCommunityIcons name="menu" size={35} color="#FFF" />
+          </TouchableOpacity>
+        }
       </View>
     </>
   );

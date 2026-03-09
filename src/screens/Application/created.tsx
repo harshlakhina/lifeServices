@@ -15,6 +15,7 @@ import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { FormProvider, useForm } from 'react-hook-form';
 import RatingScreen from '../../components/ratingScreen';
 import { ThemeContext } from '../../theme/themecontext';
+import { imageSource } from '../../constants';
 
 export const Created = () => {
   const [dialog, setDialog] = useState<boolean>(false);
@@ -104,7 +105,7 @@ export const Created = () => {
                     />
                     <View style={Styles.checkImageContainer}>
                       <Image
-                        source={require('../../assets/Check.png')}
+                        source={imageSource.checkFill}
                         style={Styles.checkImage}
                         resizeMode="contain"
                       />
@@ -128,7 +129,7 @@ export const Created = () => {
                     {item.status === 'pending' && (
                       <View style={Styles.pendingImageContainer}>
                         <Image
-                          source={require('../../assets/pendingStatus.png')}
+                          source={imageSource.pending}
                           resizeMode="contain"
                           style={Styles.pedningAndFullFillContent}
                         />
@@ -141,7 +142,7 @@ export const Created = () => {
                       >
                         <View style={Styles.fullFillImageContainer}>
                           <Image
-                            source={require('../../assets/fullfillStatus.png')}
+                            source={imageSource.check}
                             resizeMode="contain"
                             style={Styles.pedningAndFullFillContent}
                           />
