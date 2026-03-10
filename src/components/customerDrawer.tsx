@@ -3,21 +3,14 @@ import { useContext } from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../theme/themecontext';
-import { iconSource, imageSource } from '../constants';
+import { iconSource, imageSource, string } from '../constants';
 
 function CustomDrawerContent(props: any) {
-  const currentRoute = props.state.routeNames[props.state.index];
   const { theme } = useContext(ThemeContext);
   const drawerItems = [
     {
-      name: 'Home-Main',
-      label: 'Home',
-      icon: iconSource.backIcon,
-      symbol: iconSource.homeIcon,
-    },
-    {
-      name: 'Setting',
-      label: 'Setting',
+      name: 'Settings',
+      label: 'Settings',
       icon: iconSource.backIcon,
       symbol: iconSource.settings,
     },
@@ -81,46 +74,44 @@ function CustomDrawerContent(props: any) {
       </View>
 
       <View style={{ marginTop: -60, marginLeft: -15 }}>
-        {drawerItems
-          .filter(item => item.name !== currentRoute)
-          .map(item => (
-            <TouchableOpacity
-              key={item.name}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingVertical: 15,
-                paddingHorizontal: 20,
-              }}
-              onPress={() => props.navigation.navigate(item.name)}
+        {drawerItems.map(item => (
+          <TouchableOpacity
+            key={item.name}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingVertical: 15,
+              paddingHorizontal: 20,
+            }}
+            onPress={() => props.navigation.navigate(item.name)}
+          >
+            <View
+              style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}
             >
-              <View
-                style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}
-              >
-                <Image
-                  source={item.symbol}
-                  resizeMode="contain"
-                  style={{ height: 25, width: 25, tintColor: '#07C0E0' }}
-                />
-                <Text style={{ fontSize: 20, color: theme.text }}>
-                  {item.label}
-                </Text>
-              </View>
-              <View>
-                <Image
-                  source={item.icon}
-                  resizeMode="contain"
-                  style={{
-                    height: 20,
-                    width: 20,
-                    transform: [{ rotate: '180deg' }],
-                    tintColor: '#8F9CA9',
-                  }}
-                />
-              </View>
-            </TouchableOpacity>
-          ))}
+              <Image
+                source={item.symbol}
+                resizeMode="contain"
+                style={{ height: 25, width: 25, tintColor: '#07C0E0' }}
+              />
+              <Text style={{ fontSize: 20, color: theme.text }}>
+                {item.label}
+              </Text>
+            </View>
+            <View>
+              <Image
+                source={item.icon}
+                resizeMode="contain"
+                style={{
+                  height: 20,
+                  width: 20,
+                  transform: [{ rotate: '180deg' }],
+                  tintColor: '#8F9CA9',
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
 
       <View style={{ alignItems: 'flex-end' }}>
@@ -130,7 +121,7 @@ function CustomDrawerContent(props: any) {
             padding: 16,
             borderTopLeftRadius: 50,
             borderBottomLeftRadius: 50,
-            marginTop: 280,
+            marginTop: 350,
             width: '90%',
           }}
         >
@@ -143,7 +134,7 @@ function CustomDrawerContent(props: any) {
               resizeMode="cover"
               style={{ height: 19, width: 24, tintColor: '#FE5050' }}
             />
-            <Text style={{ fontSize: 20, color: '#FE5050' }}>End session</Text>
+            <Text style={{ fontSize: 20, color: '#FE5050' }}>{string.button.endSession}</Text>
           </TouchableOpacity>
         </View>
       </View>

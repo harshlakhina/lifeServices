@@ -3,7 +3,7 @@ import { Image, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { useNavigation, DrawerActions } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../theme/themecontext';
-import {imageSource} from '../constants/imageSrc';
+import { imageSource } from '../constants/imageSrc';
 import { iconSource } from '../constants';
 
 export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
@@ -42,10 +42,10 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
         </View>
       )}
 
-      {title === 'Application' && (
+      {title === 'Applications' && (
         <View style={{ height: 150, width: '100%' }}>
           <Image
-           source={imageSource.bgImage}
+            source={imageSource.bgImage}
             resizeMode="cover"
             style={{
               width: '100%',
@@ -162,14 +162,14 @@ export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
         {title === 'Edit an Application' && (
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-                 source={iconSource.backIcon}
+              source={iconSource.backIcon}
               resizeMode="contain"
               style={{ height: 20, width: 30, tintColor: '#FFF' }}
             />
           </TouchableOpacity>
         )}
 
-        {title === 'Application' && (
+        {title === 'Applications' && (
           <Image
             source={imageSource.imageDemo2}
             resizeMode="cover"

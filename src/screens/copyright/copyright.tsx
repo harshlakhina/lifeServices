@@ -2,12 +2,13 @@ import { Text, View, ScrollView } from 'react-native';
 import Header2 from '../../components/header2';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
+import { string } from '../../constants';
 
 function CopyRight() {
   const {theme}=useContext(ThemeContext)
   return (
     <>
-      <Header2 title="Copy Right" />
+      <Header2 title={string.copyRight.copyRight} />
 
       <ScrollView contentContainerStyle={{  backgroundColor: theme.background2,}}>
         <View

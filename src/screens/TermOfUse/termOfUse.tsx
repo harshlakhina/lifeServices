@@ -2,12 +2,13 @@ import { Text, View, ScrollView } from 'react-native';
 import Header2 from '../../components/header2';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
+import { string } from '../../constants';
 
 function TermOfUse() {
   const { theme } = useContext(ThemeContext);
   return (
     <>
-      <Header2 title="Term Of Use" />
+      <Header2 title={string.termOfUse.termOfUse} />
 
       <ScrollView
         contentContainerStyle={{ backgroundColor: theme.background2 }}

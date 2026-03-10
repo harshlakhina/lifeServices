@@ -15,10 +15,10 @@ import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { useContext, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
-import { imageSource } from '../../constants';
+import { imageSource, string } from '../../constants';
 
 export const ProfileBottom = () => {
-  const {theme}=useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext);
   const navigation = useNavigation();
   const methods = useForm();
   const hideProfilePhto = useRef(true);
@@ -26,7 +26,7 @@ export const ProfileBottom = () => {
   return (
     <FormProvider {...methods}>
       <Header
-        title="Profile"
+        title={string.profile.profile}
         isExpanded={isHideProfile}
         handleFunction={() => navigation.navigate('ProfileSetting' as never)}
       />
@@ -35,7 +35,7 @@ export const ProfileBottom = () => {
         contentContainerStyle={{
           paddingTop: isHideProfile ? 420 : 180,
           padding: 20,
-          backgroundColor:theme.background2
+          backgroundColor: theme.background2,
         }}
         enableOnAndroid={true}
         keyboardShouldPersistTaps="always"
@@ -52,9 +52,16 @@ export const ProfileBottom = () => {
         }}
       >
         <View style={[Styles.aboutMeContainer]}>
-          <Text style={[Styles.aboutMeTitle,{color:theme.text}]}>About me</Text>
+          <Text style={[Styles.aboutMeTitle, { color: theme.text }]}>
+            {string.profile.aboutMe}
+          </Text>
 
-          <Text style={[Styles.aboutMeDecription,{ backgroundColor:theme.card,color:theme.text}]}>
+          <Text
+            style={[
+              Styles.aboutMeDecription,
+              { backgroundColor: theme.card, color: theme.text },
+            ]}
+          >
             Hello, I am a lawyer, I do this more than 3 years, I will help with
             the task of any complexity, please contact.
           </Text>
@@ -69,11 +76,15 @@ export const ProfileBottom = () => {
               marginTop: 17,
             }}
           >
-            <Text style={[Styles.diplomaText,{color:theme.text}]}>Documents</Text>
+            <Text style={[Styles.diplomaText, { color: theme.text }]}>
+              {string.profile.documents}
+            </Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('ViewDocument' as never)}
             >
-              <Text style={{ color: '#07C0E0', fontSize: 20 }}>View All</Text>
+              <Text style={{ color: '#07C0E0', fontSize: 20 }}>
+                {string.profile.viewAll}
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -84,7 +95,12 @@ export const ProfileBottom = () => {
             contentContainerStyle={{ gap: 15 }}
             renderItem={({ item }) => {
               return (
-                <View style={[Styles.documentCardContainer,{ backgroundColor:theme.card,}]}>
+                <View
+                  style={[
+                    Styles.documentCardContainer,
+                    { backgroundColor: theme.card },
+                  ]}
+                >
                   <Image
                     source={imageSource.diploma}
                     resizeMode="cover"
@@ -99,7 +115,13 @@ export const ProfileBottom = () => {
                   </View>
 
                   <View style={{ width: 170, gap: 5 }}>
-                    <Text style={{ fontWeight: 900, fontSize: 16,color:theme.text }}>
+                    <Text
+                      style={{
+                        fontWeight: 900,
+                        fontSize: 16,
+                        color: theme.text,
+                      }}
+                    >
                       {item.diplomaName}
                     </Text>
 
@@ -117,7 +139,9 @@ export const ProfileBottom = () => {
         </View>
 
         <View style={Styles.sphereContainer}>
-          <Text style={[Styles.sphereTitle,{color:theme.text}]}>Spheres of activity</Text>
+          <Text style={[Styles.sphereTitle, { color: theme.text }]}>
+            {string.profile.spheresOfActivity}
+          </Text>
 
           <View style={Styles.sphereBodyContainer}>
             <View style={Styles.sphereBtnContainer}>
@@ -135,21 +159,28 @@ export const ProfileBottom = () => {
         </View>
 
         <View style={Styles.phoneNoContainer}>
-          <Text style={[Styles.phoneNoText,{color:theme.text}]}>Phone number</Text>
+          <Text style={[Styles.phoneNoText, { color: theme.text }]}>
+            {string.profile.phoneNumber}
+          </Text>
           <RHFTextInput
             name="phoneNo"
             style={Styles.phonoNoInput}
-            placeholder="+ 7 (495) 510 55 55"
+            placeholder={string.profile.phoneNoPlaceholder}
             keyboardType="phone-pad"
           />
         </View>
 
         <View>
-          <Text style={[Styles.myReviewText,{color:theme.text}]}>My reviews</Text>
+          <Text style={[Styles.myReviewText, { color: theme.text }]}>
+            {string.profile.myReviews}
+          </Text>
           {DiplomaMockData.map(item => (
             <View
               key={item.id}
-              style={[Styles.myReviewCardContainer,{backgroundColor:theme.card}]}
+              style={[
+                Styles.myReviewCardContainer,
+                { backgroundColor: theme.card },
+              ]}
             >
               <Image
                 source={imageSource.imageDemo2}
@@ -158,7 +189,9 @@ export const ProfileBottom = () => {
               />
 
               <View style={Styles.myReviewContentContainer}>
-                <Text style={[Styles.myReviewCardNameText,{color:theme.text}]}>
+                <Text
+                  style={[Styles.myReviewCardNameText, { color: theme.text }]}
+                >
                   {item.diplomaName}
                 </Text>
 
@@ -251,7 +284,6 @@ const Styles = StyleSheet.create({
     fontSize: 18,
   },
   aboutMeDecription: {
-   
     padding: 20,
     borderRadius: 22,
     lineHeight: 23,
@@ -297,17 +329,17 @@ const Styles = StyleSheet.create({
   phoneNoText: { fontSize: 20, fontWeight: 700 },
   phonoNoInput: { width: '100%', elevation: 2 },
   myReviewText: { fontSize: 20, fontWeight: 700, marginVertical: 17 },
-  myReviewCardContainer:{
-                flexDirection: 'row',
-                width: '100%',
-                backgroundColor: '#FFF',
-                padding: 15,
-                borderRadius: 20,
-                gap: 10,
-                marginBottom: 15,
-              },
-              myReviewCardImage:{ height: 100, width: 100, borderRadius: 20 },
-              myReviewContentContainer:{ width: '65%', gap: 5 },
-              myReviewCardNameText:{ fontWeight: 700, fontSize: 16 },
-              myReviewCardNameDescription:{ color: '#9999AA', fontSize: 13 }
+  myReviewCardContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    backgroundColor: '#FFF',
+    padding: 15,
+    borderRadius: 20,
+    gap: 10,
+    marginBottom: 15,
+  },
+  myReviewCardImage: { height: 100, width: 100, borderRadius: 20 },
+  myReviewContentContainer: { width: '65%', gap: 5 },
+  myReviewCardNameText: { fontWeight: 700, fontSize: 16 },
+  myReviewCardNameDescription: { color: '#9999AA', fontSize: 13 },
 });

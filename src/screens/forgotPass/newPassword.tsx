@@ -1,16 +1,17 @@
 import { Text, View, StyleSheet } from 'react-native';
-import { RHFTextInput } from '../hookform/rhfTextInput';
+import { RHFTextInput } from '../../hookform/rhfTextInput';
+import { string } from '../../constants';
 
 export const NewPassWord = () => {
   return (
     <View style={Styles.container}>
-      <Text style={Styles.text}>Enter a new password</Text>
+      <Text style={Styles.text}>{string.forgotPassword.enterANewPass}</Text>
 
       <View style={Styles.inputContainer}>
-        <RHFTextInput name="newPassword" placeholder="New Password"  secureTextEntry />
+        <RHFTextInput name="newPassword" placeholder={string.forgotPassword.newPassword}  secureTextEntry />
         <RHFTextInput
           name="confirmNewPassword"
-          placeholder="Confirm New Password"
+          placeholder={string.forgotPassword.confirmPassword}
           secureTextEntry
         />
       </View>

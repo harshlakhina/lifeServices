@@ -3,7 +3,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Button } from '../components/button';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
-import { imageSource } from '../constants';
+import { imageSource, string } from '../constants';
 
 export default function OnboardingScreen({ navigation }: any) {
   const { theme, isDark } = useContext(ThemeContext);
@@ -17,11 +17,7 @@ export default function OnboardingScreen({ navigation }: any) {
       extraScrollHeight={50}
     >
       <Image
-        source={
-          !isDark
-            ? imageSource.imageDemo1
-            : imageSource.imageDemo1black
-        }
+        source={!isDark ? imageSource.imageDemo1 : imageSource.imageDemo1black}
         style={Styles.lifeServiceImage}
         resizeMode="cover"
       />
@@ -33,9 +29,9 @@ export default function OnboardingScreen({ navigation }: any) {
           resizeMode="contain"
         />
 
-        <Text style={{ fontSize: 37 }}>
-          <Text style={{ color: theme.text, fontWeight: 700 }}>Life</Text>
-          <Text style={{ color: theme.text }}>Services</Text>
+        <Text style={{ fontSize: 37, color: theme.text }}>
+          <Text style={{ fontWeight: 'bold' }}>{string.auth.life}</Text>{' '}
+          {string.auth.services}
         </Text>
 
         <Text
@@ -46,16 +42,16 @@ export default function OnboardingScreen({ navigation }: any) {
             fontSize: 18,
           }}
         >
-          Hello, we will help you find your specialist!
+          {string.auth.helloWeWillHelp}
         </Text>
 
         <View style={Styles.btnContainer}>
           <Button
-            title="Sign In "
+            title={string.button.signIn}
             handleBtn={() => navigation.navigate('SignIn')}
           />
           <Button
-            title="Sign Up "
+            title={string.button.signUp}
             handleBtn={() => navigation.navigate('SignUp')}
             styleText={{ color: '#3EAEFF', fontWeight: 500, fontSize: 18 }}
             styleBtn={{ backgroundColor: theme.background }}

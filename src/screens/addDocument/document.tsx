@@ -19,7 +19,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import RequestCameraPermission from '../../components/cameraPermission';
 import Header2 from '../../components/header2';
 import { ThemeContext } from '../../theme/themecontext';
-import { iconSource } from '../../constants';
+import { iconSource, string } from '../../constants';
 
 function AddDocument() {
   const { theme } = useContext(ThemeContext);
@@ -69,7 +69,7 @@ function AddDocument() {
         <View
           style={{
             flex: 1,
-            backgroundColor: 'rgba(0,0,0,0.4)',
+            backgroundColor:theme.modalBg
           }}
         >
           <View
@@ -94,7 +94,7 @@ function AddDocument() {
                 <Text
                   style={{ fontSize: 17, color: '#141414', fontWeight: 600 }}
                 >
-                  Open Camera
+                {string.addDocument.openCamera}
                 </Text>
               </TouchableOpacity>
 
@@ -107,7 +107,7 @@ function AddDocument() {
                 <Text
                   style={{ fontSize: 17, color: '#141414', fontWeight: 600 }}
                 >
-                  Use Last Photo Taken
+                {string.addDocument.useLastPhoto}
                 </Text>
               </TouchableOpacity>
               <Divider />
@@ -123,7 +123,7 @@ function AddDocument() {
                 <Text
                   style={{ fontSize: 17, color: '#141414', fontWeight: 600 }}
                 >
-                  Choose From Library
+                {string.addDocument.chooseFromLibrary}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -135,14 +135,14 @@ function AddDocument() {
               <Text
                 style={{ textAlign: 'center', fontSize: 20, color: '#07C0E0' }}
               >
-                Cancel
+                {string.button.cancel}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
-      <Header2 title="Add Document" />
+      <Header2 title={string.addDocument.addDocument} />
 
       <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View
@@ -155,13 +155,13 @@ function AddDocument() {
           }}
         >
           <RHFTextInput
-            name="email"
+            name="name"
             style={{ width: '100%' }}
-            placeholder="Name"
+            placeholder={string.addDocument.name}
           />
 
           <Select
-            title="Document Type"
+            title={string.addDocument.documentType}
             options={countries}
             name="documentType"
             style={[Styles.input, Styles.extraInputItem, { width: '100%' }]}
@@ -170,7 +170,7 @@ function AddDocument() {
           />
 
           <RHFTextInput
-            name="Description"
+            name={string.addDocument.description}
             style={{ width: '100%' }}
             placeholder="Description"
             multiline
@@ -228,7 +228,7 @@ function AddDocument() {
                   fontSize: 20,
                 }}
               >
-                Attach photo
+             {string.addDocument.attachPhoto}
               </Text>
             </View>
           ) : (
@@ -252,12 +252,12 @@ function AddDocument() {
               }}
             >
               <TouchableOpacity onPress={openPicker}>
-                <Text style={{ color: '#FFF' }}>Change Photo</Text>
+                <Text style={{ color: '#FFF' }}>{string.addDocument.changePhoto}</Text>
               </TouchableOpacity>
             </View>
           )}
 
-          <Button title="Submit for review" styleBtn={{ width: '97%' }} />
+          <Button title={string.button.submitForReview} styleBtn={{ width: '97%' }} />
         </View>
       </KeyboardAwareScrollView>
     </FormProvider>

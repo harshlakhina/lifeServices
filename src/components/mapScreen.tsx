@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { HomeMockData } from '../screens/home-mock-data';
 import { ThemeContext } from '../theme/themecontext';
-import { iconSource, imageSource } from '../constants';
+import { iconSource, imageSource, string } from '../constants';
 
 const MapScreen = () => {
   const { theme } = useContext(ThemeContext);
@@ -180,7 +180,7 @@ const MapScreen = () => {
           }}
           numberOfLines={1}
         >
-          Next to me
+       {string.mapscreen.nextToMe}
         </Text>
       </View>
 

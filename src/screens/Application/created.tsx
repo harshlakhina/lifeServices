@@ -15,7 +15,7 @@ import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { FormProvider, useForm } from 'react-hook-form';
 import RatingScreen from '../../components/ratingScreen';
 import { ThemeContext } from '../../theme/themecontext';
-import { imageSource } from '../../constants';
+import { imageSource, string } from '../../constants';
 
 export const Created = () => {
   const [dialog, setDialog] = useState<boolean>(false);
@@ -38,18 +38,18 @@ export const Created = () => {
             style={[Styles.modalCard, { backgroundColor: theme.background }]}
           >
             <Text style={[Styles.modalLeaveReviewText, { color: theme.text }]}>
-              Leave a review
+          {string.created.leaveAReview}
             </Text>
 
             <RHFTextInput
-              placeholder="Your Review"
+              placeholder={string.created.yourReview}
               name="review"
               style={[Styles.modalInput]}
               multiline
             />
 
             <View style={Styles.RatingContainer}>
-              <Text style={[Styles.modalYourMarkText, { color: theme.text }]}>Your Mark</Text>
+              <Text style={[Styles.modalYourMarkText, { color: theme.text }]}>{string.created.yourMark}</Text>
               <RatingScreen rating={rating} setRating={setRating} />
             </View>
 
@@ -61,7 +61,7 @@ export const Created = () => {
                 }}
                 style={[Styles.modalBtn, Styles.modalSendBtnBg]}
               >
-                <Text style={Styles.modalSendBtnText}>Send</Text>
+                <Text style={Styles.modalSendBtnText}>{string.button.send}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -71,7 +71,7 @@ export const Created = () => {
                 }}
                 style={[Styles.modalBtn, { backgroundColor: theme.card}]}
               >
-                <Text style={[Styles.modalCancelText,{color:theme.text}]}>Cancel</Text>
+                <Text style={[Styles.modalCancelText,{color:theme.text}]}>{string.button.cancel}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -165,7 +165,7 @@ export const Created = () => {
                       ]}
                     >
                       <Text style={[Styles.RejectText, { color: theme.text }]}>
-                        Reject application
+                       {string.button.rejectApplication}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -180,10 +180,10 @@ export const Created = () => {
                           { color: theme.text },
                         ]}
                       >
-                        Application completed
+                      {string.created.applicationCompleted}
                       </Text>
                       <Button
-                        title="Leave a review"
+                        title={string.button.leaveAReview}
                         styleBtn={Styles.SecondCardLeaveAReviewBtn}
                         handleBtn={() => setDialog(true)}
                       />

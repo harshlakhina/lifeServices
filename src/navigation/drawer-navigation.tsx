@@ -17,7 +17,7 @@ function DrawerNavigation() {
       drawerContent={props => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home-Main" component={BottomNavigation} />
-      <Drawer.Screen name="Setting" component={Setting} />
+      <Drawer.Screen name="Settings" component={Setting} />
       <Drawer.Screen name="Contact developers" component={ContactDevelopers} />
       <Drawer.Screen name="Notifications" component={Notification} />
     </Drawer.Navigator>

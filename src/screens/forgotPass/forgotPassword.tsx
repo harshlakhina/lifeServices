@@ -1,17 +1,17 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Image, Text, View } from 'react-native';
 import { NewPassWord } from './newPassword';
-import { Email } from './email';
-import { OtpInput } from './otpInput';
+import { Email } from '../email';
 import { useContext, useState } from 'react';
-import { Button } from '../components/button';
-import { ForgotPassWordStyles } from './styles';
+import { Button } from '../../components/button';
+import { ForgotPassWordStyles } from '../styles';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ForgotPasswordSchema } from '../schema/forgotPasswordSchema';
+import { ForgotPasswordSchema } from '../../schema/forgotPasswordSchema';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ThemeContext } from '../theme/themecontext';
-import Header2 from '../components/header2';
-import { imageSource } from '../constants';
+import { ThemeContext } from '../../theme/themecontext';
+import Header2 from '../../components/header2';
+import { imageSource, string } from '../../constants';
+import { OtpInput } from './otpInput';
 
 export const ForgotPassword = ({ navigation }: any) => {
   const { theme } = useContext(ThemeContext);
@@ -54,10 +54,10 @@ export const ForgotPassword = ({ navigation }: any) => {
         <View>
           <Text style={[ForgotPassWordStyles.logotext, { color: theme.text }]}>
             {' '}
-            Restore
+            {string.forgotPassword.restore}
           </Text>
           <Text style={[ForgotPassWordStyles.logotext, { color: theme.text }]}>
-            password
+            {string.forgotPassword.password}
           </Text>
         </View>
 
@@ -67,7 +67,7 @@ export const ForgotPassword = ({ navigation }: any) => {
 
         <Button
           handleBtn={step === 3 ? handleSubmit(onSubmit) : handleStep}
-          title={step === 3 ? 'Save' : 'Send'}
+          title={step === 3 ? string.button.save : string.button.send}
         />
       </KeyboardAwareScrollView>
     </FormProvider>
