@@ -7,7 +7,7 @@ import { Button } from '../components/button';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
 import { RHFTextInput } from '../hookform/rhfTextInput';
-import { imageSource } from '../constants';
+import { imageSource, string } from '../constants';
 
 interface SignInFormData {
   email: string;
@@ -49,19 +49,19 @@ export default function SignIn({ navigation }: any) {
           resizeMode="contain"
         />
 
-        <Text style={{ fontSize: 40 }}>
-          <Text style={{ color: theme.text, fontWeight: 700 }}>Life</Text>
-          <Text style={{ color: theme.text }}>Services</Text>
+        <Text style={{ fontSize: 37, color: theme.text }}>
+          <Text style={{ fontWeight: 'bold' }}>{string.auth.life}</Text>{' '}
+          {string.auth.services}
         </Text>
 
         <View style={Styles.inputContainer}>
           <RHFTextInput
             name="email"
-            placeholder="E-Mail"
+            placeholder={string.signIn.email}
             style={{ width: '100%' }}
           />
           <RHFTextInput
-            placeholder="Password"
+            placeholder={string.signIn.password}
             name="password"
             style={{ width: '100%' }}
           />
@@ -74,25 +74,25 @@ export default function SignIn({ navigation }: any) {
             onPress={() => navigation.navigate('ForgotPassWord')}
           >
             <Text style={{ color: '#3EAEFF', fontSize: 18 }}>
-              Forgot Password?
+              {string.signIn.forgotPassword}
             </Text>
           </TouchableOpacity>
         </View>
 
         <Button
-          title="Sign In "
+          title={string.button.signIn}
           handleBtn={handleSubmit(onSubmit)}
           styleBtn={{ width: '89%' }}
         />
 
         <View style={{ alignItems: 'center', gap: 2, padding: 25 }}>
           <Text style={{ color: theme.text, fontSize: 22 }}>
-            Don't have an account yet?
+            {string.signIn.dontHaveAnAccountYet}
           </Text>
 
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={{ color: '#3EAEFF', fontSize: 21 }}>
-              Create right now
+              {string.signIn.createRightNow}
             </Text>
           </TouchableOpacity>
         </View>

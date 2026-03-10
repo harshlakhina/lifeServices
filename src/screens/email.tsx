@@ -1,11 +1,12 @@
 import { View, StyleSheet } from 'react-native';
 
 import { RHFTextInput } from '../hookform/rhfTextInput';
+import { string } from '../constants';
 
 export const Email = () => {
   return (
     <View style={[Styles.container]}>
-      <RHFTextInput name="email" placeholder="Enter your E-mail" />
+      <RHFTextInput name="email" placeholder={string.forgotPassword.enterYourEMail} />
     </View>
   );
 };

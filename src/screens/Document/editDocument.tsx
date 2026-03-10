@@ -16,7 +16,7 @@ import { Button } from '../../components/button';
 import { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
-import { iconSource, imageSource } from '../../constants';
+import { iconSource, imageSource, string } from '../../constants';
 
 function EditDocument() {
   const { theme } = useContext(ThemeContext);
@@ -38,13 +38,16 @@ function EditDocument() {
 
   return (
     <FormProvider {...methods}>
-      <Header title="Edit an Application" />
+      <Header title={string.editAnApplication.editAnApplication} />
 
       <KeyboardAwareScrollView
         enableOnAndroid={true}
         extraScrollHeight={50}
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flexGrow: 1 ,  backgroundColor: theme.background,}}
+        contentContainerStyle={{
+          flexGrow: 1,
+          backgroundColor: theme.background,
+        }}
       >
         <View
           style={{
@@ -96,7 +99,7 @@ function EditDocument() {
             multiline
           />
 
-          <View style={{height:130}}>
+          <View style={{ height: 130 }}>
             <FlatList
               data={photoUrls}
               showsHorizontalScrollIndicator={false}
@@ -116,16 +119,20 @@ function EditDocument() {
                     />
 
                     {active && (
-                    <View style={Styles.trashContainer}>
-                      <TouchableOpacity onPress={() => setActiveTrash(null)}>
-                        <Image
-                          source={iconSource.trashOutline}
-                          resizeMode="cover"
-                          style={{ height: 50, width: 50,tintColor:theme.text }}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
+                      <View style={Styles.trashContainer}>
+                        <TouchableOpacity onPress={() => setActiveTrash(null)}>
+                          <Image
+                            source={iconSource.trashOutline}
+                            resizeMode="cover"
+                            style={{
+                              height: 50,
+                              width: 50,
+                              tintColor: theme.text,
+                            }}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    )}
                   </TouchableOpacity>
                 );
               }}
@@ -135,11 +142,13 @@ function EditDocument() {
           <TouchableOpacity
             onPress={() => navigation.navigate('ViewAllPhoto' as never)}
           >
-            <Text style={{ fontSize: 20, color: '#07C0E0' }}>View photo</Text>
+            <Text style={{ fontSize: 20, color: '#07C0E0' }}>
+              {string.editAnApplication.viewPhoto}
+            </Text>
           </TouchableOpacity>
 
           <Button
-            title="Confirm an application"
+            title={string.button.confirmAnApplication}
             styleBtn={{ width: '97%', marginTop: 70 }}
             handleBtn={() => navigation.navigate('ViewDocument' as never)}
           />

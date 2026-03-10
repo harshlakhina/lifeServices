@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { ThemeContext } from '../theme/themecontext';
-import { imageSource } from '../constants';
+import { imageSource, string } from '../constants';
 
 export default function SplashScreen({ navigation }: any) {
   useEffect(() => {
@@ -14,11 +14,7 @@ export default function SplashScreen({ navigation }: any) {
   return (
     <View style={[Styles.container, { backgroundColor: theme.background }]}>
       <Image
-        source={
-          !isDark
-            ?imageSource.imageDemo1
-            : imageSource.imageDemo1black
-        }
+        source={!isDark ? imageSource.imageDemo1 : imageSource.imageDemo1black}
         style={Styles.lifeServiceImage}
         resizeMode="cover"
       />
@@ -30,9 +26,9 @@ export default function SplashScreen({ navigation }: any) {
           resizeMode="contain"
         />
 
-        <Text style={{ fontSize: 37 }}>
-          <Text style={{ color: theme.text, fontWeight: 700 }}>Life</Text>
-          <Text style={{ color: theme.text }}>Services</Text>
+        <Text style={[Styles.text, { color: theme.text }]}>
+          <Text style={Styles.textLife}>{string.auth.life}</Text>{' '}
+          {string.auth.services}
         </Text>
       </View>
     </View>
@@ -56,4 +52,8 @@ const Styles = StyleSheet.create({
   profileLogoImage: {
     height: 100,
   },
+  text: {
+    fontSize: 37,
+  },
+  textLife: { fontWeight: 'bold' },
 });

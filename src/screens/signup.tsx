@@ -13,9 +13,8 @@ import { Button } from '../components/button';
 import { SignUpStyles } from './styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignUpSchema } from '../schema/SignUpSchema';
-// import { SelectDropStyles } from '../screens/styles';
 import { ThemeContext } from '../theme/themecontext';
-import { iconSource, imageSource } from '../constants';
+import { iconSource, imageSource, string } from '../constants';
 
 export default function SignUp({ navigation }: any) {
   const { theme } = useContext(ThemeContext);
@@ -59,18 +58,9 @@ export default function SignUp({ navigation }: any) {
           resizeMode="contain"
         />
 
-        <Text>
-          <Text
-            style={[
-              SignUpStyles.lifeSevicesText,
-              { fontWeight: 700, color: theme.text },
-            ]}
-          >
-            Life
-          </Text>
-          <Text style={[SignUpStyles.lifeSevicesText, { color: theme.text }]}>
-            Services
-          </Text>
+        <Text style={{ fontSize: 37, color: theme.text }}>
+          <Text style={{ fontWeight: 'bold' }}>{string.auth.life}</Text>{' '}
+          {string.auth.services}
         </Text>
       </View>
 
@@ -128,7 +118,7 @@ export default function SignUp({ navigation }: any) {
               </View>
             </View>
             <Text style={{ color: '#07C0E0', fontSize: 20 }}>
-              Add your photo
+              {string.signUp.addYourPhoto}
             </Text>
           </TouchableOpacity>
         ) : (
@@ -163,7 +153,9 @@ export default function SignUp({ navigation }: any) {
               }}
             >
               <TouchableOpacity onPress={pickImage}>
-                <Text style={{ color: '#FFF' }}>Change Photo</Text>
+                <Text style={{ color: '#FFF' }}>
+                  {string.signUp.changePhoto}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -171,13 +163,13 @@ export default function SignUp({ navigation }: any) {
 
         <View style={[SignUpStyles.inputWrapper, , { padding: 20 }]}>
           <RHFTextInput
-            placeholder="Name"
+            placeholder={string.signUp.name}
             name="name"
             style={{ width: '100%' }}
           />
 
           <Select
-            title="Choose your profession"
+            title={string.signUp.chooseYourProfession}
             options={professions}
             name="profession"
             style={[{ width: '100%' }]}
@@ -185,7 +177,7 @@ export default function SignUp({ navigation }: any) {
             selected={true}
           />
           <Select
-            title="Choose a country"
+            title={string.signUp.chooseACountry}
             options={countries}
             name="country"
             style={[{ width: '100%' }]}
@@ -194,7 +186,7 @@ export default function SignUp({ navigation }: any) {
           />
 
           <Select
-            title="Choose your City"
+            title={string.signUp.chooseYourCity}
             options={cities}
             name="city"
             style={[{ width: '100%' }]}
@@ -203,12 +195,12 @@ export default function SignUp({ navigation }: any) {
           />
 
           <RHFTextInput
-            placeholder="Enter your Address"
+            placeholder={string.signUp.enterYourAddress}
             name="address"
             style={{ width: '100%' }}
           />
           <RHFTextInput
-            placeholder="Your phone number"
+            placeholder={string.signUp.yourPhoneNumber}
             name="phoneNo"
             keyboardType="number-pad"
             style={{ width: '100%' }}
@@ -222,12 +214,12 @@ export default function SignUp({ navigation }: any) {
               >
                 <MaterialCommunityIcons name="plus" size={24} color="#07C0E0" />
                 <Text style={{ color: '#07C0E0', fontSize: 18 }}>
-                  Add phone number
+                  {string.signUp.addPhoneNumber}
                 </Text>
               </TouchableOpacity>
             ) : (
               <RHFTextInput
-                placeholder="Your phone number"
+                placeholder={string.signUp.yourPhoneNumber}
                 name="phoneNo1"
                 keyboardType="number-pad"
                 style={{ width: '100%' }}
@@ -236,25 +228,25 @@ export default function SignUp({ navigation }: any) {
           </View>
 
           <RHFTextInput
-            placeholder="Email"
+            placeholder={string.signUp.email}
             name="email"
             style={{ width: '100%' }}
           />
 
           <RHFTextInput
-            placeholder="Password"
+            placeholder={string.signUp.password}
             name="password"
             secureTextEntry
             style={{ width: '100%' }}
           />
           <RHFTextInput
-            placeholder=" Confirm Password"
+            placeholder={string.signUp.confirmPassword}
             name="confirmPassword"
             secureTextEntry
             style={{ width: '100%' }}
           />
           <Button
-            title="Sign Up"
+            title={string.button.signUp}
             handleBtn={handleSubmit(onSubmit)}
             styleBtn={{ width: '100%' }}
           />
@@ -269,11 +261,11 @@ export default function SignUp({ navigation }: any) {
             }}
           >
             <Text style={{ fontSize: 18, color: theme.text }}>
-              Do you already have an account?
+              {string.signUp.doYouAlreadyHave}
             </Text>
 
             <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-              <Text style={SignUpStyles.signIn}>Sign in</Text>
+              <Text style={SignUpStyles.signIn}>{string.button.signIn}</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -14,7 +14,7 @@ import { useContext, useState } from 'react';
 import Header2 from '../../components/header2';
 import { ThemeContext } from '../../theme/themecontext';
 import RHFSwitch from '../../hookform/rhfSwitch';
-import { iconSource, imageSource } from '../../constants';
+import { iconSource, imageSource, string } from '../../constants';
 
 function Setting() {
   const { theme, isDark, toggleTheme } = useContext(ThemeContext);
@@ -33,6 +33,7 @@ function Setting() {
   }
   return (
     <FormProvider {...methods}>
+      <Header2 title={string.setting.settings} />
       <Modal transparent={true} visible={isEndSession}>
         <View
           style={[Styles.modalContainer, { backgroundColor: theme.modalBg }]}
@@ -49,11 +50,11 @@ function Setting() {
               style={Styles.modalImage}
             />
             <Text style={[Styles.modalTitle, { color: theme.text }]}>
-              Are you sure you want to exit?
+              {string.setting.areYouSureYouWantToExit}
             </Text>
 
             <Text style={Styles.modalDescription}>
-              You will have to log in again
+              {string.setting.youWillHaveToLogInAgain}
             </Text>
 
             <View style={Styles.modalBtnContainer}>
@@ -61,7 +62,9 @@ function Setting() {
                 onPress={() => setIsEndSession(false)}
                 style={Styles.modalBtn}
               >
-                <Text style={Styles.modalBtnExitAndDeleteText}>Exit</Text>
+                <Text style={Styles.modalBtnExitAndDeleteText}>
+                  {string.button.exit}
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -69,7 +72,7 @@ function Setting() {
                 style={[Styles.modalBtn, { backgroundColor: theme.input }]}
               >
                 <Text style={[Styles.modalCancelText, { color: theme.text }]}>
-                  Cancel
+                  {string.button.cancel}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -93,11 +96,11 @@ function Setting() {
               style={Styles.modalImage}
             />
             <Text style={[Styles.modalTitle, { color: theme.text }]}>
-              Are you sure you want to delete your account?
+              {string.setting.areYouSureYouWantoDelete}
             </Text>
 
             <Text style={Styles.modalDescription}>
-              This action is irreversible
+              {string.setting.thisActionIsIrreversible}
             </Text>
 
             <View style={Styles.modalBtnContainer}>
@@ -105,7 +108,9 @@ function Setting() {
                 onPress={() => setIsDelete(false)}
                 style={Styles.modalBtn}
               >
-                <Text style={Styles.modalBtnExitAndDeleteText}>Delete</Text>
+                <Text style={Styles.modalBtnExitAndDeleteText}>
+                  {string.button.delete}
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -113,15 +118,13 @@ function Setting() {
                 style={[Styles.modalBtn, { backgroundColor: theme.input }]}
               >
                 <Text style={[Styles.modalCancelText, { color: theme.text }]}>
-                  Cancel
+                  {string.button.cancel}
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
-
-      <Header2 title="Settings" />
 
       <ScrollView
         contentContainerStyle={[
@@ -249,7 +252,9 @@ function Setting() {
               resizeMode="cover"
               style={Styles.EndSessionBtnImage}
             />
-            <Text style={Styles.EndSessionBtnText}>End session</Text>
+            <Text style={Styles.EndSessionBtnText}>
+              {string.button.endSession}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

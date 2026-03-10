@@ -6,7 +6,7 @@ import { Image } from 'react-native';
 import FavouriteScreen from '../screens/favourite/Favourite';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
-import {iconSource} from "../constants/iconSrc"
+import { iconSource } from '../constants/iconSrc';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,14 +40,15 @@ export const BottomNavigation = () => {
           },
         }}
       />
+
       <Tab.Screen
-        name="profile-bottom"
-        component={ProfileBottom}
+        name="Application-bottom"
+        component={TopNavigation}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
               <Image
-                source={iconSource.profileBlackColor}
+                source={iconSource.inboxIcon}
                 resizeMode="contain"
                 style={{
                   height: 29,
@@ -61,13 +62,13 @@ export const BottomNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Application-bottom"
-        component={TopNavigation}
+        name="profile-bottom"
+        component={ProfileBottom}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
               <Image
-                source={iconSource.inboxIcon}
+                source={iconSource.profileBlackColor}
                 resizeMode="contain"
                 style={{
                   height: 29,

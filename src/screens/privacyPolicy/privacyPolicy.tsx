@@ -2,12 +2,13 @@ import { Text, View, ScrollView } from 'react-native';
 import Header2 from '../../components/header2';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
+import { string } from '../../constants';
 
 function PrivacyPolicy() {
   const { theme } = useContext(ThemeContext);
   return (
     <>
-      <Header2 title="Privacy Policy" />
+      <Header2 title={string.privacyPolicy.privacyPolicy}/>
 
       <ScrollView
         contentContainerStyle={{ backgroundColor: theme.background2 }}

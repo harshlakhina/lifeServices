@@ -6,14 +6,14 @@ import { Button } from '../../components/button';
 import Header2 from '../../components/header2';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
-import { imageSource } from '../../constants';
+import { imageSource, string } from '../../constants';
 
 function ViewAllDocument() {
   const navigation = useNavigation();
   const { theme } = useContext(ThemeContext);
   return (
     <>
-      <Header2 title="Documents" />
+      <Header2 title={string.viewAllDocument.documents} />
 
       <ScrollView
         contentContainerStyle={{
@@ -109,7 +109,7 @@ function ViewAllDocument() {
         })}
 
         <Button
-          title="Add new document"
+          title={string.button.addNewDocument}
           styleBtn={{ width: '97%' }}
           handleBtn={() => navigation.navigate('CreateAnApplication' as never)}
         />

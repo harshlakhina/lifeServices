@@ -16,8 +16,7 @@ import { Header } from '../../components/header';
 import { HomeStyles } from './style';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
-import { imageSource } from '../../constants';
-// import { ThemeContext } from '../../theme/themecontext';
+import { imageSource, string } from '../../constants';
 
 export const Home = () => {
   const methods = useForm();
@@ -52,7 +51,7 @@ export const Home = () => {
     <FormProvider {...methods}>
       {/* Header */}
       <Header
-        title="Home"
+        title={string.home.home}
         isExpanded={hideBox}
         handleFunction={() => navigation.navigate('Map' as never)}
       />
@@ -75,8 +74,7 @@ export const Home = () => {
         {/* Best Offers */}
         <View style={HomeStyles.bestOfferContainer}>
           <Text style={[HomeStyles.bestOfferText, { color: theme.text }]}>
-            {' '}
-            Best Offers
+            {string.home.bestOffers}
           </Text>
 
           <FlatList
@@ -160,7 +158,7 @@ export const Home = () => {
         {/* All Offers */}
         <View style={HomeStyles.allOfferContainer}>
           <Text style={[HomeStyles.allOfferText, { color: theme.text }]}>
-            All Offers
+            {string.home.allOffers}
           </Text>
 
           {HomeMockData.map(item => {
@@ -266,7 +264,11 @@ export const Home = () => {
               />
             </View>
 
-            <Select name="moscow" title="Moscow" options={professions} />
+            <Select
+              name="moscow"
+              title={string.home.moscow}
+              options={professions}
+            />
           </View>
 
           <View style={HomeStyles.topSearchBoxContentContainer}>
@@ -282,7 +284,12 @@ export const Home = () => {
                 style={HomeStyles.topSearchBoxContentContainerImage}
               />
             </View>
-            <Select name="sphere" title="Sphere" options={professions} isDropstyle={{elevation:3}}/>
+            <Select
+              name="sphere"
+              title={string.home.sphere}
+              options={professions}
+              isDropstyle={{ elevation: 3 }}
+            />
           </View>
         </View>
       )}

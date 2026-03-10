@@ -5,6 +5,7 @@ import {
 import { Inbox } from '../screens/Application/inbox';
 import { Created } from '../screens/Application/created';
 import { Header } from '../components/header';
+import { string } from '../constants';
 
 const TopTab = createMaterialTopTabNavigator();
 function TopNavigation() {
@@ -13,7 +14,7 @@ function TopNavigation() {
       <TopTab.Navigator
         tabBar={props => (
           <>
-            <Header title="Application" />
+            <Header title={string.application.applications} />
             <MaterialTopTabBar {...props} />
           </>
         )}

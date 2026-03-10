@@ -2,12 +2,13 @@ import { Text, View, ScrollView } from 'react-native';
 import Header2 from '../../components/header2';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
+import { string } from '../../constants';
 
 function CommunityRules() {
   const { theme } = useContext(ThemeContext);
   return (
     <>
-      <Header2 title="Community Rules" />
+      <Header2 title={string.communityRules.communityRules} />
 
       <ScrollView
         contentContainerStyle={{ backgroundColor: theme.background2 }}

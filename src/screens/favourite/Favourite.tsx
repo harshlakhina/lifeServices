@@ -11,17 +11,28 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { HomeMockData } from '../home-mock-data';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
-import { imageSource } from '../../constants';
+import { imageSource, string } from '../../constants';
 
 function FavouriteScreen() {
-  const {theme}=useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   return (
     <View>
-      <Header title="Favourites" />
-      <ScrollView contentContainerStyle={[Styles.scrollContainer,{backgroundColor:theme.background2}]}>
+      <Header title={string.favourite.favourites} />
+      <ScrollView
+        contentContainerStyle={[
+          Styles.scrollContainer,
+          { backgroundColor: theme.background2 },
+        ]}
+      >
         {HomeMockData.map(item => {
           return (
-            <View style={[Styles.menuItemContainer,{  backgroundColor:theme.card,}]} key={item.id}>
+            <View
+              style={[
+                Styles.menuItemContainer,
+                { backgroundColor: theme.card },
+              ]}
+              key={item.id}
+            >
               <View style={Styles.menuItemBodyContainer}>
                 <View>
                   <Image
@@ -39,7 +50,11 @@ function FavouriteScreen() {
                 </View>
 
                 <View style={Styles.menuItemContentContainer}>
-                  <Text style={[Styles.menuItemNameText,{color:theme.text}]}>{item.name}</Text>
+                  <Text
+                    style={[Styles.menuItemNameText, { color: theme.text }]}
+                  >
+                    {item.name}
+                  </Text>
 
                   <View style={Styles.menuItemRatingContainer}>
                     <MaterialCommunityIcons

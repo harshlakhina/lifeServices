@@ -8,10 +8,8 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Header } from '../../components/header';
-// import { HomeStyles } from '../home/style';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Select } from '../../hookform/select';
-// import { SelectDropStyles } from '../styles';
 import { professions } from '../../constants/profession';
 import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -20,7 +18,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
-import { iconSource } from '../../constants';
+import { iconSource, string } from '../../constants';
 
 function CreateNewDocument() {
   const { theme } = useContext(ThemeContext);
@@ -46,25 +44,23 @@ function CreateNewDocument() {
   };
   return (
     <FormProvider {...methods}>
-      <Header title="Create an Application" />
+      <Header title={string.createNewDocument.createAnApplication} />
 
       <KeyboardAwareScrollView
         enableOnAndroid={true}
         extraScrollHeight={50}
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1 ,     backgroundColor: theme.background,}}
       >
         <View
           style={{
             padding: 20,
             gap: 20,
             alignItems: 'center',
-            backgroundColor: theme.background,
-            flex: 1,
           }}
         >
           <Select
-            title="Choose your profession"
+            title={string.createNewDocument.createAnApplication}
             options={professions}
             name="profession"
             style={[{ width: '100%' }]}
@@ -73,13 +69,13 @@ function CreateNewDocument() {
           />
 
           <RHFTextInput
-            placeholder="+7 (899) 355 76"
+            placeholder={string.createNewDocument.phoneNoPlaceholder}
             name="PhoneNo"
             style={{ width: '100%' }}
             keyboardType="phone-pad"
           />
           <RHFTextInput
-            placeholder="Description"
+            placeholder={string.createNewDocument.description}
             name="description"
             style={{ width: '100%' }}
             multiline
@@ -128,7 +124,7 @@ function CreateNewDocument() {
             <TouchableOpacity
               onPress={() => navigation.navigate('ViewAllPhoto' as never)}
             >
-              <Text style={{ fontSize: 20, color: '#07C0E0' }}>View photo</Text>
+              <Text style={{ fontSize: 20, color: '#07C0E0' }}>{string.createNewDocument.viewPhoto}</Text>
             </TouchableOpacity>
           )}
 
@@ -184,12 +180,12 @@ function CreateNewDocument() {
                 fontSize: 20,
               }}
             >
-              Attach photo
+             {string.createNewDocument.attachPhoto}
             </Text>
           </View>
 
           <Button
-            title="Submit an application"
+            title={string.button.submitAnApplication}
             styleBtn={{ width: '97%' }}
             handleBtn={() => navigation.navigate('ViewDocument' as never)}
           />

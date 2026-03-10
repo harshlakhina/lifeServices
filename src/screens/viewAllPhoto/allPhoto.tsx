@@ -10,6 +10,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header2 from '../../components/header2';
 import { ThemeContext } from '../../theme/themecontext';
+import { string } from '../../constants';
 
 function ViewAllPhoto() {
   const {theme}=useContext(ThemeContext)
@@ -52,7 +53,7 @@ function ViewAllPhoto() {
         </View>
       </Modal>
 
-      <Header2 title=" View Photos"/>
+      <Header2 title={string.viewAllPhoto.viewPhoto}/>
 
       <ScrollView contentContainerStyle={{ padding: 10,paddingTop:40 ,backgroundColor:theme.background,flex:1}}>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 15 }}>

@@ -20,7 +20,7 @@ import { Button } from '../../components/button';
 import { cities } from '../../constants/cities';
 import { countries } from '../../constants/countries';
 import { ThemeContext } from '../../theme/themecontext';
-import { iconSource, imageSource } from '../../constants';
+import { iconSource, imageSource, string } from '../../constants';
 
 export const ProfileSetting = () => {
   const { theme } = useContext(ThemeContext);
@@ -46,7 +46,11 @@ export const ProfileSetting = () => {
 
   return (
     <FormProvider {...methods}>
-      <Header title="Profile" isExpanded={isHideProfile} setting={true} />
+      <Header
+        title={string.profileSetting.profile}
+        isExpanded={isHideProfile}
+        setting={true}
+      />
 
       <KeyboardAwareScrollView
         contentContainerStyle={{
@@ -73,11 +77,11 @@ export const ProfileSetting = () => {
         <RHFTextInput
           name="name"
           style={{ width: '100%', elevation: 2 }}
-          placeholder="Name"
+          placeholder={string.profileSetting.name}
         />
 
         <Select
-          title="Country"
+          title={string.profileSetting.country}
           options={countries}
           name="Country"
           style={[Styles.input, Styles.extraInputItem, { width: '100%' }]}
@@ -86,7 +90,7 @@ export const ProfileSetting = () => {
         />
 
         <Select
-          title="Cities"
+          title={string.profileSetting.cities}
           options={cities}
           name="Cities"
           style={[Styles.input, Styles.extraInputItem, { width: '100%' }]}
@@ -97,12 +101,12 @@ export const ProfileSetting = () => {
         <RHFTextInput
           name="email"
           style={{ width: '100%', elevation: 2 }}
-          placeholder="email"
+          placeholder={string.profileSetting.email}
         />
 
         <View style={Styles.aboutMeContainer}>
           <Text style={[Styles.aboutMeTitle, { color: theme.text }]}>
-            About me
+            {string.profileSetting.aboutMe}
           </Text>
 
           <Text
@@ -125,12 +129,14 @@ export const ProfileSetting = () => {
             }}
           >
             <Text style={[Styles.diplomaText, { color: theme.text }]}>
-              Documents
+              {string.profileSetting.documents}
             </Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('AddDocument' as never)}
             >
-              <Text style={{ color: '#07C0E0', fontSize: 20 }}>Add</Text>
+              <Text style={{ color: '#07C0E0', fontSize: 20 }}>
+                {string.profileSetting.add}
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -202,11 +208,11 @@ export const ProfileSetting = () => {
 
         <View style={Styles.sphereContainer}>
           <Text style={[Styles.sphereTitle, { color: theme.text }]}>
-            Spheres of activity
+        {string.profileSetting.spheresOfActivity}
           </Text>
 
           <Select
-            title="Choose your profession"
+            title={string.profileSetting.chooseYourProfession}
             options={professions}
             name="profession"
             style={[Styles.input, Styles.extraInputItem, { width: '97%' }]}
@@ -216,7 +222,7 @@ export const ProfileSetting = () => {
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <Button title="Save" styleBtn={{ width: '100%' }} />
+          <Button title={string.button.save} styleBtn={{ width: '100%' }} />
         </View>
       </KeyboardAwareScrollView>
 
@@ -266,7 +272,9 @@ export const ProfileSetting = () => {
                 borderRadius: 50,
               }}
             >
-              <Text style={{ color: '#FFF' }}>Change Photo</Text>
+              <Text style={{ color: '#FFF' }}>
+                {string.profileSetting.changePhoto}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

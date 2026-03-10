@@ -10,7 +10,7 @@ import {
 import { HomeMockData } from '../home-mock-data';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
-import { imageSource } from '../../constants';
+import { imageSource, string } from '../../constants';
 
 export const Inbox = () => {
     const {theme}=useContext(ThemeContext);
@@ -57,11 +57,11 @@ export const Inbox = () => {
 
             <View style={Styles.BtnsContainer}>
               <TouchableOpacity style={[Styles.Btns, Styles.acceptBtn]}>
-                <Text style={Styles.acceptText}>Accept</Text>
+                <Text style={Styles.acceptText}>{string.button.accept}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={[Styles.Btns,{backgroundColor:theme.background}]}>
-                <Text style={[Styles.rejectText,{color:theme.text}]}>Reject</Text>
+                <Text style={[Styles.rejectText,{color:theme.text}]}>{string.button.reject}</Text>
               </TouchableOpacity>
             </View>
           </View>
