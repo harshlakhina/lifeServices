@@ -21,6 +21,7 @@ import { cities } from '../../constants/cities';
 import { countries } from '../../constants/countries';
 import { ThemeContext } from '../../theme/themecontext';
 import { iconSource, imageSource, string } from '../../constants';
+import { Routes } from '../../navigation';
 
 export const ProfileSetting = () => {
   const { theme } = useContext(ThemeContext);
@@ -132,7 +133,9 @@ export const ProfileSetting = () => {
               {string.profileSetting.documents}
             </Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate('AddDocument' as never)}
+              onPress={() =>
+                navigation.navigate(Routes.AddNewDocumentProfile as never)
+              }
             >
               <Text style={Styles.AddText}>{string.profileSetting.add}</Text>
             </TouchableOpacity>

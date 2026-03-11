@@ -19,6 +19,7 @@ import { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
 import { iconSource, string } from '../../constants';
+import { Routes } from '../../navigation';
 
 function CreateNewDocument() {
   const { theme } = useContext(ThemeContext);
@@ -117,7 +118,7 @@ function CreateNewDocument() {
           )}
           {image.length > 0 && (
             <TouchableOpacity
-              onPress={() => navigation.navigate('ViewAllPhoto' as never)}
+              onPress={() => navigation.navigate(Routes.ViewAllPhotos as never)}
             >
               <Text style={Styles.viewPhotoText}>
                 {string.createNewDocument.viewPhoto}

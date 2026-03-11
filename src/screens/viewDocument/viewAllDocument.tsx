@@ -14,6 +14,7 @@ import Header2 from '../../components/header2';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
 import { imageSource, string } from '../../constants';
+import { Routes } from '../../navigation';
 
 function ViewAllDocument() {
   const navigation = useNavigation();
@@ -35,7 +36,7 @@ function ViewAllDocument() {
             <TouchableOpacity
               key={item.id}
               style={[{ backgroundColor: theme.card }, Styles.cardContainer]}
-              onPress={() => navigation.navigate('EditApplication' as never)}
+              onPress={() => navigation.navigate(Routes.EditDocument as never)}
             >
               <Image
                 source={imageSource.diploma}
@@ -93,7 +94,7 @@ function ViewAllDocument() {
         <Button
           title={string.button.addNewDocument}
           styleBtn={Styles.btn}
-          handleBtn={() => navigation.navigate('CreateAnApplication' as never)}
+          handleBtn={() => navigation.navigate(Routes.AddNewDocument as never)}
         />
       </ScrollView>
     </>
