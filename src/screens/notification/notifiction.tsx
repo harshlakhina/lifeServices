@@ -12,7 +12,7 @@ function Notification() {
       <Header2 title={string.notification.notification} />
 
       <View
-        style={{ backgroundColor: theme.background2, padding: 10, flex: 1 }}
+        style={[{ backgroundColor: theme.background2,},Styles.bodyContainer]}
       >
         <ScrollView>
           <View style={Styles.bodyContainer}>
@@ -47,7 +47,7 @@ function Notification() {
 export default Notification;
 
 const Styles = StyleSheet.create({
-  bodyContainer: {},
+  bodyContainer: { padding: 10, flex: 1},
   menuItemContainer: {
     padding: 18,
     margin: 7,

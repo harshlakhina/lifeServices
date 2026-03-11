@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from '../screens/home/Home';
 import { ProfileBottom } from '../screens/profile/profile-home';
 import TopNavigation from './top-bar-navigation';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import FavouriteScreen from '../screens/favourite/Favourite';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
@@ -29,12 +29,12 @@ export const BottomNavigation = () => {
               <Image
                 source={iconSource.homeIcon}
                 resizeMode="contain"
-                style={{
-                  height: 29,
-                  width: 29,
-                  marginTop: 10,
-                  tintColor: focused ? '#07C0E0' : theme.bottomTab,
-                }}
+                style={[
+                  {
+                    tintColor: focused ? '#07C0E0' : theme.bottomTab,
+                  },
+                  Styles.image,
+                ]}
               />
             );
           },
@@ -50,12 +50,12 @@ export const BottomNavigation = () => {
               <Image
                 source={iconSource.inboxIcon}
                 resizeMode="contain"
-                style={{
-                  height: 29,
-                  width: 29,
-                  marginTop: 10,
-                  tintColor: focused ? '#07C0E0' : theme.bottomTab,
-                }}
+                style={[
+                  {
+                    tintColor: focused ? '#07C0E0' : theme.bottomTab,
+                  },
+                  Styles.image,
+                ]}
               />
             );
           },
@@ -70,12 +70,12 @@ export const BottomNavigation = () => {
               <Image
                 source={iconSource.profileBlackColor}
                 resizeMode="contain"
-                style={{
-                  height: 29,
-                  width: 29,
-                  marginTop: 10,
-                  tintColor: focused ? '#07C0E0' : theme.bottomTab,
-                }}
+                style={[
+                  {
+                    tintColor: focused ? '#07C0E0' : theme.bottomTab,
+                  },
+                  Styles.image,
+                ]}
               />
             );
           },
@@ -90,12 +90,12 @@ export const BottomNavigation = () => {
               <Image
                 source={iconSource.heartIcon}
                 resizeMode="contain"
-                style={{
-                  height: 29,
-                  width: 29,
-                  marginTop: 10,
-                  tintColor: focused ? '#07C0E0' : theme.bottomTab,
-                }}
+                style={[
+                  {
+                    tintColor: focused ? '#07C0E0' : theme.bottomTab,
+                  },
+                  Styles.image,
+                ]}
               />
             );
           },
@@ -104,3 +104,7 @@ export const BottomNavigation = () => {
     </Tab.Navigator>
   );
 };
+
+const Styles = StyleSheet.create({
+  image: { height: 29, width: 29, marginTop: 10 },
+});

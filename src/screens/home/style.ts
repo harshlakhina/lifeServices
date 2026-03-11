@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const HomeStyles = StyleSheet.create({
   headerText: { color: '#FFF', fontWeight: '700', fontSize: 28 },
@@ -23,10 +23,11 @@ export const HomeStyles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingLeft: 12,
   },
+  bestOfferCheckImage: { height: 40 },
   bestOfferCardHeartContainer: {
     backgroundColor: '#FFF',
-    height: 45,
-    width: 45,
+    height: 40,
+    width: 40,
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -49,6 +50,7 @@ export const HomeStyles = StyleSheet.create({
   },
   bestOfferCardBottomRatingText: { fontSize: 15, color: '#FFF' },
   bestOfferCardBottomDescText: { color: '#FFF' },
+  bestOfferActiveStyles: { opacity: 1, height: 400 },
 
   allOfferContainer: { width: '96%', gap: 20, marginBottom: 10 },
   allOfferText: {
@@ -72,9 +74,34 @@ export const HomeStyles = StyleSheet.create({
     padding: 15,
     width: '97%',
   },
+  allOfferCardLeftImage: {
+    width: 95,
+    height: 96,
+    borderRadius: 15,
+    position: 'relative',
+  },
+  allOfferCardCheckFillImageContainer: {
+    position: 'absolute',
+    right: -43,
+    top: -8,
+  },
+  allOfferCardCheckFillImage: { height: 30 },
+  allOfferCardContentContainer: { width: '55%', gap: 3 },
+  allOfferCardNameText: {
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  allOfferCardRatingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+  },
+  allOfferCardRatingText:{ fontSize: 15, color: '#07C0E0' },
+  allOfferCardDescriptionText:{ color: '#66737F', fontSize: 13 },
+
+
 
   topSearchBox: {
-    
     width: '92%',
     elevation: 5,
     alignSelf: 'center',

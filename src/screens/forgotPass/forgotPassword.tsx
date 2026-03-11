@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { Image, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { NewPassWord } from './newPassword';
 import { Email } from '../email';
 import { useContext, useState } from 'react';
@@ -40,7 +40,8 @@ export const ForgotPassword = ({ navigation }: any) => {
       <KeyboardAwareScrollView
         contentContainerStyle={[
           ForgotPassWordStyles.container,
-          { backgroundColor: theme.background2, flexGrow: 1 },
+          { backgroundColor: theme.background2 },
+          Styles.container,
         ]}
         enableOnAndroid={true}
         extraScrollHeight={50}
@@ -73,3 +74,9 @@ export const ForgotPassword = ({ navigation }: any) => {
     </FormProvider>
   );
 };
+
+const Styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+  },
+});

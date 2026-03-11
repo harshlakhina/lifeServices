@@ -6,196 +6,139 @@ import { ThemeContext } from '../theme/themecontext';
 import { imageSource } from '../constants/imageSrc';
 import { iconSource } from '../constants';
 
-export const Header = ({ title, isExpanded, handleFunction, setting }: any) => {
+export const Header = ({ title, handleFunction, setting }: any) => {
   const navigation = useNavigation();
   const { theme } = useContext(ThemeContext);
+
+  const showBack =
+    title === 'Create an Application' ||
+    title === 'Edit an Application' ||
+    (title === 'Profile' && setting);
+
   return (
     <>
-      {title === 'Home' && (
-        <View
-          style={{
-            height: 140,
-            width: '100%',
-            backgroundColor: theme.background2,
-          }}
-        >
+      {title === 'Applications' ? (
+        <View style={styles.headerContainer}>
           <Image
             source={imageSource.bgImage}
             resizeMode="cover"
-            style={{ width: '100%', height: isExpanded ? 320 : 180 }}
+            style={styles.bgImage}
           />
         </View>
-      )}
-      {title === 'Profile' && (
+      ) : (
         <View
-          style={{
-            height: 137,
-            width: '100%',
-            backgroundColor: theme.background2,
-          }}
+          style={[
+            styles.headerContainer,
+            { backgroundColor: theme.background2 },
+          ]}
         >
           <Image
             source={imageSource.bgImage}
             resizeMode="cover"
-            style={{ width: '100%', height: isExpanded ? 450 : 180 }}
+            style={[styles.bgImage]}
           />
         </View>
       )}
 
-      {title === 'Applications' && (
-        <View style={{ height: 150, width: '100%' }}>
-          <Image
-            source={imageSource.bgImage}
-            resizeMode="cover"
-            style={{
-              width: '100%',
-              height: 300,
-              backgroundColor: theme.background2,
-            }}
-          />
-        </View>
-      )}
-      {title === 'Favourites' && (
-        <View
-          style={{
-            height: 150,
-            width: '100%',
-            backgroundColor: theme.background2,
-          }}
-        >
-          <Image
-            source={imageSource.bgImage}
-            resizeMode="cover"
-            style={{ width: '100%', height: 200 }}
-          />
-        </View>
-      )}
-      {title === 'Create an Application' && (
-        <View
-          style={{
-            height: 140,
-            width: '100%',
-            backgroundColor: theme.background,
-          }}
-        >
-          <Image
-            source={imageSource.bgImage}
-            resizeMode="cover"
-            style={{ width: '100%', height: 180 }}
-          />
-        </View>
-      )}
-      {title === 'Edit an Application' && (
-        <View
-          style={{
-            height: 140,
-            width: '100%',
-            backgroundColor: theme.background,
-          }}
-        >
-          <Image
-            source={imageSource.bgImage}
-            resizeMode="cover"
-            style={{ width: '100%', height: 180 }}
-          />
-        </View>
-      )}
-
-      <View
-        style={{
-          position: 'absolute',
-          top: 45,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: '100%',
-          padding: 20,
-          alignItems: 'center',
-          // backgroundColor:"red"
-        }}
-      >
+      <View style={styles.topBar}>
+        {/* Left Side */}
         {title === 'Home' && (
           <TouchableOpacity onPress={handleFunction}>
-            <Image
-              source={iconSource.mapIcon}
-              resizeMode="contain"
-              style={{ height: 35, width: 30 }}
-            />
+            <Image source={iconSource.mapIcon} style={styles.mapIcon} />
           </TouchableOpacity>
         )}
 
         {title === 'Profile' && !setting && (
           <TouchableOpacity
-            style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}
+            style={styles.editContainer}
             onPress={handleFunction}
           >
-            <Image
-              source={iconSource.editIcon}
-              style={{ height: 29, width: 29, tintColor: '#FFF' }}
-            />
-            <Text style={{ color: '#FFF', fontSize: 14 }}>Edit</Text>
+            <Image source={iconSource.editIcon} style={styles.editIcon} />
+            <Text style={styles.editText}>Edit</Text>
           </TouchableOpacity>
         )}
 
-        {title === 'Profile' && setting && (
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            // style={{ width: '30%' }}
-          >
-            <Image
-              source={iconSource.backIcon}
-              resizeMode="contain"
-              style={{ height: 20, width: 30, tintColor: '#FFF' }}
-            />
-          </TouchableOpacity>
-        )}
-
-        {title === 'Create an Application' && (
+        {showBack && (
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              source={iconSource.backIcon}
-              resizeMode="contain"
-              style={{ height: 20, width: 30, tintColor: '#FFF' }}
-            />
-          </TouchableOpacity>
-        )}
-
-        {title === 'Edit an Application' && (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              source={iconSource.backIcon}
-              resizeMode="contain"
-              style={{ height: 20, width: 30, tintColor: '#FFF' }}
-            />
+            <Image source={iconSource.backIcon} style={styles.backIcon} />
           </TouchableOpacity>
         )}
 
         {title === 'Applications' && (
-          <Image
-            source={imageSource.imageDemo2}
-            resizeMode="cover"
-            style={{ height: 50, width: 50, borderRadius: 10 }}
-          />
+          <Image source={imageSource.imageDemo2} style={styles.profileImage} />
         )}
 
-        <Text style={Styles.headerText}>{title}</Text>
+        {/* Title */}
+        <Text style={styles.headerText}>{title}</Text>
 
-        {
-          <TouchableOpacity
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-          >
-            <MaterialCommunityIcons name="menu" size={35} color="#FFF" />
-          </TouchableOpacity>
-        }
+        {/* Hamburger */}
+        <TouchableOpacity
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+        >
+          <MaterialCommunityIcons name="menu" size={35} color="#FFF" />
+        </TouchableOpacity>
       </View>
     </>
   );
 };
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
+  headerContainer: {
+    height: 140,
+    width: '100%',
+  },
+
+  bgImage: {
+    width: '100%',
+  },
+
+  topBar: {
+    position: 'absolute',
+    top: 45,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    padding: 20,
+    alignItems: 'center',
+  },
+
   headerText: {
     color: '#FFF',
     fontWeight: '700',
     fontSize: 24,
-    marginRight: 10,
+  },
+
+  mapIcon: {
+    height: 35,
+    width: 30,
+  },
+
+  editContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+  },
+
+  editIcon: {
+    height: 29,
+    width: 29,
+    tintColor: '#FFF',
+  },
+
+  editText: {
+    color: '#FFF',
+    fontSize: 14,
+  },
+
+  backIcon: {
+    height: 20,
+    width: 30,
+    tintColor: '#FFF',
+  },
+
+  profileImage: {
+    height: 50,
+    width: 50,
+    borderRadius: 10,
   },
 });

@@ -1,11 +1,11 @@
 import { Controller, useFormContext } from 'react-hook-form';
-import { Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { RHFTextInputStyles } from '../screens/styles';
 import { ThemeContext } from '../theme/themecontext';
 import { useContext } from 'react';
 
 export const RHFTextInput = (props: any) => {
-  const {theme}=useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const {
     control,
     formState: { errors },
@@ -24,18 +24,22 @@ export const RHFTextInput = (props: any) => {
             onChangeText={onChange}
             style={[
               RHFTextInputStyles.input,
-              {backgroundColor:theme.input,color:theme.text,borderColor:theme.background},
+              {
+                backgroundColor: theme.input,
+                color: theme.text,
+                borderColor: theme.background,
+              },
               props.style,
 
               { borderColor: errors?.[props.name] ? 'red' : '' },
-              props.multiline && { height: 120 },
+              props.multiline && Styles.multine,
             ]}
             value={value}
           />
 
           {errors?.[props.name] && (
-            <View style={{ width: '80%' }}>
-              <Text style={{ color: 'red' }}>
+            <View style={Styles.errorWidth}>
+              <Text style={Styles.error}>
                 {errors?.[props.name]?.message as string}
               </Text>
             </View>
@@ -45,3 +49,19 @@ export const RHFTextInput = (props: any) => {
     />
   );
 };
+
+const Styles = StyleSheet.create({
+  error: {
+    color: 'red',
+  },
+  errorWidth: { width: '90%' },
+  multine: { height: 120 },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+
+  inputError: {
+    borderColor: 'red',
+  },
+});

@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useContext, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { SelectDropStyles } from '../screens/styles';
@@ -34,11 +34,8 @@ export const Select = (props: any) => {
             <View style={[SelectDropStyles.wrapper, props.wrapperStyle]}>
               <TouchableOpacity
                 style={[
-                  {
-                    borderColor: errors?.[props.name]
-                      ? 'red'
-                      : theme.background,
-                  },
+                  errors?.[props.name] ? Styles.errorBorder : '#fff',
+
                   SelectDropStyles.input,
                   SelectDropStyles.extraInputItem,
                   props.style,
@@ -46,17 +43,12 @@ export const Select = (props: any) => {
                 ]}
                 onPress={() => setIsDrop(prev => !prev)}
               >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                >
+                <View style={Styles.dropItemsContainer}>
                   <Text
-                    style={{
-                      color: errors?.[props.name] ? 'red' : '#66737F',
-                      alignSelf: 'center',
-                    }}
+                    style={[
+                      Styles.titleMain,
+                      errors?.[props.name] ? Styles.error : Styles.normal,
+                    ]}
                   >
                     {props.title}
                   </Text>
@@ -94,19 +86,11 @@ export const Select = (props: any) => {
                         style={[
                           SelectDropStyles.input,
                           SelectDropStyles.extraDropDownItem,
-                        
-                          {
-                            borderColor: theme.secondaryText,
-                            elevation: isDark ? 3 : 0,
-                          },
-                          isFirst && {
-                            borderTopLeftRadius: 25,
-                            borderTopRightRadius: 25,
-                          },
-                          isLast && {
-                            borderBottomLeftRadius: 25,
-                            borderBottomRightRadius: 25,
-                          },
+
+                          isDark && Styles.darkElevation,
+
+                          isFirst && Styles.firstItem,
+                          isLast && Styles.lastItem,
                         ]}
                         onPress={() => {
                           ToggleSelected(option);
@@ -123,24 +107,14 @@ export const Select = (props: any) => {
               {props.selected && isSelected.length > 0 && (
                 <View style={SelectDropStyles.selectedContainer}>
                   {isSelected.map(selected => (
-                    <View
-                      key={selected}
-                      style={{
-                        backgroundColor: '#07C0E0',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        paddingVertical: 15,
-                        borderRadius: 45,
-                        gap: 20,
-                      }}
-                    >
+                    <View key={selected} style={Styles.selectedItemContainer}>
                       <Text style={SelectDropStyles.selectedText}>
                         {selected}
                       </Text>
                       <MaterialCommunityIcons
                         name="close"
                         size={20}
-                        style={{ paddingRight: 8, color: '#FFF' }}
+                        style={Styles.selectedItemCloseIcon}
                         onPress={() => ToggleSelected(selected)}
                       />
                     </View>
@@ -149,8 +123,8 @@ export const Select = (props: any) => {
               )}
 
               {errors?.[props.name] && (
-                <View style={{ width: '80%' }}>
-                  <Text style={{ color: 'red' }}>
+                <View style={Styles.errorWidth}>
+                  <Text style={Styles.error}>
                     {errors?.[props.name]?.message as string}
                   </Text>
                 </View>
@@ -162,3 +136,45 @@ export const Select = (props: any) => {
     />
   );
 };
+
+const Styles = StyleSheet.create({
+  dropItemsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  titleMain: {
+    alignSelf: 'center',
+  },
+  normal: {
+    color: '#66737F',
+  },
+  error: {
+    color: 'red',
+  },
+  errorBorder: {
+    borderColor: 'red',
+  },
+  errorWidth: { width: '80%' },
+  selectedItemContainer: {
+    backgroundColor: '#07C0E0',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 15,
+    borderRadius: 45,
+    gap: 20,
+  },
+
+  selectedItemCloseIcon: { paddingRight: 8, color: '#FFF' },
+  firstItem: {
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+  },
+
+  lastItem: {
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+  },
+  darkElevation: {
+    elevation: 3,
+  },
+});

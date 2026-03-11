@@ -1,4 +1,4 @@
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import Header2 from '../../components/header2';
 import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
@@ -8,21 +8,20 @@ function PrivacyPolicy() {
   const { theme } = useContext(ThemeContext);
   return (
     <>
-      <Header2 title={string.privacyPolicy.privacyPolicy}/>
+      <Header2 title={string.privacyPolicy.privacyPolicy} />
 
       <ScrollView
         contentContainerStyle={{ backgroundColor: theme.background2 }}
       >
         <View
-          style={{
-            backgroundColor: theme.background2,
-            elevation: 5,
-            borderRadius: 20,
-            padding: 20,
-            margin: 20,
-          }}
+          style={[
+            {
+              backgroundColor: theme.background2,
+            },
+            Styles.bodyContainer,
+          ]}
         >
-          <Text style={{ color: '#9999AA', lineHeight: 23 }}>
+          <Text style={Styles.text}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
             ullamcorper lorem in risus suscipit venenatis. Praesent volutpat
             nunc vel augue eleifend egestas. Nulla sagittis mi id tortor
@@ -68,3 +67,13 @@ function PrivacyPolicy() {
 }
 
 export default PrivacyPolicy;
+
+const Styles = StyleSheet.create({
+  bodyContainer: {
+    elevation: 5,
+    borderRadius: 20,
+    padding: 20,
+    margin: 20,
+  },
+  text: { color: '#9999AA', lineHeight: 23 },
+});

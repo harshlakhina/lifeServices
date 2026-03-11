@@ -8,7 +8,11 @@ export const NewPassWord = () => {
       <Text style={Styles.text}>{string.forgotPassword.enterANewPass}</Text>
 
       <View style={Styles.inputContainer}>
-        <RHFTextInput name="newPassword" placeholder={string.forgotPassword.newPassword}  secureTextEntry />
+        <RHFTextInput
+          name="newPassword"
+          placeholder={string.forgotPassword.newPassword}
+          secureTextEntry
+        />
         <RHFTextInput
           name="confirmNewPassword"
           placeholder={string.forgotPassword.confirmPassword}

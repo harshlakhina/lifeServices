@@ -48,19 +48,14 @@ export const SignUpStyles = StyleSheet.create({
     width: '100%',
     gap: 25,
     alignItems: 'center',
-    paddingTop: 32,
-    paddingBottom: 20,
+    padding: 25,
     position: 'relative',
   },
-  input: {
-    backgroundColor: 'white',
-    elevation: 5,
-    width: '80%',
-    borderRadius: 30,
-    height: 60,
-    paddingHorizontal: 20,
-    color: 'black',
+  inputWidth: {
+    width: '100%',
   },
+  selectCenter: { alignItems: 'center' },
+
   signInbtn: {
     backgroundColor: '#02D1AC',
     borderRadius: 30,
@@ -69,8 +64,70 @@ export const SignUpStyles = StyleSheet.create({
     width: '80%',
     height: '6%',
   },
+
   btnText: { color: '#FFFFFF', fontWeight: 700, fontSize: 18 },
   signIn: { color: '#3EAEFF', fontSize: 18 },
+  text: {
+    fontSize: 37,
+  },
+  textLife: {
+    fontWeight: '700',
+  },
+  profileDemoContainer: { alignItems: 'center', paddingTop: 20, gap: 15 },
+  profileDemoImageContainer: {
+    height: 120,
+    width: 120,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+  },
+  profileDemoImage: { height: 55, width: 55 },
+  profileDemoPlusContainer: {
+    position: 'absolute',
+    right: -8,
+    top: -13,
+    backgroundColor: '#07C0E0',
+    height: 35,
+    width: 35,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addYourPhotoText: { color: '#07C0E0', fontSize: 20 },
+
+  selectedImageMainContainer: {
+    position: 'relative',
+  },
+  selectedImageContainer: {
+    width: '100%',
+    paddingHorizontal: 30,
+    alignItems: 'center',
+  },
+  selectedImage: { height: 350, width: '100%', borderRadius: 25 },
+  changePhotoContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 18,
+    backgroundColor: '#07C0E0',
+    paddingHorizontal: 30,
+    paddingVertical: 16,
+    borderRadius: 35,
+  },
+
+  phoneNoMainContainer: { width: '100%', gap: 20 },
+  phoneNoContainer: { flexDirection: 'row', gap: 10, paddingLeft: 15 },
+  phoneNoText: { color: '#07C0E0', fontSize: 18 },
+  doYouHaveAndSignInContainer: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 30,
+    width: '100%',
+    justifyContent: 'center',
+  },
+  doYouAlreadyHaveAnAccountText: {
+    fontSize: 19,
+  },
 });
 
 export const SelectDropStyles = StyleSheet.create({
@@ -81,7 +138,7 @@ export const SelectDropStyles = StyleSheet.create({
     gap: 15,
   },
   input: {
-    elevation:3,
+    elevation: 3,
     borderBottomWidth: 1,
 
     width: '80%',

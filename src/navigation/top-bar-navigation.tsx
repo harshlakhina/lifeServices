@@ -1,23 +1,26 @@
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBar,
+  MaterialTopTabBarProps,
 } from '@react-navigation/material-top-tabs';
 import { Inbox } from '../screens/Application/inbox';
 import { Created } from '../screens/Application/created';
 import { Header } from '../components/header';
 import { string } from '../constants';
+import { View } from 'react-native';
 
 const TopTab = createMaterialTopTabNavigator();
 function TopNavigation() {
+  const renderTabBar = (props: MaterialTopTabBarProps) => (
+    <View>
+      <Header title={string.application.applications} />
+      <MaterialTopTabBar {...props} />
+    </View>
+  );
   return (
     <>
       <TopTab.Navigator
-        tabBar={props => (
-          <>
-            <Header title={string.application.applications} />
-            <MaterialTopTabBar {...props} />
-          </>
-        )}
+        tabBar={renderTabBar}
         screenOptions={{
           tabBarStyle: {
             backgroundColor: 'transparent',

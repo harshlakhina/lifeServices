@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   StyleSheet,
-  // StyleSheet,
 } from 'react-native';
 import { HomeMockData } from '../home-mock-data';
 import { useContext } from 'react';
@@ -13,16 +12,21 @@ import { ThemeContext } from '../../theme/themecontext';
 import { imageSource, string } from '../../constants';
 
 export const Inbox = () => {
-    const {theme}=useContext(ThemeContext);
-  
+  const { theme } = useContext(ThemeContext);
+
   return (
     <FlatList
       data={HomeMockData}
-      contentContainerStyle={[Styles.flatListContainer,{backgroundColor:theme.background2}]}
+      contentContainerStyle={[
+        Styles.flatListContainer,
+        { backgroundColor: theme.background2 },
+      ]}
       keyExtractor={item => item.id.toString()}
       renderItem={({ item }) => {
         return (
-          <View style={[Styles.menuItemContainer,{  backgroundColor:theme.card,}]}>
+          <View
+            style={[Styles.menuItemContainer, { backgroundColor: theme.card }]}
+          >
             <View style={Styles.menuItemBodyContainer}>
               <View>
                 <Image
@@ -40,7 +44,9 @@ export const Inbox = () => {
               </View>
 
               <View style={Styles.infoContainer}>
-                <Text style={[Styles.nameText,{color:theme.text}]}>{item.name}</Text>
+                <Text style={[Styles.nameText, { color: theme.text }]}>
+                  {item.name}
+                </Text>
 
                 <Text style={Styles.addressText}>st. Tverskaya, 13</Text>
 
@@ -60,8 +66,12 @@ export const Inbox = () => {
                 <Text style={Styles.acceptText}>{string.button.accept}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[Styles.Btns,{backgroundColor:theme.background}]}>
-                <Text style={[Styles.rejectText,{color:theme.text}]}>{string.button.reject}</Text>
+              <TouchableOpacity
+                style={[Styles.Btns, { backgroundColor: theme.background }]}
+              >
+                <Text style={[Styles.rejectText, { color: theme.text }]}>
+                  {string.button.reject}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -141,10 +151,10 @@ const Styles = StyleSheet.create({
 
   acceptText: {
     color: '#FFFFFF',
-    fontSize:19
+    fontSize: 19,
   },
 
   rejectText: {
-     fontSize:19
+    fontSize: 19,
   },
 });

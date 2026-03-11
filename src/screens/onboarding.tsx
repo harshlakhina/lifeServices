@@ -29,19 +29,12 @@ export default function OnboardingScreen({ navigation }: any) {
           resizeMode="contain"
         />
 
-        <Text style={{ fontSize: 37, color: theme.text }}>
-          <Text style={{ fontWeight: 'bold' }}>{string.auth.life}</Text>{' '}
+        <Text style={[{ color: theme.text }, Styles.text]}>
+          <Text style={Styles.textLife}>{string.auth.life}</Text>{' '}
           {string.auth.services}
         </Text>
 
-        <Text
-          style={{
-            color: theme.secondaryText,
-            paddingTop: 28,
-            paddingBottom: 60,
-            fontSize: 18,
-          }}
-        >
+        <Text style={[{ color: theme.secondaryText }, Styles.description]}>
           {string.auth.helloWeWillHelp}
         </Text>
 
@@ -53,7 +46,7 @@ export default function OnboardingScreen({ navigation }: any) {
           <Button
             title={string.button.signUp}
             handleBtn={() => navigation.navigate('SignUp')}
-            styleText={{ color: '#3EAEFF', fontWeight: 500, fontSize: 18 }}
+            styleText={Styles.signUpBtn}
             styleBtn={{ backgroundColor: theme.background }}
           />
         </View>
@@ -83,14 +76,13 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  darkShadow: {
-    shadowColor: '#fff',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
-    elevation: 10, // Android
+
+  text: {
+    fontSize: 37,
   },
+  textLife: {
+    fontWeight: '700',
+  },
+  description: { paddingTop: 28, paddingBottom: 60, fontSize: 18 },
+  signUpBtn: { color: '#3EAEFF', fontWeight: 500, fontSize: 18 },
 });
