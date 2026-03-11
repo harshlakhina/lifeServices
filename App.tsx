@@ -1,17 +1,12 @@
-import {NavigationContainer} from "@react-navigation/native"
-import StackNavigation from "./src/navigation/stack-navigation";
-import { ThemeProvider } from "./src/theme/themecontext";
-
+import RootNavigation from './src/navigation/root-navigation';
+import { ThemeProvider } from './src/theme/themecontext';
 
 function App() {
   return (
-     <ThemeProvider>
-      <NavigationContainer>
-        <StackNavigation />
-      </NavigationContainer>
+    <ThemeProvider>
+      <RootNavigation />
     </ThemeProvider>
   );
 }
-
 
 export default App;

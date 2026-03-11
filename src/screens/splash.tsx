@@ -2,11 +2,12 @@ import { useContext, useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { ThemeContext } from '../theme/themecontext';
 import { imageSource, string } from '../constants';
+import { Routes } from '../navigation';
 
 export default function SplashScreen({ navigation }: any) {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Onboarding');
+      navigation.replace(Routes.OnBoarding);
     }, 3000);
   }, [navigation]);
   const { theme, isDark } = useContext(ThemeContext);

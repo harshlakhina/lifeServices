@@ -4,6 +4,7 @@ import { Button } from '../components/button';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
 import { imageSource, string } from '../constants';
+import { Routes } from '../navigation';
 
 export default function OnboardingScreen({ navigation }: any) {
   const { theme, isDark } = useContext(ThemeContext);
@@ -41,11 +42,11 @@ export default function OnboardingScreen({ navigation }: any) {
         <View style={Styles.btnContainer}>
           <Button
             title={string.button.signIn}
-            handleBtn={() => navigation.navigate('SignIn')}
+            handleBtn={() => navigation.navigate(Routes.SignIn)}
           />
           <Button
             title={string.button.signUp}
-            handleBtn={() => navigation.navigate('SignUp')}
+            handleBtn={() => navigation.navigate(Routes.SignUp)}
             styleText={Styles.signUpBtn}
             styleBtn={{ backgroundColor: theme.background }}
           />
