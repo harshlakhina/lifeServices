@@ -34,12 +34,15 @@ export const Select = (props: any) => {
             <View style={[SelectDropStyles.wrapper, props.wrapperStyle]}>
               <TouchableOpacity
                 style={[
-                  errors?.[props.name] ? Styles.errorBorder : '#fff',
-
                   SelectDropStyles.input,
                   SelectDropStyles.extraInputItem,
                   props.style,
                   { backgroundColor: theme.input },
+                  errors?.[props.name]
+                    ? Styles.errorBorder
+                    : isDark
+                    ? Styles.darkBorder
+                    : Styles.lightBorder,
                 ]}
                 onPress={() => setIsDrop(prev => !prev)}
               >
@@ -87,7 +90,9 @@ export const Select = (props: any) => {
                           SelectDropStyles.input,
                           SelectDropStyles.extraDropDownItem,
 
-                          isDark && Styles.darkElevation,
+                          isDark
+                            ? Styles.darkElevation
+                            : Styles.normalElevation,
 
                           isFirst && Styles.firstItem,
                           isLast && Styles.lastItem,
@@ -151,9 +156,9 @@ const Styles = StyleSheet.create({
   error: {
     color: 'red',
   },
-  errorBorder: {
-    borderColor: 'red',
-  },
+  lightBorder: { borderColor: '#fff' },
+  darkBorder: { borderColor: '#000' },
+  errorBorder: { borderColor: 'red' },
   errorWidth: { width: '80%' },
   selectedItemContainer: {
     backgroundColor: '#07C0E0',
@@ -176,5 +181,8 @@ const Styles = StyleSheet.create({
   },
   darkElevation: {
     elevation: 3,
+  },
+  normalElevation: {
+    elevation: 0,
   },
 });

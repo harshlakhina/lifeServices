@@ -52,7 +52,6 @@ export const Home = () => {
       {/* Header */}
       <Header
         title={string.home.home}
-      
         handleFunction={() => navigation.navigate('Map' as never)}
       />
 
@@ -154,13 +153,10 @@ export const Home = () => {
             }}
           />
         </View>
-
-        {/* All Offers */}
         <View style={HomeStyles.allOfferContainer}>
           <Text style={[HomeStyles.allOfferText, { color: theme.text }]}>
             {string.home.allOffers}
           </Text>
-
           {HomeMockData.map(item => {
             const active = selectedHeart.includes(item.id);
             return (
@@ -188,7 +184,6 @@ export const Home = () => {
                       />
                     </View>
                   </View>
-
                   <View style={HomeStyles.allOfferCardContentContainer}>
                     <Text
                       style={[
