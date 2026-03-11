@@ -10,7 +10,7 @@ function CopyRight() {
     <>
       <Header2 title={string.copyRight.copyRight} />
 
-      <ScrollView
+                <ScrollView
         contentContainerStyle={{ backgroundColor: theme.background2 }}
       >
         <View

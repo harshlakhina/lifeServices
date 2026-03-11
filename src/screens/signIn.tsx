@@ -116,13 +116,7 @@ const Styles = StyleSheet.create({
     paddingBottom: 20,
     padding: 25,
   },
-  input: {
-    backgroundColor: 'white',
-    width: '80%',
-    borderRadius: 30,
-    height: 55,
-    paddingHorizontal: 20,
-  },
+
   inputWidth: { width: '100%' },
   forgotPassWordContainer: {
     width: '80%',
