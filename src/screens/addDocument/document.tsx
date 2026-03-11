@@ -19,7 +19,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import RequestCameraPermission from '../../components/cameraPermission';
 import Header2 from '../../components/header2';
 import { ThemeContext } from '../../theme/themecontext';
-import { iconSource, string } from '../../constants';
+import { iconSource, imageSource, string } from '../../constants';
 
 function AddDocument() {
   const { theme } = useContext(ThemeContext);
@@ -67,21 +67,15 @@ function AddDocument() {
     <FormProvider {...methods}>
       <Modal transparent={true} visible={openModal}>
         <View
-          style={{
-            flex: 1,
-            backgroundColor:theme.modalBg
-          }}
+          style={[
+            {
+              backgroundColor: theme.modalBg,
+            },
+            Styles.modalMainContainer,
+          ]}
         >
-          <View
-            style={{
-              width: '100%',
-              padding: 15,
-              bottom: 0,
-              position: 'absolute',
-              gap: 10,
-            }}
-          >
-            <View style={{ backgroundColor: '#FFF', borderRadius: 25 }}>
+          <View style={Styles.modalSmallContainer}>
+            <View style={Styles.modalSmallContainerCard}>
               <TouchableOpacity
                 style={Styles.modalContainerPhotoPicker}
                 onPress={openCamera}
@@ -91,10 +85,8 @@ function AddDocument() {
                   size={28}
                   color="#07C0E0"
                 />
-                <Text
-                  style={{ fontSize: 17, color: '#141414', fontWeight: 600 }}
-                >
-                {string.addDocument.openCamera}
+                <Text style={Styles.modalText}>
+                  {string.addDocument.openCamera}
                 </Text>
               </TouchableOpacity>
 
@@ -104,10 +96,8 @@ function AddDocument() {
                 onPress={openPicker}
               >
                 <MaterialCommunityIcons name="file" size={28} color="#07C0E0" />
-                <Text
-                  style={{ fontSize: 17, color: '#141414', fontWeight: 600 }}
-                >
-                {string.addDocument.useLastPhoto}
+                <Text style={Styles.modalText}>
+                  {string.addDocument.useLastPhoto}
                 </Text>
               </TouchableOpacity>
               <Divider />
@@ -115,26 +105,22 @@ function AddDocument() {
                 style={Styles.modalContainerPhotoPicker}
                 onPress={openPicker}
               >
-                {/* <Image
-                  source={require('../../assets/imageLogo.png')}
+                <Image
+                  source={imageSource.privacyPolicy}
                   resizeMode="contain"
-                  style={{ height: 28, width: 28, tintColor: '#07C0E0' }}
-                /> */}
-                <Text
-                  style={{ fontSize: 17, color: '#141414', fontWeight: 600 }}
-                >
-                {string.addDocument.chooseFromLibrary}
+                  style={Styles.modalFileImage}
+                />
+                <Text style={Styles.modalText}>
+                  {string.addDocument.chooseFromLibrary}
                 </Text>
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity
-              style={{ backgroundColor: '#FFF', padding: 15, borderRadius: 15 }}
+              style={Styles.modalCancelBtnContainer}
               onPress={() => setOpenModal(false)}
             >
-              <Text
-                style={{ textAlign: 'center', fontSize: 20, color: '#07C0E0' }}
-              >
+              <Text style={Styles.modalCancelBtnText}>
                 {string.button.cancel}
               </Text>
             </TouchableOpacity>
@@ -144,19 +130,21 @@ function AddDocument() {
 
       <Header2 title={string.addDocument.addDocument} />
 
-      <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View
-          style={{
-            padding: 20,
-            gap: 20,
-            alignItems: 'center',
-            backgroundColor: theme.background2,
-            flex: 1,
-          }}
-        >
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        extraScrollHeight={50}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={[
+          {
+            backgroundColor: theme.background,
+          },
+          Styles.scrollContainer,
+        ]}
+      >
+        <View style={Styles.mainContainer}>
           <RHFTextInput
             name="name"
-            style={{ width: '100%' }}
+            style={Styles.inputWidth}
             placeholder={string.addDocument.name}
           />
 
@@ -164,100 +152,72 @@ function AddDocument() {
             title={string.addDocument.documentType}
             options={countries}
             name="documentType"
-            style={[Styles.input, Styles.extraInputItem, { width: '100%' }]}
-            wrapperStyle={{ alignItems: 'center' }}
+            style={Styles.inputWidth}
+            wrapperStyle={Styles.selectWrapperStyle}
             selected={true}
           />
 
           <RHFTextInput
             name={string.addDocument.description}
-            style={{ width: '100%' }}
+            style={Styles.inputWidth}
             placeholder="Description"
             multiline
           />
 
           {!image ? (
-            <View
-              style={{
-                marginTop: 40,
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => setOpenModal(true)}
-                style={{
-                  backgroundColor: theme.input,
-                  height: 120,
-                  width: 120,
-                  borderRadius: 20,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Image
-                  source={iconSource.addPhotoIcon}
-                  style={{ height: 55, width: 55, tintColor: theme.bottomTab }}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
+            <TouchableOpacity style={Styles.profileDemoContainer}>
+              <View>
+                <TouchableOpacity
+                  onPress={() => setOpenModal(true)}
+                  style={[
+                    { backgroundColor: theme.input },
+                    Styles.profileDemoImageContainer,
+                  ]}
+                >
+                  <Image
+                    source={iconSource.addPhotoIcon}
+                    style={[
+                      { tintColor: theme.bottomTab },
+                      Styles.profileDemoImage,
+                    ]}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => setOpenModal(true)}
-                style={{
-                  position: 'absolute',
-                  right: -10,
-                  top: -13,
-                  backgroundColor: '#07C0E0',
-                  height: 35,
-                  width: 35,
-                  borderRadius: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <MaterialCommunityIcons
-                  name="plus"
-                  size={24}
-                  color={theme.background}
-                />
-              </TouchableOpacity>
-              <Text
-                style={{
-                  color: '#07C0E0',
-                  marginTop: 10,
-                  marginBottom: 40,
-                  fontSize: 20,
-                }}
-              >
-             {string.addDocument.attachPhoto}
+                <View style={Styles.profileDemoPlusContainer}>
+                  <MaterialCommunityIcons
+                    name="plus"
+                    size={24}
+                    color={theme.background}
+                  />
+                </View>
+              </View>
+              <Text style={Styles.addYourPhotoText}>
+                {string.addDocument.attachPhoto}
               </Text>
-            </View>
+            </TouchableOpacity>
           ) : (
             <Image
               source={{ uri: image }}
               resizeMode="cover"
-              style={{ height: 400, width: 370, borderRadius: 40 }}
+              style={Styles.selectedImage}
             />
           )}
 
           {image && (
-            <View
-              style={{
-                position: 'absolute',
-                alignSelf: 'center',
-                bottom: 110,
-                backgroundColor: '#07C0E0',
-                paddingHorizontal: 40,
-                paddingVertical: 16,
-                borderRadius: 35,
-              }}
-            >
+            <View style={Styles.changePhotoContainer}>
               <TouchableOpacity onPress={openPicker}>
-                <Text style={{ color: '#FFF' }}>{string.addDocument.changePhoto}</Text>
+                <Text style={Styles.changePhototext}>
+                  {string.addDocument.changePhoto}
+                </Text>
               </TouchableOpacity>
             </View>
           )}
 
-          <Button title={string.button.submitForReview} styleBtn={{ width: '97%' }} />
+          <Button
+            title={string.button.submitForReview}
+            styleBtn={Styles.btnWidth}
+          />
         </View>
       </KeyboardAwareScrollView>
     </FormProvider>
@@ -267,47 +227,82 @@ function AddDocument() {
 export default AddDocument;
 
 const Styles = StyleSheet.create({
-  container: { width: '100%' },
-  wrapper: {
-    width: '100%',
-    position: 'relative',
-    gap: 15,
+  scrollContainer: { flexGrow: 1 },
+  mainContainer: {
+    padding: 20,
+    gap: 20,
+    alignItems: 'center',
   },
-  input: {
-    backgroundColor: 'white',
-    elevation: 5,
-    width: '80%',
-    borderRadius: 30,
-    height: 60,
-    paddingHorizontal: 20,
+  inputWidth: { width: '100%' },
+  selectWrapperStyle: { alignItems: 'center' },
+
+  // input: {
+  //   backgroundColor: 'white',
+  //   elevation: 5,
+  //   width: '80%',
+  //   borderRadius: 30,
+  //   height: 60,
+  //   paddingHorizontal: 20,
+  //   justifyContent: 'center',
+  // },
+  profileDemoContainer: { alignItems: 'center', paddingTop: 20, gap: 15 },
+  profileDemoImageContainer: {
+    height: 120,
+    width: 120,
+    borderRadius: 20,
     justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
   },
-  extraInputItem: { position: 'relative', borderWidth: 1 },
-  dropdown: {
+  profileDemoImage: { height: 55, width: 55 },
+  profileDemoPlusContainer: {
     position: 'absolute',
-    top: 60,
-    width: '80%',
-    backgroundColor: 'white',
+    right: -8,
+    top: -13,
+    backgroundColor: '#07C0E0',
+    height: 35,
+    width: 35,
     borderRadius: 50,
-    zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  extraDropDownItem: { width: '100%', borderRadius: 0 },
-  selectedContainer: {
-    flexDirection: 'row',
-    width: '80%',
-    flexWrap: 'wrap',
+  addYourPhotoText: { color: '#07C0E0', fontSize: 20 },
+
+  changePhotoContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 110,
+    backgroundColor: '#07C0E0',
+    paddingHorizontal: 40,
+    paddingVertical: 16,
+    borderRadius: 35,
+  },
+  changePhototext: { color: '#FFF' },
+  selectedImage: { height: 400, width: 370, borderRadius: 40 },
+
+  modalMainContainer: { flex: 1 },
+  modalSmallContainer: {
+    width: '100%',
+    padding: 15,
+    bottom: 0,
+    position: 'absolute',
     gap: 10,
   },
-  selectedText: {
-    color: '#FFF',
-    paddingLeft: 20,
-    fontSize: 20,
+  modalSmallContainerCard: { backgroundColor: '#FFF', borderRadius: 25 },
+  modalText: { fontSize: 17, color: '#141414', fontWeight: 600 },
+  modalFileImage: { height: 28, width: 28, tintColor: '#07C0E0' },
+  modalCancelBtnContainer: {
+    backgroundColor: '#FFF',
+    padding: 15,
+    borderRadius: 15,
   },
-
+  modalCancelBtnText: { textAlign: 'center', fontSize: 20, color: '#07C0E0' },
   modalContainerPhotoPicker: {
     flexDirection: 'row',
     gap: 20,
     alignItems: 'center',
     padding: 20,
   },
+
+  btnWidth: { width: '97%' },
 });

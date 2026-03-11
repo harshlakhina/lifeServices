@@ -50,47 +50,44 @@ function CreateNewDocument() {
         enableOnAndroid={true}
         extraScrollHeight={50}
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flexGrow: 1 ,     backgroundColor: theme.background,}}
+        contentContainerStyle={[
+          {
+            backgroundColor: theme.background,
+          },
+          Styles.scrollContainer,
+        ]}
       >
-        <View
-          style={{
-            padding: 20,
-            gap: 20,
-            alignItems: 'center',
-          }}
-        >
+        <View style={Styles.mainContainer}>
           <Select
             title={string.createNewDocument.createAnApplication}
             options={professions}
             name="profession"
-            style={[{ width: '100%' }]}
-            wrapperStyle={{ alignItems: 'center' }}
+            style={Styles.inputWidth}
+            wrapperStyle={Styles.selectWrapperStyle}
             selected={true}
           />
-
           <RHFTextInput
             placeholder={string.createNewDocument.phoneNoPlaceholder}
             name="PhoneNo"
-            style={{ width: '100%' }}
+            style={Styles.inputWidth}
             keyboardType="phone-pad"
           />
           <RHFTextInput
             placeholder={string.createNewDocument.description}
             name="description"
-            style={{ width: '100%' }}
+            style={Styles.inputWidth}
             multiline
           />
-
           {image.length > 0 && (
             <FlatList
               data={image}
               horizontal={true}
-              contentContainerStyle={{ gap: 10 }}
+              contentContainerStyle={Styles.scrollAllImageContainer}
               renderItem={({ item, index }) => {
                 const active = activeTrash === index;
                 return (
                   <TouchableOpacity
-                    style={Styles.container}
+                    style={Styles.allImagecontainer}
                     onPress={() => setActiveTrash(index)}
                   >
                     <Image
@@ -105,11 +102,10 @@ function CreateNewDocument() {
                           <Image
                             source={iconSource.trashOutline}
                             resizeMode="cover"
-                            style={{
-                              height: 50,
-                              width: 50,
-                              tintColor: theme.text,
-                            }}
+                            style={[
+                              { tintColor: theme.text },
+                              Styles.trashImage,
+                            ]}
                           />
                         </TouchableOpacity>
                       </View>
@@ -119,52 +115,39 @@ function CreateNewDocument() {
               }}
             />
           )}
-
           {image.length > 0 && (
             <TouchableOpacity
               onPress={() => navigation.navigate('ViewAllPhoto' as never)}
             >
-              <Text style={{ fontSize: 20, color: '#07C0E0' }}>{string.createNewDocument.viewPhoto}</Text>
+              <Text style={Styles.viewPhotoText}>
+                {string.createNewDocument.viewPhoto}
+              </Text>
             </TouchableOpacity>
           )}
 
-          <View
-            style={{
-              marginTop: 40,
-            }}
-          >
+          <View style={Styles.profileImageDemoContainer}>
             <TouchableOpacity
               onPress={() => openPicker()}
-              style={{
-                backgroundColor: theme.card,
-                height: 120,
-                width: 120,
-                borderRadius: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-                elevation: 3,
-              }}
+              style={[
+                {
+                  backgroundColor: theme.card,
+                },
+                Styles.profileUploadBox,
+              ]}
             >
               <Image
                 source={iconSource.addPhotoIcon}
-                style={{ height: 65, width: 65, tintColor: theme.bottomTab }}
+                style={[
+                  { tintColor: theme.bottomTab },
+                  Styles.profileUploadIcon,
+                ]}
                 resizeMode="contain"
               />
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => openPicker()}
-              style={{
-                position: 'absolute',
-                right: -10,
-                top: -13,
-                backgroundColor: '#07C0E0',
-                height: 35,
-                width: 35,
-                borderRadius: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
+              style={Styles.plusButton}
             >
               <MaterialCommunityIcons
                 name="plus"
@@ -172,21 +155,15 @@ function CreateNewDocument() {
                 color={theme.background}
               />
             </TouchableOpacity>
-            <Text
-              style={{
-                color: '#07C0E0',
-                marginTop: 10,
-                marginBottom: 40,
-                fontSize: 20,
-              }}
-            >
-             {string.createNewDocument.attachPhoto}
+
+            <Text style={Styles.attachPhotoText}>
+              {string.createNewDocument.attachPhoto}
             </Text>
           </View>
 
           <Button
             title={string.button.submitAnApplication}
-            styleBtn={{ width: '97%' }}
+            styleBtn={Styles.btnWidth}
             handleBtn={() => navigation.navigate('ViewDocument' as never)}
           />
         </View>
@@ -198,7 +175,17 @@ function CreateNewDocument() {
 export default CreateNewDocument;
 
 const Styles = StyleSheet.create({
-  container: {
+  scrollContainer: { flexGrow: 1 },
+  mainContainer: {
+    padding: 20,
+    gap: 20,
+    alignItems: 'center',
+  },
+  inputWidth: { width: '100%' },
+  selectWrapperStyle: { alignItems: 'center' },
+
+  scrollAllImageContainer: { gap: 15 },
+  allImagecontainer: {
     width: 120,
     height: 120,
     borderRadius: 20,
@@ -214,4 +201,43 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 20,
   },
+  trashImage: {
+    height: 50,
+    width: 50,
+  },
+  viewPhotoText: { fontSize: 20, color: '#07C0E0' },
+
+  profileImageDemoContainer: {
+    marginTop: 45,
+  },
+  profileUploadBox: {
+    height: 120,
+    width: 120,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3,
+  },
+  profileUploadIcon: {
+    height: 65,
+    width: 65,
+  },
+  plusButton: {
+    position: 'absolute',
+    right: -10,
+    top: -13,
+    backgroundColor: '#07C0E0',
+    height: 35,
+    width: 35,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  attachPhotoText: {
+    color: '#07C0E0',
+    marginTop: 10,
+    marginBottom: 40,
+    fontSize: 20,
+  },
+  btnWidth: { width: '97%' },
 });

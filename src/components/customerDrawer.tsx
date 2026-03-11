@@ -1,6 +1,6 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useContext } from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../theme/themecontext';
 import { iconSource, imageSource, string } from '../constants';
@@ -27,74 +27,64 @@ function CustomDrawerContent(props: any) {
       symbol: iconSource.bellIcon,
     },
   ];
+
   return (
     <DrawerContentScrollView
-      contentContainerStyle={{
-        paddingTop: 0,
-        backgroundColor: theme.background,
-        flexGrow: 1,
-      }}
+      contentContainerStyle={[
+        {
+          backgroundColor: theme.background,
+        },
+        Styles.scrollContainer,
+      ]}
     >
-      <View style={{ marginHorizontal: -20 }}>
+      <View style={Styles.topContentContainer}>
         <Image
           source={imageSource.bgImage}
-          style={{ width: '100%', height: 350 }}
+          style={Styles.topContentImage}
           resizeMode="cover"
         />
 
-        <View
-          style={{
-            position: 'absolute',
-            top: 70,
-            left: 50,
-            flexDirection: 'row',
-            gap: 10,
-          }}
-        >
+        <View style={Styles.topProfileContainer}>
           <Image
             source={imageSource.imageDemo2}
             resizeMode="cover"
-            style={{ height: 85, width: 90, borderRadius: 10 }}
+            style={Styles.topProfileImage}
           />
 
           <View>
-            <Text style={{ fontSize: 18, color: '#FFF' }}>Maria</Text>
-            <Text style={{ fontSize: 18, color: '#FFF' }}>Minogarova</Text>
+            <Text style={Styles.topContentText}>Maria Minogarova</Text>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={Styles.topContentRatingContainer}>
               <MaterialCommunityIcons
                 name="star-outline"
                 size={25}
                 color="#FFF"
               />
-              <Text style={{ color: '#FFF', fontSize: 19 }}>4.2</Text>
+              <Text style={Styles.topContentRatingText}>4.2</Text>
             </View>
           </View>
         </View>
       </View>
 
-      <View style={{ marginTop: -60, marginLeft: -15 }}>
+      <View style={Styles.centerContentMainContainer}>
         {drawerItems.map(item => (
           <TouchableOpacity
             key={item.name}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingVertical: 15,
-              paddingHorizontal: 20,
-            }}
+            style={Styles.centerContentContainer}
             onPress={() => props.navigation.navigate(item.name)}
           >
-            <View
-              style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}
-            >
+            <View style={Styles.centerContentLeftItemsContainer}>
               <Image
                 source={item.symbol}
                 resizeMode="contain"
-                style={{ height: 25, width: 25, tintColor: '#07C0E0' }}
+                style={Styles.centerContentLeftItemsContainerImage}
               />
-              <Text style={{ fontSize: 20, color: theme.text }}>
+              <Text
+                style={[
+                  { color: theme.text },
+                  Styles.centerContentLeftItemsContainerText,
+                ]}
+              >
                 {item.label}
               </Text>
             </View>
@@ -102,39 +92,32 @@ function CustomDrawerContent(props: any) {
               <Image
                 source={item.icon}
                 resizeMode="contain"
-                style={{
-                  height: 20,
-                  width: 20,
-                  transform: [{ rotate: '180deg' }],
-                  tintColor: '#8F9CA9',
-                }}
+                style={Styles.centerContentRightItemsImage}
               />
             </View>
           </TouchableOpacity>
         ))}
       </View>
 
-      <View style={{ alignItems: 'flex-end' }}>
+      <View style={Styles.bottomMainContainer}>
         <View
-          style={{
-            backgroundColor: theme.endSessionBg,
-            padding: 16,
-            borderTopLeftRadius: 50,
-            borderBottomLeftRadius: 50,
-            marginTop: 350,
-            width: '90%',
-          }}
+          style={[
+            { backgroundColor: theme.endSessionBg },
+            Styles.bottomContainer,
+          ]}
         >
           <TouchableOpacity
-            style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}
+            style={Styles.bottomContainerBtn}
             onPress={() => props.navigation.navigate('SignIn')}
           >
             <Image
               source={iconSource.logOutOutline}
               resizeMode="cover"
-              style={{ height: 19, width: 24, tintColor: '#FE5050' }}
+              style={Styles.bottomContainerBtnImage}
             />
-            <Text style={{ fontSize: 20, color: '#FE5050' }}>{string.button.endSession}</Text>
+            <Text style={Styles.bottomContainerBtnText}>
+              {string.button.endSession}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -143,3 +126,61 @@ function CustomDrawerContent(props: any) {
 }
 
 export default CustomDrawerContent;
+
+const Styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    paddingTop: 0,
+  },
+  topContentContainer: { marginHorizontal: -20 },
+  topContentImage: { width: '100%', height: 350 },
+  topProfileContainer: {
+    position: 'absolute',
+    top: 70,
+    left: 50,
+    flexDirection: 'row',
+    gap: 10,
+  },
+  topProfileImage: { height: 85, width: 90, borderRadius: 10 },
+  topContentText: { fontSize: 18, color: '#FFF' },
+  topContentRatingContainer: { flexDirection: 'row', alignItems: 'center' },
+  topContentRatingText: { color: '#FFF', fontSize: 19 },
+
+  centerContentMainContainer: { marginTop: -60, marginLeft: -15 },
+  centerContentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+  },
+  centerContentLeftItemsContainer: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+  },
+  centerContentLeftItemsContainerImage: {
+    height: 25,
+    width: 25,
+    tintColor: '#07C0E0',
+  },
+  centerContentLeftItemsContainerText: { fontSize: 20 },
+  centerContentRightItemsImage: {
+    height: 20,
+    width: 20,
+    transform: [{ rotate: '180deg' }],
+    tintColor: '#8F9CA9',
+  },
+
+  bottomMainContainer: { alignItems: 'flex-end' },
+  bottomContainer: {
+    padding: 16,
+    borderTopLeftRadius: 50,
+    borderBottomLeftRadius: 50,
+    marginTop: 350,
+    width: '90%',
+  },
+  bottomContainerBtn: { flexDirection: 'row', gap: 10, alignItems: 'center' },
+  bottomContainerBtnImage: { height: 19, width: 24, tintColor: '#FE5050' },
+  bottomContainerBtnText: { fontSize: 20, color: '#FE5050' },
+});

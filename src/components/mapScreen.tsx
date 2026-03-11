@@ -67,7 +67,8 @@ const MapScreen = () => {
         />
       </MapView>
 
-      <View style={{ position: 'absolute', bottom: 60 }}>
+      {/*Bottom Cards */}
+      <View style={HomeStyles.CardBottomMainContainer}>
         <FlatList
           horizontal
           data={HomeMockData}
@@ -93,7 +94,7 @@ const MapScreen = () => {
                       source={{ uri: item.photoUrl }}
                       style={[
                         HomeStyles.CardImage,
-                        isActive && { opacity: 1, height: 230 },
+                        isActive && HomeStyles.CardActiveStyles,
                       ]}
                       resizeMode="cover"
                     />
@@ -102,7 +103,7 @@ const MapScreen = () => {
                   <View style={HomeStyles.CardTopContent}>
                     <Image
                       source={imageSource.checkFill}
-                      style={{ height: 30, width: 30 }}
+                      style={HomeStyles.CardCheckFillImage}
                       resizeMode="contain"
                     />
 
@@ -150,69 +151,52 @@ const MapScreen = () => {
       </View>
 
       <View
-        style={{
-          flexDirection: 'row',
-          padding: 10,
-          paddingTop: 50,
-          alignItems: 'center',
-          gap: 12,
-          position: 'absolute',
-          backgroundColor: theme.map,
-          width: '100%',
-        }}
+        style={[{ backgroundColor: theme.map }, HomeStyles.headerContainer]}
       >
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={{ width: '30%' }}
+          style={HomeStyles.headerBackIconContainer}
         >
           <Image
             source={iconSource.backIcon}
             resizeMode="contain"
-            style={{ height: 22, width: 40, tintColor: '#07C0E0' }}
+            style={HomeStyles.headerBackIconImage}
           />
         </TouchableOpacity>
         <Text
-          style={{
-            fontSize: 25,
-            color: theme.text,
-            fontWeight: 700,
-            width: '60%',
-          }}
+          style={[{ color: theme.text }, HomeStyles.headerTitle]}
           numberOfLines={1}
         >
-       {string.mapscreen.nextToMe}
+          {string.mapscreen.nextToMe}
         </Text>
       </View>
 
-      <View
-        style={{
-          top: 100,
-          position: 'absolute',
-          padding: 10,
-        }}
-      >
+      <View style={HomeStyles.topCategoryContainer}>
         <FlatList
           data={skills}
           keyExtractor={item => item.toString()}
           horizontal
-          contentContainerStyle={{ gap: 15 }}
+          contentContainerStyle={HomeStyles.topCategoryFLatListContainer}
           renderItem={({ item }) => {
             const activePage = item === activeMapPage;
             return (
               <TouchableOpacity
                 onPress={() => setActiveMapPage(item)}
-                style={{
-                  backgroundColor: activePage ? '#07C0E0' : theme.background,
-                  padding: 13,
-                  borderRadius: 30,
-                  paddingHorizontal: 35,
-                }}
+                style={[
+                  HomeStyles.topCategoryButton,
+                  {
+                    backgroundColor: activePage
+                      ? theme.primaryText
+                      : theme.background,
+                  },
+                ]}
               >
                 <Text
-                  style={{
-                    color: activePage ? '#FFF' : theme.primaryText,
-                    fontSize: 17,
-                  }}
+                  style={[
+                    activePage
+                      ? HomeStyles.topCategoryActiveText
+                      : HomeStyles.topCategoryInactiveText,
+                  ]}
                 >
                   {item}
                 </Text>
@@ -234,6 +218,41 @@ const HomeStyles = StyleSheet.create({
   map: {
     flex: 1,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    paddingTop: 50,
+    alignItems: 'center',
+    gap: 12,
+    position: 'absolute',
+    width: '100%',
+  },
+  headerBackIconContainer: { width: '30%' },
+  headerBackIconImage: { height: 22, width: 40, tintColor: '#07C0E0' },
+  headerTitle: {
+    fontSize: 25,
+    fontWeight: 700,
+    width: '60%',
+  },
+  topCategoryContainer: {
+    top: 100,
+    position: 'absolute',
+    padding: 10,
+  },
+  topCategoryFLatListContainer: { gap: 15 },
+  topCategoryButton: {
+    padding: 13,
+    paddingHorizontal: 35,
+    borderRadius: 30,
+  },
+  topCategoryActiveText: {
+    color: '#FFF',
+  },
+
+  topCategoryInactiveText: {
+    color: '#07C0E0',
+  },
+
   ListCard: { paddingLeft: 17, justifyContent: 'center' },
   cardImageContainer: { backgroundColor: '#FFF', borderRadius: 30 },
   CardImage: {
@@ -250,6 +269,15 @@ const HomeStyles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 12,
   },
+  CardBottomMainContainer: { position: 'absolute', bottom: 60 },
+  CardActiveStyles: { opacity: 1, height: 230 },
+
+  CardBottomContainer: {
+    position: 'absolute',
+    bottom: 20,
+    width: '100%',
+    paddingHorizontal: 15,
+  },
   CardHeartContainer: {
     backgroundColor: '#FFF',
     height: 30,
@@ -258,12 +286,7 @@ const HomeStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  CardBottomContainer: {
-    position: 'absolute',
-    bottom: 20,
-    width: '100%',
-    paddingHorizontal: 15,
-  },
+  CardCheckFillImage: { height: 30, width: 30 },
   CardBottomNameText: {
     color: '#FFF',
     fontSize: 17,

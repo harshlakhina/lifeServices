@@ -1,7 +1,7 @@
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { SignInSchema } from '../schema/signInSchema';
+// import { yupResolver } from '@hookform/resolvers/yup';
+// import { SignInSchema } from '../schema/signInSchema';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button } from '../components/button';
 import { useContext } from 'react';
@@ -49,8 +49,8 @@ export default function SignIn({ navigation }: any) {
           resizeMode="contain"
         />
 
-        <Text style={{ fontSize: 37, color: theme.text }}>
-          <Text style={{ fontWeight: 'bold' }}>{string.auth.life}</Text>{' '}
+        <Text style={[Styles.text, { color: theme.text }]}>
+          <Text style={Styles.textLife}>{string.auth.life}</Text>{' '}
           {string.auth.services}
         </Text>
 
@@ -58,22 +58,20 @@ export default function SignIn({ navigation }: any) {
           <RHFTextInput
             name="email"
             placeholder={string.signIn.email}
-            style={{ width: '100%' }}
+            style={Styles.inputWidth}
           />
           <RHFTextInput
             placeholder={string.signIn.password}
             name="password"
-            style={{ width: '100%' }}
+            style={Styles.inputWidth}
           />
         </View>
 
-        <View
-          style={{ width: '80%', alignItems: 'flex-end', paddingBottom: 28 }}
-        >
+        <View style={Styles.forgotPassWordContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassWord')}
           >
-            <Text style={{ color: '#3EAEFF', fontSize: 18 }}>
+            <Text style={Styles.forgotPasswordText}>
               {string.signIn.forgotPassword}
             </Text>
           </TouchableOpacity>
@@ -82,16 +80,16 @@ export default function SignIn({ navigation }: any) {
         <Button
           title={string.button.signIn}
           handleBtn={handleSubmit(onSubmit)}
-          styleBtn={{ width: '89%' }}
+          styleBtn={Styles.signInbtn}
         />
 
-        <View style={{ alignItems: 'center', gap: 2, padding: 25 }}>
-          <Text style={{ color: theme.text, fontSize: 22 }}>
+        <View style={Styles.dontHaveAnAccountContainer}>
+          <Text style={[Styles.dontHaveAnAccountText, { color: theme.text }]}>
             {string.signIn.dontHaveAnAccountYet}
           </Text>
 
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text style={{ color: '#3EAEFF', fontSize: 21 }}>
+            <Text style={Styles.createRightNotBtn}>
               {string.signIn.createRightNow}
             </Text>
           </TouchableOpacity>
@@ -125,14 +123,15 @@ const Styles = StyleSheet.create({
     height: 55,
     paddingHorizontal: 20,
   },
-
-  signInbtn: {
-    backgroundColor: '#02D1AC',
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+  inputWidth: { width: '100%' },
+  forgotPassWordContainer: {
     width: '80%',
-    height: '6%',
+    alignItems: 'flex-end',
+    paddingBottom: 28,
+  },
+  forgotPasswordText: { color: '#3EAEFF', fontSize: 18 },
+  signInbtn: {
+    width: '89%',
   },
   btnText: { color: '#FFFFFF', fontWeight: 700, fontSize: 18 },
   errorText: {
@@ -140,4 +139,13 @@ const Styles = StyleSheet.create({
     fontSize: 15,
     width: '80%',
   },
+  text: {
+    fontSize: 37,
+  },
+  textLife: { fontWeight: 'bold' },
+  dontHaveAnAccountContainer: { alignItems: 'center', gap: 2, padding: 25 },
+  dontHaveAnAccountText: {
+    fontSize: 23,
+  },
+  createRightNotBtn: { color: '#3EAEFF', fontSize: 21 },
 });

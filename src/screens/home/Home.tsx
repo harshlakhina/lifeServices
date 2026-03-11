@@ -52,7 +52,7 @@ export const Home = () => {
       {/* Header */}
       <Header
         title={string.home.home}
-        isExpanded={hideBox}
+      
         handleFunction={() => navigation.navigate('Map' as never)}
       />
 
@@ -101,7 +101,7 @@ export const Home = () => {
                     source={{ uri: item.photoUrl }}
                     style={[
                       HomeStyles.bestOfferCardImage,
-                      isActive && { opacity: 1, height: 400 },
+                      isActive && HomeStyles.bestOfferActiveStyles,
                     ]}
                     resizeMode="cover"
                   />
@@ -109,7 +109,7 @@ export const Home = () => {
                   <View style={HomeStyles.bestOfferCardTopContent}>
                     <Image
                       source={imageSource.checkFill}
-                      style={{ height: 40 }}
+                      style={HomeStyles.bestOfferCheckImage}
                       resizeMode="contain"
                     />
 
@@ -175,53 +175,45 @@ export const Home = () => {
                   <View>
                     <Image
                       source={{ uri: item.photoUrl }}
-                      style={{
-                        width: 95,
-                        height: 96,
-                        borderRadius: 15,
-                        position: 'relative',
-                      }}
+                      style={HomeStyles.allOfferCardLeftImage}
                       resizeMode="cover"
                     />
-                    <View style={{ position: 'absolute', right: -43, top: -8 }}>
+                    <View
+                      style={HomeStyles.allOfferCardCheckFillImageContainer}
+                    >
                       <Image
                         source={imageSource.checkFill}
-                        style={{ height: 30 }}
+                        style={HomeStyles.allOfferCardCheckFillImage}
                         resizeMode="contain"
                       />
                     </View>
                   </View>
 
-                  <View style={{ width: '55%', gap: 3 }}>
+                  <View style={HomeStyles.allOfferCardContentContainer}>
                     <Text
-                      style={{
-                        color: theme.text,
-                        fontSize: 17,
-                        fontWeight: '700',
-                      }}
+                      style={[
+                        {
+                          color: theme.text,
+                        },
+                        HomeStyles.allOfferCardNameText,
+                      ]}
                     >
                       {item.name}
                     </Text>
 
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: 3,
-                      }}
-                    >
+                    <View style={HomeStyles.allOfferCardRatingContainer}>
                       <MaterialCommunityIcons
                         name="star-outline"
                         size={25}
                         color="#07C0E0"
                       />
-                      <Text style={{ fontSize: 15, color: '#07C0E0' }}>
+                      <Text style={HomeStyles.allOfferCardRatingText}>
                         {item.rating}
                       </Text>
                     </View>
 
                     <Text
-                      style={{ color: '#66737F', fontSize: 13 }}
+                      style={HomeStyles.allOfferCardDescriptionText}
                       numberOfLines={2}
                     >
                       {item.description}
@@ -288,7 +280,6 @@ export const Home = () => {
               name="sphere"
               title={string.home.sphere}
               options={professions}
-              isDropstyle={{ elevation: 3 }}
             />
           </View>
         </View>

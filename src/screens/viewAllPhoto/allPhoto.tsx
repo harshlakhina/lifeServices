@@ -13,7 +13,7 @@ import { ThemeContext } from '../../theme/themecontext';
 import { string } from '../../constants';
 
 function ViewAllPhoto() {
-  const {theme}=useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext);
   const [activePhoto, setActivePhoto] = useState({ active: false, file: '' });
   const photoUrls = [
     'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=800',
@@ -29,7 +29,7 @@ function ViewAllPhoto() {
   return (
     <>
       <Modal transparent={false} visible={activePhoto.active}>
-        <View style={{backgroundColor:theme.background}}>
+        <View style={{ backgroundColor: theme.background }}>
           <Image
             source={{
               uri: activePhoto.file,
@@ -47,16 +47,27 @@ function ViewAllPhoto() {
                 })
               }
             >
-              <MaterialCommunityIcons name="close" size={40} color={theme.primaryText}/>
+              <MaterialCommunityIcons
+                name="close"
+                size={40}
+                color={theme.primaryText}
+              />
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
-      <Header2 title={string.viewAllPhoto.viewPhoto}/>
+      <Header2 title={string.viewAllPhoto.viewPhoto} />
 
-      <ScrollView contentContainerStyle={{ padding: 10,paddingTop:40 ,backgroundColor:theme.background,flex:1}}>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 15 }}>
+      <ScrollView
+        contentContainerStyle={[
+          {
+            backgroundColor: theme.background,
+          },
+          Styles.scrollContainer,
+        ]}
+      >
+        <View style={Styles.listContainer}>
           {photoUrls.map(item => (
             <View>
               <TouchableOpacity
@@ -70,7 +81,7 @@ function ViewAllPhoto() {
                 <Image
                   source={{ uri: item }}
                   resizeMode="cover"
-                  style={{ height: 120, width: 120, borderRadius: 20 }}
+                  style={Styles.listImage}
                 />
               </TouchableOpacity>
             </View>
@@ -84,6 +95,9 @@ function ViewAllPhoto() {
 export default ViewAllPhoto;
 
 const Styles = StyleSheet.create({
+  scrollContainer: { flexGrow: 1, padding: 10, paddingTop: 40 },
+  listContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 15 },
+  listImage: { height: 120, width: 120, borderRadius: 20 },
   ModalImage: { height: '100%', width: '100%', position: 'relative' },
   closeIconContainer: { position: 'absolute', right: 0 },
   headerContainer: {

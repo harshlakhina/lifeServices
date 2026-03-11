@@ -32,11 +32,12 @@ export const ProfileBottom = () => {
       />
 
       <KeyboardAwareScrollView
-        contentContainerStyle={{
-          paddingTop: isHideProfile ? 420 : 180,
-          padding: 20,
-          backgroundColor: theme.background2,
-        }}
+        contentContainerStyle={[
+          {
+            backgroundColor: theme.background2,
+          },
+          Styles.scrollContainer,
+        ]}
         enableOnAndroid={true}
         keyboardShouldPersistTaps="always"
         onScroll={event => {
@@ -68,23 +69,14 @@ export const ProfileBottom = () => {
         </View>
 
         <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: 17,
-            }}
-          >
-            <Text style={[Styles.diplomaText, { color: theme.text }]}>
+          <View style={Styles.documentAndViewAllContainer}>
+            <Text style={[Styles.documentText, { color: theme.text }]}>
               {string.profile.documents}
             </Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('ViewDocument' as never)}
             >
-              <Text style={{ color: '#07C0E0', fontSize: 20 }}>
-                {string.profile.viewAll}
-              </Text>
+              <Text style={Styles.viewAllText}>{string.profile.viewAll}</Text>
             </TouchableOpacity>
           </View>
 
@@ -92,7 +84,7 @@ export const ProfileBottom = () => {
             horizontal
             data={DiplomaMockData}
             keyExtractor={item => item.id.toString()}
-            contentContainerStyle={{ gap: 15 }}
+            contentContainerStyle={Styles.documentCardMainContainer}
             renderItem={({ item }) => {
               return (
                 <View
@@ -104,30 +96,31 @@ export const ProfileBottom = () => {
                   <Image
                     source={imageSource.diploma}
                     resizeMode="cover"
-                    style={{ height: 100, width: 100, borderRadius: 20 }}
+                    style={Styles.documentCardLeftImage}
                   />
-                  <View style={{ position: 'absolute', right: -41, top: -7 }}>
+                  <View style={Styles.documentCardCheckFillImageContainer}>
                     <Image
                       source={imageSource.checkFill}
-                      style={{ height: 30 }}
+                      style={Styles.documentCardCheckFillImage}
                       resizeMode="contain"
                     />
                   </View>
 
-                  <View style={{ width: 170, gap: 5 }}>
+                  <View style={Styles.documentCardContentContainer}>
                     <Text
-                      style={{
-                        fontWeight: 900,
-                        fontSize: 16,
-                        color: theme.text,
-                      }}
+                      style={[
+                        {
+                          color: theme.text,
+                        },
+                        Styles.documentCardNameText,
+                      ]}
                     >
                       {item.diplomaName}
                     </Text>
 
                     <Text
                       numberOfLines={2}
-                      style={{ color: '#9999AA', fontSize: 13 }}
+                      style={Styles.documentCardDescriptionText}
                     >
                       {item.description}
                     </Text>
@@ -243,6 +236,7 @@ export const ProfileBottom = () => {
 };
 
 const Styles = StyleSheet.create({
+  scrollContainer: { padding: 20 },
   mainProfileImageContainer: {
     position: 'absolute',
     top: 130,
@@ -277,6 +271,7 @@ const Styles = StyleSheet.create({
   mainProfileBottomText: { color: '#FFF', fontSize: 17 },
   aboutMeContainer: {
     gap: 15,
+    paddingTop: 420,
   },
   aboutMeTitle: {
     color: '#141414',
@@ -289,7 +284,15 @@ const Styles = StyleSheet.create({
     lineHeight: 23,
     color: '#141414',
   },
-  diplomaContainer: { width: '96%', gap: 10 },
+  documentAndViewAllContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 17,
+  },
+  documentText: { fontSize: 20, fontWeight: 700 },
+  viewAllText: { color: '#07C0E0', fontSize: 20 },
+  documentCardMainContainer: { gap: 15 },
   documentCardContainer: {
     flexDirection: 'row',
     width: 320,
@@ -300,7 +303,17 @@ const Styles = StyleSheet.create({
     marginTop: 17,
     marginRight: 9,
   },
-  diplomaText: { fontSize: 20, fontWeight: 700 },
+  documentCardLeftImage: { height: 100, width: 100, borderRadius: 20 },
+  documentCardCheckFillImageContainer: {
+    position: 'absolute',
+    right: -41,
+    top: -7,
+  },
+  documentCardCheckFillImage: { height: 30 },
+  documentCardContentContainer: { width: '55%', gap: 5 },
+  documentCardNameText: { fontWeight: 700, fontSize: 16 },
+  documentCardDescriptionText: { color: '#9999AA', fontSize: 13 },
+
   sphereContainer: {
     gap: 15,
     marginVertical: 17,

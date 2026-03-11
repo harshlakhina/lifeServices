@@ -7,7 +7,6 @@ import {
   Modal,
   StyleSheet,
 } from 'react-native';
-// import { InboxStyles } from './styles';
 import { CreatedMockData } from './created-mock-data';
 import { useContext, useState } from 'react';
 import { Button } from '../../components/button';
@@ -38,7 +37,7 @@ export const Created = () => {
             style={[Styles.modalCard, { backgroundColor: theme.background }]}
           >
             <Text style={[Styles.modalLeaveReviewText, { color: theme.text }]}>
-          {string.created.leaveAReview}
+              {string.created.leaveAReview}
             </Text>
 
             <RHFTextInput
@@ -49,7 +48,9 @@ export const Created = () => {
             />
 
             <View style={Styles.RatingContainer}>
-              <Text style={[Styles.modalYourMarkText, { color: theme.text }]}>{string.created.yourMark}</Text>
+              <Text style={[Styles.modalYourMarkText, { color: theme.text }]}>
+                {string.created.yourMark}
+              </Text>
               <RatingScreen rating={rating} setRating={setRating} />
             </View>
 
@@ -61,7 +62,9 @@ export const Created = () => {
                 }}
                 style={[Styles.modalBtn, Styles.modalSendBtnBg]}
               >
-                <Text style={Styles.modalSendBtnText}>{string.button.send}</Text>
+                <Text style={Styles.modalSendBtnText}>
+                  {string.button.send}
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -69,9 +72,11 @@ export const Created = () => {
                   setDialog(false);
                   setActiveIdx(null);
                 }}
-                style={[Styles.modalBtn, { backgroundColor: theme.card}]}
+                style={[Styles.modalBtn, { backgroundColor: theme.card }]}
               >
-                <Text style={[Styles.modalCancelText,{color:theme.text}]}>{string.button.cancel}</Text>
+                <Text style={[Styles.modalCancelText, { color: theme.text }]}>
+                  {string.button.cancel}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -165,7 +170,7 @@ export const Created = () => {
                       ]}
                     >
                       <Text style={[Styles.RejectText, { color: theme.text }]}>
-                       {string.button.rejectApplication}
+                        {string.button.rejectApplication}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -180,7 +185,7 @@ export const Created = () => {
                           { color: theme.text },
                         ]}
                       >
-                      {string.created.applicationCompleted}
+                        {string.created.applicationCompleted}
                       </Text>
                       <Button
                         title={string.button.leaveAReview}

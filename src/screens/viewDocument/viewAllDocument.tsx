@@ -1,4 +1,11 @@
-import { Image, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ViewAllDocuments } from './mock-data';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,90 +23,65 @@ function ViewAllDocument() {
       <Header2 title={string.viewAllDocument.documents} />
 
       <ScrollView
-        contentContainerStyle={{
-          padding: 20,
-          gap: 15,
-          backgroundColor: theme.background2,
-        }}
+        contentContainerStyle={[
+          {
+            backgroundColor: theme.background2,
+          },
+          Styles.scrollContainer,
+        ]}
       >
         {ViewAllDocuments.map(item => {
           return (
             <TouchableOpacity
               key={item.id}
-              style={{
-                flexDirection: 'row',
-                backgroundColor: theme.card,
-                padding: 15,
-                borderRadius: 25,
-                gap: 10,
-                marginRight: 10,
-                marginTop: 10,
-              }}
+              style={[{ backgroundColor: theme.card }, Styles.cardContainer]}
               onPress={() => navigation.navigate('EditApplication' as never)}
             >
               <Image
                 source={imageSource.diploma}
                 resizeMode="cover"
-                style={{ height: 100, width: 100, borderRadius: 20 }}
+                style={Styles.cardContainerLeftImage}
               />
-              <View style={{ position: 'absolute', right: -10, top: -7 }}>
+              <View style={Styles.cardStatusContainer}>
                 {item.status === 'fulfilled' && (
                   <Image
                     source={imageSource.checkFill}
-                    style={{ height: 31, width: 31 }}
+                    style={Styles.cardFullFillImage}
                     resizeMode="contain"
                   />
                 )}
 
                 {item.status === 'pending' && (
-                  <View
-                    style={{
-                      backgroundColor: '#FFA23A',
-                      height: 30,
-                      width: 30,
-                      borderRadius: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
+                  <View style={Styles.cardPedningContainer}>
                     <Image
                       source={imageSource.pending}
-                      style={{ height: 19, width: 30 }}
+                      style={Styles.cardPendingImage}
                       resizeMode="contain"
                     />
                   </View>
                 )}
 
                 {item.status === 'rejected' && (
-                  <View
-                    style={{
-                      backgroundColor: '#FE5050',
-                      height: 30,
-                      width: 30,
-                      borderRadius: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
+                  <View style={Styles.cardRejectedContainer}>
                     <MaterialCommunityIcons
                       name="close"
                       size={22}
-                      style={{ color: '#FFF' }}
+                      style={Styles.cardRejectedClose}
                     />
                   </View>
                 )}
               </View>
 
-              <View style={{ width: 170, gap: 5 }}>
+              <View style={Styles.cardContentContainer}>
                 <Text
-                  style={{ fontWeight: 900, fontSize: 16, color: theme.text }}
+                  style={[{ color: theme.text }, Styles.cardContentNameText]}
                 >
                   {item.diplomaName}
                 </Text>
 
                 <Text
                   numberOfLines={2}
-                  style={{ color: '#9999AA', fontSize: 15 }}
+                  style={Styles.cardContentDescriptionText}
                 >
                   {item.description}
                 </Text>
@@ -110,7 +92,7 @@ function ViewAllDocument() {
 
         <Button
           title={string.button.addNewDocument}
-          styleBtn={{ width: '97%' }}
+          styleBtn={Styles.btn}
           handleBtn={() => navigation.navigate('CreateAnApplication' as never)}
         />
       </ScrollView>
@@ -119,3 +101,43 @@ function ViewAllDocument() {
 }
 
 export default ViewAllDocument;
+
+const Styles = StyleSheet.create({
+  scrollContainer: {
+    padding: 20,
+    gap: 15,
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    padding: 15,
+    borderRadius: 25,
+    gap: 10,
+    marginRight: 10,
+    marginTop: 10,
+  },
+  cardContainerLeftImage: { height: 100, width: 100, borderRadius: 20 },
+  cardContentContainer: { width: '55%', gap: 5 },
+  cardContentNameText: { fontWeight: 900, fontSize: 16 },
+  cardContentDescriptionText: { color: '#9999AA', fontSize: 15 },
+  cardStatusContainer: { position: 'absolute', right: -10, top: -7 },
+  cardFullFillImage: { height: 31, width: 31 },
+  cardPedningContainer: {
+    backgroundColor: '#FFA23A',
+    height: 30,
+    width: 30,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardPendingImage: { height: 19, width: 30 },
+  cardRejectedContainer: {
+    backgroundColor: '#FE5050',
+    height: 30,
+    width: 30,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardRejectedClose: { color: '#FFF' },
+  btn: { width: '97%' },
+});

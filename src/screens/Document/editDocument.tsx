@@ -44,43 +44,25 @@ function EditDocument() {
         enableOnAndroid={true}
         extraScrollHeight={50}
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          flexGrow: 1,
-          backgroundColor: theme.background,
-        }}
+        contentContainerStyle={[
+          {
+            backgroundColor: theme.background,
+          },
+          Styles.scrollContainer,
+        ]}
       >
-        <View
-          style={{
-            padding: 20,
-            gap: 20,
-            alignItems: 'center',
-            // backgroundColor: theme.background,
-            flex: 1,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: '#38C976',
-              width: '100%',
-              borderRadius: 30,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: 13,
-              }}
-            >
-              <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
-                <Text style={{ color: '#FFF', fontSize: 17 }}>Status :</Text>
-                <Text style={{ color: '#FFF', fontSize: 17 }}>Confirmed</Text>
+        <View style={Styles.mainContainer}>
+          <View style={Styles.statusContainer}>
+            <View style={Styles.statusContainerLeftItem}>
+              <View style={Styles.statusTextContainer}>
+                <Text style={Styles.statusText}>Status :</Text>
+
+                <Text style={Styles.statusText}>Confirmed</Text>
               </View>
 
               <Image
                 source={imageSource.checkFill}
-                style={{ height: 35, width: 35 }}
+                style={Styles.fullFillImage}
                 resizeMode="contain"
               />
             </View>
@@ -89,22 +71,22 @@ function EditDocument() {
           <RHFTextInput
             placeholder="+7 (899) 355 76"
             name="PhoneNo"
-            style={{ width: '100%' }}
+            style={Styles.inputWidth}
             keyboardType="phone-pad"
           />
           <RHFTextInput
             placeholder="Hello, I need an invitation design for the wedding."
             name="description"
-            style={{ width: '100%' }}
+            style={Styles.inputWidth}
             multiline
           />
 
-          <View style={{ height: 130 }}>
+          <View style={Styles.photoListContainer}>
             <FlatList
               data={photoUrls}
               showsHorizontalScrollIndicator={false}
               horizontal={true}
-              contentContainerStyle={{ gap: 10 }}
+              contentContainerStyle={Styles.photoList}
               renderItem={({ item, index }) => {
                 const active = activeTrash === index;
                 return (
@@ -124,11 +106,12 @@ function EditDocument() {
                           <Image
                             source={iconSource.trashOutline}
                             resizeMode="cover"
-                            style={{
-                              height: 50,
-                              width: 50,
-                              tintColor: theme.text,
-                            }}
+                            style={[
+                              {
+                                tintColor: theme.text,
+                              },
+                              Styles.trashImage,
+                            ]}
                           />
                         </TouchableOpacity>
                       </View>
@@ -142,14 +125,14 @@ function EditDocument() {
           <TouchableOpacity
             onPress={() => navigation.navigate('ViewAllPhoto' as never)}
           >
-            <Text style={{ fontSize: 20, color: '#07C0E0' }}>
+            <Text style={Styles.viewPhotoText}>
               {string.editAnApplication.viewPhoto}
             </Text>
           </TouchableOpacity>
 
           <Button
             title={string.button.confirmAnApplication}
-            styleBtn={{ width: '97%', marginTop: 70 }}
+            styleBtn={Styles.btnContainer}
             handleBtn={() => navigation.navigate('ViewDocument' as never)}
           />
         </View>
@@ -161,6 +144,47 @@ function EditDocument() {
 export default EditDocument;
 
 const Styles = StyleSheet.create({
+  scrollContainer: { flexGrow: 1 },
+  mainContainer: {
+    padding: 20,
+    gap: 20,
+    alignItems: 'center',
+  },
+  statusContainer: {
+    backgroundColor: '#38C976',
+    width: '100%',
+    borderRadius: 30,
+  },
+  statusContainerLeftItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 13,
+  },
+  statusTextContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+  },
+  statusText: {
+    color: '#FFF',
+    fontSize: 17,
+  },
+  fullFillImage: {
+    height: 35,
+    width: 35,
+  },
+
+  inputWidth: {
+    width: '100%',
+  },
+
+  photoListContainer: {
+    height: 130,
+  },
+  photoList: {
+    gap: 10,
+  },
+
   container: {
     width: 120,
     height: 120,
@@ -177,4 +201,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 20,
   },
+  trashImage: { height: 50, width: 50 },
+  viewPhotoText: { fontSize: 20, color: '#07C0E0' },
+  btnContainer: { width: '97%', marginTop: 70 },
 });

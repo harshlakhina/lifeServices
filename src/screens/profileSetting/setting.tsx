@@ -53,15 +53,15 @@ export const ProfileSetting = () => {
       />
 
       <KeyboardAwareScrollView
-        contentContainerStyle={{
-          paddingTop: isHideProfile ? 420 : 180,
-          padding: 20,
-          paddingBottom: 20,
-          gap: 15,
-          backgroundColor: theme.background2,
-        }}
+        contentContainerStyle={[
+          {
+            backgroundColor: theme.background2,
+          },
+          Styles.scrollContainer,
+        ]}
         enableOnAndroid={true}
         keyboardShouldPersistTaps="handled"
+        extraScrollHeight={150}
         onScroll={event => {
           const scrollY = event.nativeEvent.contentOffset.y;
 
@@ -76,7 +76,7 @@ export const ProfileSetting = () => {
       >
         <RHFTextInput
           name="name"
-          style={{ width: '100%', elevation: 2 }}
+          style={Styles.inputWidth}
           placeholder={string.profileSetting.name}
         />
 
@@ -84,8 +84,8 @@ export const ProfileSetting = () => {
           title={string.profileSetting.country}
           options={countries}
           name="Country"
-          style={[Styles.input, Styles.extraInputItem, { width: '100%' }]}
-          wrapperStyle={{ alignItems: 'center' }}
+          style={Styles.inputWidth}
+          wrapperStyle={Styles.selectCenter}
           selected={true}
         />
 
@@ -93,15 +93,21 @@ export const ProfileSetting = () => {
           title={string.profileSetting.cities}
           options={cities}
           name="Cities"
-          style={[Styles.input, Styles.extraInputItem, { width: '100%' }]}
-          wrapperStyle={{ alignItems: 'center' }}
+          style={Styles.inputWidth}
+          wrapperStyle={Styles.selectCenter}
           selected={true}
         />
 
         <RHFTextInput
           name="email"
-          style={{ width: '100%', elevation: 2 }}
+          style={Styles.inputWidth}
           placeholder={string.profileSetting.email}
+        />
+        <RHFTextInput
+          name="phoneNo"
+          style={Styles.phonoNoInput}
+          placeholder={string.profile.phoneNoPlaceholder}
+          keyboardType="phone-pad"
         />
 
         <View style={Styles.aboutMeContainer}>
@@ -120,23 +126,15 @@ export const ProfileSetting = () => {
           </Text>
         </View>
 
-        <View style={{ gap: 10 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '96%',
-            }}
-          >
-            <Text style={[Styles.diplomaText, { color: theme.text }]}>
+        <View style={Styles.documentMainContainer}>
+          <View style={Styles.documentAndAddContainer}>
+            <Text style={[Styles.documentText, { color: theme.text }]}>
               {string.profileSetting.documents}
             </Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('AddDocument' as never)}
             >
-              <Text style={{ color: '#07C0E0', fontSize: 20 }}>
-                {string.profileSetting.add}
-              </Text>
+              <Text style={Styles.AddText}>{string.profileSetting.add}</Text>
             </TouchableOpacity>
           </View>
 
@@ -145,57 +143,45 @@ export const ProfileSetting = () => {
             data={DiplomaMockData}
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id.toString()}
-            contentContainerStyle={{ gap: 10 }}
+            contentContainerStyle={Styles.documentCardMainContainer}
             renderItem={({ item }) => {
               return (
                 <View
-                  style={{
-                    flexDirection: 'row',
-                    width: 330,
-                    backgroundColor: theme.input,
-                    padding: 15,
-                    borderRadius: 25,
-                    gap: 10,
-                  }}
+                  style={[
+                    Styles.documentCardContainer,
+                    { backgroundColor: theme.card },
+                  ]}
                 >
                   <Image
                     source={imageSource.diploma}
                     resizeMode="cover"
-                    style={{ height: 100, width: 100, borderRadius: 20 }}
+                    style={Styles.documentCardLeftImage}
                   />
                   <TouchableOpacity
-                    style={{
-                      position: 'absolute',
-                      right: 7,
-                      top: 7,
-                      backgroundColor: 'red',
-                      borderRadius: 60,
-                      width: 32,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
+                    style={Styles.documentCardRightTrashContainer}
                   >
                     <Image
                       source={iconSource.trashOutline}
-                      style={{ height: 28, width: 18, tintColor: '#FFF' }}
+                      style={Styles.documentCardRightTrashImage}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
 
-                  <View style={{ width: 170, gap: 5 }}>
+                  <View style={Styles.documentCardContentContainer}>
                     <Text
-                      style={{
-                        fontWeight: 900,
-                        fontSize: 16,
-                        color: theme.text,
-                      }}
+                      style={[
+                        {
+                          color: theme.text,
+                        },
+                        Styles.documentCardNameText,
+                      ]}
                     >
                       {item.diplomaName}
                     </Text>
 
                     <Text
                       numberOfLines={2}
-                      style={{ color: '#9999AA', fontSize: 13 }}
+                      style={Styles.documentCardDescriptionText}
                     >
                       {item.description}
                     </Text>
@@ -208,85 +194,88 @@ export const ProfileSetting = () => {
 
         <View style={Styles.sphereContainer}>
           <Text style={[Styles.sphereTitle, { color: theme.text }]}>
-        {string.profileSetting.spheresOfActivity}
+            {string.profileSetting.spheresOfActivity}
           </Text>
 
           <Select
             title={string.profileSetting.chooseYourProfession}
             options={professions}
             name="profession"
-            style={[Styles.input, Styles.extraInputItem, { width: '97%' }]}
-            wrapperStyle={{ alignItems: 'center' }}
+            style={Styles.inputWidth}
+            wrapperStyle={Styles.selectCenter}
             selected={true}
           />
         </View>
 
-        <View style={{ alignItems: 'center' }}>
-          <Button title={string.button.save} styleBtn={{ width: '100%' }} />
-        </View>
+        <Button title={string.button.save} styleBtn={Styles.btnWidth} />
       </KeyboardAwareScrollView>
 
       {isHideProfile && (
-        <View
-          style={{
-            position: 'absolute',
-            top: 110,
-            padding: 20,
-            left: image ? 10 : 0,
-          }}
-        >
-          {image ? (
-            <Image
-              source={{ uri: image }}
-              resizeMode="cover"
-              style={{
-                height: 400,
-                width: 350,
-                position: 'relative',
-                borderRadius: 30,
-              }}
-            />
-          ) : (
-            <Image
-              source={imageSource.imageDemo3}
-              resizeMode="contain"
-              style={{ height: 400, width: 370, position: 'relative' }}
-            />
-          )}
-
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 40,
-              alignItems: 'center',
-              width: '100%',
-              marginLeft: 12,
-            }}
-          >
-            <TouchableOpacity
-              onPress={pickImage}
-              style={{
-                backgroundColor: '#07C0E0',
-                padding: 15,
-                paddingHorizontal: 35,
-                borderRadius: 50,
-              }}
-            >
-              <Text style={{ color: '#FFF' }}>
-                {string.profileSetting.changePhoto}
-              </Text>
-            </TouchableOpacity>
+        <>
+          <View style={Styles.mainProfileImageContainer}>
+            {!image ? (
+              <Image
+                source={imageSource.imageDemo3}
+                resizeMode="contain"
+                style={Styles.mainProfileImage}
+              />
+            ) : (
+              <Image
+                source={{ uri: image }}
+                resizeMode="contain"
+                style={Styles.mainProfileImage}
+              />
+            )}
+            <View style={Styles.changePhotoContainer}>
+              <TouchableOpacity onPress={pickImage}>
+                <Text style={{ color: theme.background }}>
+                  {string.signUp.changePhoto}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </>
       )}
     </FormProvider>
   );
 };
 
 const Styles = StyleSheet.create({
+  scrollContainer: {
+    padding: 20,
+    paddingTop: 420,
+    gap: 20,
+  },
+  mainProfileImageContainer: {
+    position: 'absolute',
+    top: 130,
+    height: 410,
+    width: 413,
+    alignItems: 'center',
+  },
+  mainProfileImage: { position: 'relative', height: '100%', width: '100%' },
+  mainProfileImageTopContentContainer: {
+    position: 'absolute',
+    top: 20,
+    left: 40,
+  },
+  changePhotoContainer: {
+    position: 'absolute',
+    // alignSelf: 'center',
+    bottom: 18,
+    backgroundColor: '#07C0E0',
+    paddingHorizontal: 30,
+    paddingVertical: 16,
+    borderRadius: 35,
+  },
+
+  inputWidth: {
+    width: '100%',
+  },
+
+  selectCenter: { alignItems: 'center' },
   aboutMeContainer: {
-    width: '99%',
-    gap: 10,
+    gap: 15,
   },
   aboutMeTitle: {
     color: '#141414',
@@ -300,8 +289,41 @@ const Styles = StyleSheet.create({
     lineHeight: 23,
     color: '#141414',
   },
-  diplomaContainer: { width: '97%', gap: 10 },
-  diplomaText: { fontSize: 20, fontWeight: 700, paddingLeft: 9 },
+
+  documentMainContainer: { gap: 15 },
+  documentAndAddContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 9,
+  },
+  documentText: { fontSize: 20, fontWeight: 700 },
+  AddText: { color: '#07C0E0', fontSize: 20 },
+
+  documentCardMainContainer: { gap: 15 },
+  documentCardContainer: {
+    flexDirection: 'row',
+    width: 340,
+    backgroundColor: '#FFF',
+    padding: 15,
+    borderRadius: 25,
+    gap: 15,
+  },
+  documentCardLeftImage: { height: 100, width: 100, borderRadius: 20 },
+  documentCardContentContainer: { width: '55%', gap: 5 },
+  documentCardNameText: { fontWeight: 700, fontSize: 16 },
+  documentCardDescriptionText: { color: '#9999AA', fontSize: 13 },
+  documentCardRightTrashContainer: {
+    position: 'absolute',
+    right: 7,
+    top: 7,
+    backgroundColor: 'red',
+    borderRadius: 60,
+    width: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  documentCardRightTrashImage: { height: 28, width: 18, tintColor: '#FFF' },
+
   sphereContainer: {
     gap: 10,
   },
@@ -311,11 +333,8 @@ const Styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 9,
   },
-  phoneNoContainer: {
-    paddingHorizontal: 25,
-    gap: 10,
-  },
-  phoneNoText: { fontSize: 20, fontWeight: 700 },
+  btnWidth: { width: '100%' },
+  phonoNoInput: { width: '100%', elevation: 2 },
   container: { width: '100%' },
   wrapper: {
     width: '100%',

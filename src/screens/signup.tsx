@@ -58,58 +58,41 @@ export default function SignUp({ navigation }: any) {
           resizeMode="contain"
         />
 
-        <Text style={{ fontSize: 37, color: theme.text }}>
-          <Text style={{ fontWeight: 'bold' }}>{string.auth.life}</Text>{' '}
+        <Text style={[{ color: theme.text }, SignUpStyles.text]}>
+          <Text style={SignUpStyles.textLife}>{string.auth.life}</Text>{' '}
           {string.auth.services}
         </Text>
       </View>
 
       <KeyboardAwareScrollView
         enableOnAndroid={true}
-        extraScrollHeight={50}
+        extraScrollHeight={150}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           backgroundColor: theme.background,
-          padding: 5,
         }}
       >
         {!image ? (
-          <TouchableOpacity
-            style={{ alignItems: 'center', paddingTop: 20, gap: 15 }}
-          >
+          <TouchableOpacity style={SignUpStyles.profileDemoContainer}>
             <View>
               <TouchableOpacity
                 onPress={pickImage}
-                style={{
-                  backgroundColor: theme.input,
-                  height: 120,
-                  width: 120,
-                  borderRadius: 20,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  elevation: 2,
-                }}
+                style={[
+                  { backgroundColor: theme.input },
+                  SignUpStyles.profileDemoImageContainer,
+                ]}
               >
                 <Image
                   source={iconSource.profileWhiteColor}
-                  style={{ height: 55, width: 55, tintColor: theme.bottomTab }}
+                  style={[
+                    { tintColor: theme.bottomTab },
+                    SignUpStyles.profileDemoImage,
+                  ]}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
 
-              <View
-                style={{
-                  position: 'absolute',
-                  right: -8,
-                  top: -13,
-                  backgroundColor: '#07C0E0',
-                  height: 35,
-                  width: 35,
-                  borderRadius: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
+              <View style={SignUpStyles.profileDemoPlusContainer}>
                 <MaterialCommunityIcons
                   name="plus"
                   size={24}
@@ -117,43 +100,23 @@ export default function SignUp({ navigation }: any) {
                 />
               </View>
             </View>
-            <Text style={{ color: '#07C0E0', fontSize: 20 }}>
+            <Text style={SignUpStyles.addYourPhotoText}>
               {string.signUp.addYourPhoto}
             </Text>
           </TouchableOpacity>
         ) : (
-          <View
-            style={{
-              position: 'relative',
-            }}
-          >
-            <View
-              style={{
-                width: '100%',
-                paddingHorizontal: 30,
-                alignItems: 'center',
-              }}
-            >
+          <View style={SignUpStyles.selectedImageMainContainer}>
+            <View style={SignUpStyles.selectedImageContainer}>
               <Image
                 source={{ uri: image }}
-                style={{ height: 350, width: '100%', borderRadius: 25 }}
+                style={SignUpStyles.selectedImage}
                 resizeMode="cover"
               />
             </View>
 
-            <View
-              style={{
-                position: 'absolute',
-                alignSelf: 'center',
-                bottom: 18,
-                backgroundColor: '#07C0E0',
-                paddingHorizontal: 30,
-                paddingVertical: 16,
-                borderRadius: 35,
-              }}
-            >
+            <View style={SignUpStyles.changePhotoContainer}>
               <TouchableOpacity onPress={pickImage}>
-                <Text style={{ color: '#FFF' }}>
+                <Text style={{ color: theme.background }}>
                   {string.signUp.changePhoto}
                 </Text>
               </TouchableOpacity>
@@ -161,27 +124,27 @@ export default function SignUp({ navigation }: any) {
           </View>
         )}
 
-        <View style={[SignUpStyles.inputWrapper, , { padding: 20 }]}>
+        <View style={[SignUpStyles.inputWrapper]}>
           <RHFTextInput
             placeholder={string.signUp.name}
             name="name"
-            style={{ width: '100%' }}
+            style={SignUpStyles.inputWidth}
           />
 
           <Select
             title={string.signUp.chooseYourProfession}
             options={professions}
             name="profession"
-            style={[{ width: '100%' }]}
-            wrapperStyle={{ alignItems: 'center' }}
+            style={SignUpStyles.inputWidth}
+            wrapperStyle={SignUpStyles.selectCenter}
             selected={true}
           />
           <Select
             title={string.signUp.chooseACountry}
             options={countries}
             name="country"
-            style={[{ width: '100%' }]}
-            wrapperStyle={{ alignItems: 'center' }}
+            style={SignUpStyles.inputWidth}
+            wrapperStyle={SignUpStyles.selectCenter}
             selected={true}
           />
 
@@ -189,31 +152,31 @@ export default function SignUp({ navigation }: any) {
             title={string.signUp.chooseYourCity}
             options={cities}
             name="city"
-            style={[{ width: '100%' }]}
-            wrapperStyle={{ alignItems: 'center' }}
+            style={SignUpStyles.inputWidth}
+            wrapperStyle={SignUpStyles.selectCenter}
             selected={true}
           />
 
           <RHFTextInput
             placeholder={string.signUp.enterYourAddress}
             name="address"
-            style={{ width: '100%' }}
+            style={SignUpStyles.inputWidth}
           />
           <RHFTextInput
             placeholder={string.signUp.yourPhoneNumber}
             name="phoneNo"
             keyboardType="number-pad"
-            style={{ width: '100%' }}
+            style={SignUpStyles.inputWidth}
           />
 
-          <View style={{ width: '100%', gap: 20 }}>
+          <View style={SignUpStyles.phoneNoMainContainer}>
             {!isPhone ? (
               <TouchableOpacity
                 onPress={() => setIsPhone(true)}
-                style={{ flexDirection: 'row', gap: 10, paddingLeft: 15 }}
+                style={SignUpStyles.phoneNoContainer}
               >
                 <MaterialCommunityIcons name="plus" size={24} color="#07C0E0" />
-                <Text style={{ color: '#07C0E0', fontSize: 18 }}>
+                <Text style={SignUpStyles.phoneNoText}>
                   {string.signUp.addPhoneNumber}
                 </Text>
               </TouchableOpacity>
@@ -222,7 +185,7 @@ export default function SignUp({ navigation }: any) {
                 placeholder={string.signUp.yourPhoneNumber}
                 name="phoneNo1"
                 keyboardType="number-pad"
-                style={{ width: '100%' }}
+                style={SignUpStyles.inputWidth}
               />
             )}
           </View>
@@ -230,37 +193,34 @@ export default function SignUp({ navigation }: any) {
           <RHFTextInput
             placeholder={string.signUp.email}
             name="email"
-            style={{ width: '100%' }}
+            style={SignUpStyles.inputWidth}
           />
 
           <RHFTextInput
             placeholder={string.signUp.password}
             name="password"
             secureTextEntry
-            style={{ width: '100%' }}
+            style={SignUpStyles.inputWidth}
           />
           <RHFTextInput
             placeholder={string.signUp.confirmPassword}
             name="confirmPassword"
             secureTextEntry
-            style={{ width: '100%' }}
+            style={SignUpStyles.inputWidth}
           />
           <Button
             title={string.button.signUp}
             handleBtn={handleSubmit(onSubmit)}
-            styleBtn={{ width: '100%' }}
+            styleBtn={SignUpStyles.inputWidth}
           />
 
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: 8,
-              marginBottom: 30,
-              width: '100%',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 18, color: theme.text }}>
+          <View style={SignUpStyles.doYouHaveAndSignInContainer}>
+            <Text
+              style={[
+                { color: theme.text },
+                SignUpStyles.doYouAlreadyHaveAnAccountText,
+              ]}
+            >
               {string.signUp.doYouAlreadyHave}
             </Text>
 
