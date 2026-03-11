@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
 import { RHFTextInput } from '../hookform/rhfTextInput';
 import { imageSource, string } from '../constants';
+import { Routes } from '../navigation';
 
 interface SignInFormData {
   email: string;
@@ -48,7 +49,6 @@ export default function SignIn({ navigation }: any) {
           style={Styles.profileLogoImage}
           resizeMode="contain"
         />
-
         <Text style={[Styles.text, { color: theme.text }]}>
           <Text style={Styles.textLife}>{string.auth.life}</Text>{' '}
           {string.auth.services}
@@ -69,7 +69,7 @@ export default function SignIn({ navigation }: any) {
 
         <View style={Styles.forgotPassWordContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('ForgotPassWord')}
+            onPress={() => navigation.navigate(Routes.ForgotPassword)}
           >
             <Text style={Styles.forgotPasswordText}>
               {string.signIn.forgotPassword}
@@ -88,7 +88,7 @@ export default function SignIn({ navigation }: any) {
             {string.signIn.dontHaveAnAccountYet}
           </Text>
 
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <TouchableOpacity onPress={() => navigation.navigate(Routes.SignUp)}>
             <Text style={Styles.createRightNotBtn}>
               {string.signIn.createRightNow}
             </Text>
