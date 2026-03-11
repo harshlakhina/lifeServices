@@ -1,4 +1,5 @@
 import { iconSource, imageSource } from '../../constants';
+import { Routes } from '../../navigation';
 
 export const SupportItems = [
   {
@@ -18,25 +19,25 @@ export const InformationItem = [
     label: 'Terms of Use',
     icon: iconSource.backIcon,
     symbol: imageSource.termsOfUse,
-    navigate: 'TermOfUse',
+    navigate: Routes.TermOfUse,
   },
   {
     label: 'Community Rules',
     icon: iconSource.backIcon,
     symbol: imageSource.checkMarkSquare,
-    navigate: 'CommunityRules',
+    navigate: Routes.CommunityRules,
   },
   {
     label: 'Privacy Policy',
     icon: iconSource.backIcon,
     symbol: imageSource.privacyPolicy,
-    navigate: 'PrivacyPolicy',
+    navigate: Routes.PrivacyPolicy,
   },
   {
     label: 'Copyright',
     icon: iconSource.backIcon,
     symbol: imageSource.copyRight,
-    navigate: 'CopyRight',
+    navigate: Routes.CopyRight,
   },
 ];
 

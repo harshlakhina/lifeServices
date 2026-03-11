@@ -17,6 +17,7 @@ import { HomeStyles } from './style';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
 import { imageSource, string } from '../../constants';
+import { Routes } from '../../navigation';
 
 export const Home = () => {
   const methods = useForm();
@@ -52,7 +53,7 @@ export const Home = () => {
       {/* Header */}
       <Header
         title={string.home.home}
-        handleFunction={() => navigation.navigate('Map' as never)}
+        handleFunction={() => navigation.navigate(Routes.Map as never)}
       />
 
       {/* Scrollable Content */}

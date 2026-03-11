@@ -16,6 +16,7 @@ import { useContext, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
 import { imageSource, string } from '../../constants';
+import { Routes } from '../../navigation';
 
 export const ProfileBottom = () => {
   const { theme } = useContext(ThemeContext);
@@ -74,7 +75,7 @@ export const ProfileBottom = () => {
               {string.profile.documents}
             </Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate('ViewDocument' as never)}
+              onPress={() => navigation.navigate(Routes.ViewAll as never)}
             >
               <Text style={Styles.viewAllText}>{string.profile.viewAll}</Text>
             </TouchableOpacity>
