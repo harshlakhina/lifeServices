@@ -10,21 +10,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { RHFTextInput } from '../hookform/rhfTextInput';
 import { Button } from '../components/button';
 import { SignUpStyles } from './styles';
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import { SignUpSchema } from '../schema/SignUpSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SignUpSchema } from '../schema/SignUpSchema';
 import { ThemeContext } from '../theme/themecontext';
 import { iconSource, imageSource, string } from '../constants';
-
-import CountryPickerModal from '../components/country-picker';
+import PhoneInput from '../components/country-picker';
 
 export default function SignUp({ navigation }: any) {
   const { theme } = useContext(ThemeContext);
   const methods = useForm({
-    // resolver: yupResolver(SignUpSchema),
-    defaultValues: {
-      country: 'India',
-    },
+    resolver: yupResolver(SignUpSchema),
   });
+
   const [isPhone, setIsPhone] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
 
@@ -136,15 +133,6 @@ export default function SignUp({ navigation }: any) {
               wrapperStyle={SignUpStyles.selectCenter}
               selected={true}
             />
-            {/* <Select
-              title={string.signUp.chooseACountry}
-              options={countries}
-              name="country"
-              style={SignUpStyles.inputWidth}
-              wrapperStyle={SignUpStyles.selectCenter}
-              selected={true}
-            /> */}
-            <CountryPickerModal />
 
             <Select
               title={string.signUp.chooseYourCity}
@@ -160,15 +148,10 @@ export default function SignUp({ navigation }: any) {
               name="address"
               style={SignUpStyles.inputWidth}
             />
-            <RHFTextInput
-              placeholder={string.signUp.yourPhoneNumber}
-              name="phoneNo"
-              keyboardType="number-pad"
-              style={SignUpStyles.inputWidth}
-            />
 
-            <View style={SignUpStyles.phoneNoMainContainer}>
-              {!isPhone ? (
+            <PhoneInput phoneName="phoneNumber" countryName="countryCode" />
+            {!isPhone ? (
+              <View style={{ alignSelf: 'flex-start' }}>
                 <TouchableOpacity
                   onPress={() => setIsPhone(true)}
                   style={SignUpStyles.phoneNoContainer}
@@ -182,15 +165,10 @@ export default function SignUp({ navigation }: any) {
                     {string.signUp.addPhoneNumber}
                   </Text>
                 </TouchableOpacity>
-              ) : (
-                <RHFTextInput
-                  placeholder={string.signUp.yourPhoneNumber}
-                  name="phoneNo1"
-                  keyboardType="number-pad"
-                  style={SignUpStyles.inputWidth}
-                />
-              )}
-            </View>
+              </View>
+            ) : (
+              <PhoneInput phoneName="phoneNumber1" countryName="countryCode" />
+            )}
 
             <RHFTextInput
               placeholder={string.signUp.email}
