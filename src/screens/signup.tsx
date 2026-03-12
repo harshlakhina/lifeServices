@@ -3,7 +3,6 @@ import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Select } from '../hookform/select';
 import { professions } from '../constants/profession';
-import { countries } from '../constants/countries';
 import { cities } from '../constants/cities';
 import { useContext, useState } from 'react';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -11,15 +10,20 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { RHFTextInput } from '../hookform/rhfTextInput';
 import { Button } from '../components/button';
 import { SignUpStyles } from './styles';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { SignUpSchema } from '../schema/SignUpSchema';
+// import { yupResolver } from '@hookform/resolvers/yup';
+// import { SignUpSchema } from '../schema/SignUpSchema';
 import { ThemeContext } from '../theme/themecontext';
 import { iconSource, imageSource, string } from '../constants';
+
+import CountryPickerModal from '../components/country-picker';
 
 export default function SignUp({ navigation }: any) {
   const { theme } = useContext(ThemeContext);
   const methods = useForm({
-    resolver: yupResolver(SignUpSchema),
+    // resolver: yupResolver(SignUpSchema),
+    defaultValues: {
+      country: 'India',
+    },
   });
   const [isPhone, setIsPhone] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
@@ -46,190 +50,189 @@ export default function SignUp({ navigation }: any) {
 
   return (
     <FormProvider {...methods}>
-      <View
-        style={[
-          SignUpStyles.profileImageWrapper,
-          { backgroundColor: theme.background },
-        ]}
-      >
-        <Image
-          source={imageSource.profileLogo}
-          style={SignUpStyles.profileLogoImage}
-          resizeMode="contain"
-        />
+      <View style={{ backgroundColor: theme.background, flex: 1 }}>
+        <View style={[SignUpStyles.profileImageWrapper]}>
+          <Image
+            source={imageSource.profileLogo}
+            style={SignUpStyles.profileLogoImage}
+            resizeMode="contain"
+          />
 
-        <Text style={[{ color: theme.text }, SignUpStyles.text]}>
-          <Text style={SignUpStyles.textLife}>{string.auth.life}</Text>{' '}
-          {string.auth.services}
-        </Text>
-      </View>
+          <Text style={[{ color: theme.text }, SignUpStyles.text]}>
+            <Text style={SignUpStyles.textLife}>{string.auth.life}</Text>{' '}
+            {string.auth.services}
+          </Text>
+        </View>
 
-      <KeyboardAwareScrollView
-        enableOnAndroid={true}
-        extraScrollHeight={150}
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          backgroundColor: theme.background,
-        }}
-      >
-        {!image ? (
-          <TouchableOpacity style={SignUpStyles.profileDemoContainer}>
-            <View>
-              <TouchableOpacity
-                onPress={pickImage}
-                style={[
-                  { backgroundColor: theme.input },
-                  SignUpStyles.profileDemoImageContainer,
-                ]}
-              >
-                <Image
-                  source={iconSource.profileWhiteColor}
+        <KeyboardAwareScrollView
+          enableOnAndroid={true}
+          extraScrollHeight={150}
+          keyboardShouldPersistTaps="handled"
+        >
+          {!image ? (
+            <TouchableOpacity style={SignUpStyles.profileDemoContainer}>
+              <View>
+                <TouchableOpacity
+                  onPress={pickImage}
                   style={[
-                    { tintColor: theme.bottomTab },
-                    SignUpStyles.profileDemoImage,
+                    { backgroundColor: theme.input },
+                    SignUpStyles.profileDemoImageContainer,
                   ]}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
+                >
+                  <Image
+                    source={iconSource.profileWhiteColor}
+                    style={[
+                      { tintColor: theme.bottomTab },
+                      SignUpStyles.profileDemoImage,
+                    ]}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
 
-              <View style={SignUpStyles.profileDemoPlusContainer}>
-                <MaterialCommunityIcons
-                  name="plus"
-                  size={24}
-                  color={theme.background}
+                <View style={SignUpStyles.profileDemoPlusContainer}>
+                  <MaterialCommunityIcons
+                    name="plus"
+                    size={24}
+                    color={theme.background}
+                  />
+                </View>
+              </View>
+              <Text style={SignUpStyles.addYourPhotoText}>
+                {string.signUp.addYourPhoto}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <View style={SignUpStyles.selectedImageMainContainer}>
+              <View style={SignUpStyles.selectedImageContainer}>
+                <Image
+                  source={{ uri: image }}
+                  style={SignUpStyles.selectedImage}
+                  resizeMode="cover"
                 />
               </View>
+
+              <View style={SignUpStyles.changePhotoContainer}>
+                <TouchableOpacity onPress={pickImage}>
+                  <Text style={{ color: theme.background }}>
+                    {string.signUp.changePhoto}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <Text style={SignUpStyles.addYourPhotoText}>
-              {string.signUp.addYourPhoto}
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <View style={SignUpStyles.selectedImageMainContainer}>
-            <View style={SignUpStyles.selectedImageContainer}>
-              <Image
-                source={{ uri: image }}
-                style={SignUpStyles.selectedImage}
-                resizeMode="cover"
-              />
+          )}
+
+          <View style={[SignUpStyles.inputWrapper]}>
+            <RHFTextInput
+              placeholder={string.signUp.name}
+              name="name"
+              style={SignUpStyles.inputWidth}
+            />
+
+            <Select
+              title={string.signUp.chooseYourProfession}
+              options={professions}
+              name="profession"
+              style={SignUpStyles.inputWidth}
+              wrapperStyle={SignUpStyles.selectCenter}
+              selected={true}
+            />
+            {/* <Select
+              title={string.signUp.chooseACountry}
+              options={countries}
+              name="country"
+              style={SignUpStyles.inputWidth}
+              wrapperStyle={SignUpStyles.selectCenter}
+              selected={true}
+            /> */}
+            <CountryPickerModal />
+
+            <Select
+              title={string.signUp.chooseYourCity}
+              options={cities}
+              name="city"
+              style={SignUpStyles.inputWidth}
+              wrapperStyle={SignUpStyles.selectCenter}
+              selected={true}
+            />
+
+            <RHFTextInput
+              placeholder={string.signUp.enterYourAddress}
+              name="address"
+              style={SignUpStyles.inputWidth}
+            />
+            <RHFTextInput
+              placeholder={string.signUp.yourPhoneNumber}
+              name="phoneNo"
+              keyboardType="number-pad"
+              style={SignUpStyles.inputWidth}
+            />
+
+            <View style={SignUpStyles.phoneNoMainContainer}>
+              {!isPhone ? (
+                <TouchableOpacity
+                  onPress={() => setIsPhone(true)}
+                  style={SignUpStyles.phoneNoContainer}
+                >
+                  <MaterialCommunityIcons
+                    name="plus"
+                    size={24}
+                    color="#07C0E0"
+                  />
+                  <Text style={SignUpStyles.phoneNoText}>
+                    {string.signUp.addPhoneNumber}
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <RHFTextInput
+                  placeholder={string.signUp.yourPhoneNumber}
+                  name="phoneNo1"
+                  keyboardType="number-pad"
+                  style={SignUpStyles.inputWidth}
+                />
+              )}
             </View>
 
-            <View style={SignUpStyles.changePhotoContainer}>
-              <TouchableOpacity onPress={pickImage}>
-                <Text style={{ color: theme.background }}>
-                  {string.signUp.changePhoto}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
+            <RHFTextInput
+              placeholder={string.signUp.email}
+              name="email"
+              style={SignUpStyles.inputWidth}
+            />
 
-        <View style={[SignUpStyles.inputWrapper]}>
-          <RHFTextInput
-            placeholder={string.signUp.name}
-            name="name"
-            style={SignUpStyles.inputWidth}
-          />
+            <RHFTextInput
+              placeholder={string.signUp.password}
+              name="password"
+              secureTextEntry
+              style={SignUpStyles.inputWidth}
+            />
+            <RHFTextInput
+              placeholder={string.signUp.confirmPassword}
+              name="confirmPassword"
+              secureTextEntry
+              style={SignUpStyles.inputWidth}
+            />
+            <Button
+              title={string.button.signUp}
+              handleBtn={handleSubmit(onSubmit)}
+              styleBtn={SignUpStyles.inputWidth}
+            />
 
-          <Select
-            title={string.signUp.chooseYourProfession}
-            options={professions}
-            name="profession"
-            style={SignUpStyles.inputWidth}
-            wrapperStyle={SignUpStyles.selectCenter}
-            selected={true}
-          />
-          <Select
-            title={string.signUp.chooseACountry}
-            options={countries}
-            name="country"
-            style={SignUpStyles.inputWidth}
-            wrapperStyle={SignUpStyles.selectCenter}
-            selected={true}
-          />
-
-          <Select
-            title={string.signUp.chooseYourCity}
-            options={cities}
-            name="city"
-            style={SignUpStyles.inputWidth}
-            wrapperStyle={SignUpStyles.selectCenter}
-            selected={true}
-          />
-
-          <RHFTextInput
-            placeholder={string.signUp.enterYourAddress}
-            name="address"
-            style={SignUpStyles.inputWidth}
-          />
-          <RHFTextInput
-            placeholder={string.signUp.yourPhoneNumber}
-            name="phoneNo"
-            keyboardType="number-pad"
-            style={SignUpStyles.inputWidth}
-          />
-
-          <View style={SignUpStyles.phoneNoMainContainer}>
-            {!isPhone ? (
-              <TouchableOpacity
-                onPress={() => setIsPhone(true)}
-                style={SignUpStyles.phoneNoContainer}
+            <View style={SignUpStyles.doYouHaveAndSignInContainer}>
+              <Text
+                style={[
+                  { color: theme.text },
+                  SignUpStyles.doYouAlreadyHaveAnAccountText,
+                ]}
               >
-                <MaterialCommunityIcons name="plus" size={24} color="#07C0E0" />
-                <Text style={SignUpStyles.phoneNoText}>
-                  {string.signUp.addPhoneNumber}
-                </Text>
+                {string.signUp.doYouAlreadyHave}
+              </Text>
+
+              <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+                <Text style={SignUpStyles.signIn}>{string.button.signIn}</Text>
               </TouchableOpacity>
-            ) : (
-              <RHFTextInput
-                placeholder={string.signUp.yourPhoneNumber}
-                name="phoneNo1"
-                keyboardType="number-pad"
-                style={SignUpStyles.inputWidth}
-              />
-            )}
+            </View>
           </View>
-
-          <RHFTextInput
-            placeholder={string.signUp.email}
-            name="email"
-            style={SignUpStyles.inputWidth}
-          />
-
-          <RHFTextInput
-            placeholder={string.signUp.password}
-            name="password"
-            secureTextEntry
-            style={SignUpStyles.inputWidth}
-          />
-          <RHFTextInput
-            placeholder={string.signUp.confirmPassword}
-            name="confirmPassword"
-            secureTextEntry
-            style={SignUpStyles.inputWidth}
-          />
-          <Button
-            title={string.button.signUp}
-            handleBtn={handleSubmit(onSubmit)}
-            styleBtn={SignUpStyles.inputWidth}
-          />
-
-          <View style={SignUpStyles.doYouHaveAndSignInContainer}>
-            <Text
-              style={[
-                { color: theme.text },
-                SignUpStyles.doYouAlreadyHaveAnAccountText,
-              ]}
-            >
-              {string.signUp.doYouAlreadyHave}
-            </Text>
-
-            <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-              <Text style={SignUpStyles.signIn}>{string.button.signIn}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView>
+      </View>
     </FormProvider>
   );
 }

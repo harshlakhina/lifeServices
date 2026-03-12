@@ -1,27 +1,26 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+
 import { Button } from '../components/button';
 import { useContext } from 'react';
 import { ThemeContext } from '../theme/themecontext';
 import { imageSource, string } from '../constants';
 import { Routes } from '../navigation';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function OnboardingScreen({ navigation }: any) {
   const { theme, isDark } = useContext(ThemeContext);
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={[
-        Styles.container,
-        { backgroundColor: theme.background },
-      ]}
-      enableOnAndroid={true}
-      extraScrollHeight={50}
-    >
-      <Image
+    <View style={[Styles.container, { backgroundColor: theme.background }]}>
+      <ImageBackground
         source={!isDark ? imageSource.imageDemo1 : imageSource.imageDemo1black}
         style={Styles.lifeServiceImage}
         resizeMode="cover"
-      />
+      >
+        <LinearGradient
+          colors={['transparent', theme.background]}
+          style={Styles.gradient}
+        />
+      </ImageBackground>
 
       <View style={Styles.content}>
         <Image
@@ -29,7 +28,6 @@ export default function OnboardingScreen({ navigation }: any) {
           style={Styles.profileLogoImage}
           resizeMode="contain"
         />
-
         <Text style={[{ color: theme.text }, Styles.text]}>
           <Text style={Styles.textLife}>{string.auth.life}</Text>{' '}
           {string.auth.services}
@@ -52,7 +50,7 @@ export default function OnboardingScreen({ navigation }: any) {
           />
         </View>
       </View>
-    </KeyboardAwareScrollView>
+    </View>
   );
 }
 
@@ -69,7 +67,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileLogoImage: {
-    height: 130,
+    height: '27%',
   },
   btnContainer: {
     width: '100%',
@@ -86,4 +84,7 @@ const Styles = StyleSheet.create({
   },
   description: { paddingTop: 28, paddingBottom: 60, fontSize: 18 },
   signUpBtn: { color: '#3EAEFF', fontWeight: 500, fontSize: 18 },
+  gradient: {
+    flex: 1,
+  },
 });

@@ -153,7 +153,7 @@ export const SelectDropStyles = StyleSheet.create({
     width: '80%',
     borderRadius: 20,
     zIndex: 1,
-    elevation:5
+    elevation: 5,
   },
   extraDropDownItem: { width: '100%', borderRadius: 0 },
   selectedContainer: {
