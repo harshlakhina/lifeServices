@@ -19,15 +19,21 @@ export const Select = (props: any) => {
       control={control}
       name={props.name}
       render={({ field: { onChange } }) => {
-        function ToggleSelected(profession: string) {
-          setIsSelected(prev => {
-            let updated;
-            updated = prev.includes(profession)
-              ? prev.filter(selected => selected !== profession)
-              : [...prev, profession];
-            onChange(updated);
-            return updated;
-          });
+        function ToggleSelected(option: string) {
+          if (props.multiple) {
+            setIsSelected(prev => {
+              const updated = prev.includes(option)
+                ? prev.filter(i => i !== option)
+                : [...prev, option];
+
+              onChange(updated);
+              return updated;
+            });
+          } else {
+            setIsSelected([option]);
+            onChange(option);
+            setIsDrop(false);
+          }
         }
         return (
           <View style={SelectDropStyles.container}>
@@ -53,7 +59,9 @@ export const Select = (props: any) => {
                       errors?.[props.name] ? Styles.error : Styles.normal,
                     ]}
                   >
-                    {props.title}
+                    {isSelected.length > 0
+                      ? isSelected[isSelected.length - 1]
+                      : props.title}
                   </Text>
 
                   <View>
@@ -159,7 +167,7 @@ const Styles = StyleSheet.create({
   lightBorder: { borderColor: '#fff' },
   darkBorder: { borderColor: '#000' },
   errorBorder: { borderColor: 'red' },
-  errorWidth: { width: '80%' },
+  errorWidth: { width: '90%' },
   selectedItemContainer: {
     backgroundColor: '#07C0E0',
     flexDirection: 'row',

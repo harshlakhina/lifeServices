@@ -31,7 +31,7 @@ export const RHFTextInput = (props: any) => {
               },
               props.style,
 
-              { borderColor: errors?.[props.name] ? 'red' : '' },
+              { borderColor: errors?.[props.name] ? 'red' : theme.background },
               props.multiline && Styles.multine,
             ]}
             value={value}

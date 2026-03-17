@@ -15,10 +15,10 @@ function CustomDrawerContent(props: any) {
       symbol: iconSource.settings,
     },
     {
-      name: 'Contact developers',
-      label: 'Contact developers',
+      name: 'Map',
+      label: 'Next To Me',
       icon: iconSource.backIcon,
-      symbol: imageSource.contactPeople,
+      symbol: iconSource.mapIcon,
     },
     {
       name: 'Notifications',

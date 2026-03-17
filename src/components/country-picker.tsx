@@ -21,12 +21,18 @@ export default function PhoneInput({ phoneName, countryName }: Props) {
 
   return (
     <View style={{ width: '100%' }}>
-      <View style={[styles.container, { backgroundColor: theme.input }]}>
-        {/* Country Picker */}
-        <Controller
-          control={control}
-          name={countryName}
-          render={() => (
+      <Controller
+        control={control}
+        name={phoneName}
+        render={({ field: { onChange }, fieldState: { error } }) => (
+          <View
+            style={[
+              styles.container,
+              { backgroundColor: theme.input },
+              error ? { borderWidth: 1, borderColor: 'red' } : null,
+            ]}
+          >
+            {/* Country Picker */}
             <CountryPicker
               withFilter
               withFlag
@@ -34,17 +40,11 @@ export default function PhoneInput({ phoneName, countryName }: Props) {
               countryCode={(country?.cca2 as CountryCode) || 'IN'}
               onSelect={c => {
                 setCountry(c);
-                setValue(countryName, c.cca2); // store country code
+                setValue(countryName, c.cca2);
               }}
             />
-          )}
-        />
 
-        {/* Phone Input */}
-        <Controller
-          control={control}
-          name={phoneName}
-          render={({ field: { onChange } }) => (
+            {/* Phone Input */}
             <View style={styles.inputRow}>
               <Text style={styles.prefix}>
                 {country?.callingCode ? `+${country.callingCode[0]}` : '+91'}
@@ -60,21 +60,23 @@ export default function PhoneInput({ phoneName, countryName }: Props) {
                 }}
               />
             </View>
-          )}
-        />
-      </View>
+          </View>
+        )}
+      />
 
-      <View style={{ marginLeft: 15 }}>
-        <Controller
-          control={control}
-          name={phoneName}
-          render={({ fieldState: { error } }) => (
-            <Text style={{ color: 'red', marginTop: 5 }}>
-              {error ? error.message : ' '}
-            </Text>
-          )}
-        />
-      </View>
+      <Controller
+        control={control}
+        name={phoneName}
+        render={({ fieldState: { error } }) => (
+          <>
+            {error && (
+              <Text style={{ color: 'red', marginTop: 5, marginLeft: 15 }}>
+                {error.message}
+              </Text>
+            )}
+          </>
+        )}
+      />
     </View>
   );
 }
@@ -87,6 +89,7 @@ const styles = StyleSheet.create({
     height: 60,
     paddingHorizontal: 10,
     width: '100%',
+    elevation: 5,
   },
   inputRow: {
     flexDirection: 'row',

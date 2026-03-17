@@ -1,10 +1,14 @@
 import RootNavigation from './src/navigation/root-navigation';
+import store from './src/redux/store';
 import { ThemeProvider } from './src/theme/themecontext';
+import { Provider } from 'react-redux';
 
 function App() {
   return (
     <ThemeProvider>
-      <RootNavigation />
+      <Provider store={store}>
+        <RootNavigation />
+      </Provider>
     </ThemeProvider>
   );
 }

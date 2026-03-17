@@ -1,25 +1,25 @@
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { FormProvider, useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import { SignInSchema } from '../schema/signInSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SignInSchema } from '../../../schema/signInSchema';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Button } from '../components/button';
 import { useContext } from 'react';
-import { ThemeContext } from '../theme/themecontext';
-import { RHFTextInput } from '../hookform/rhfTextInput';
-import { imageSource, string } from '../constants';
-import { Routes } from '../navigation';
-
-interface SignInFormData {
-  email: string;
-  password: string;
-}
+import { Routes } from '../../../navigation';
+import { imageSource, string } from '../../../constants';
+import { ThemeContext } from '../../../theme/themecontext';
+import { RHFTextInput } from '../../../hookform/rhfTextInput';
+import { Button } from '../../../components/button';
+import { useDispatch } from 'react-redux';
+import { signin } from '../slice';
+import { Select } from '../../../hookform/select';
+import { Role } from '../mock-data';
 
 export default function SignIn({ navigation }: any) {
   const { theme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
 
-  const methods = useForm<SignInFormData>({
-    // resolver: yupResolver(SignInSchema),
+  const methods = useForm({
+    resolver: yupResolver(SignInSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -28,9 +28,8 @@ export default function SignIn({ navigation }: any) {
 
   const { handleSubmit } = methods;
 
-  const onSubmit = (data: SignInFormData) => {
-    console.log(data);
-    navigation.navigate('Home-screen');
+  const onSubmit = (data: any) => {
+    dispatch(signin(data));
   };
 
   return (
@@ -55,6 +54,14 @@ export default function SignIn({ navigation }: any) {
         </Text>
 
         <View style={Styles.inputContainer}>
+          <Select
+            title={string.signIn.chooseYourRole}
+            name="role"
+            options={Role}
+            multiple={false}
+            style={Styles.inputWidth}
+            wrapperStyle={Styles.selectCenter}
+          />
           <RHFTextInput
             name="email"
             placeholder={string.signIn.email}
@@ -64,6 +71,7 @@ export default function SignIn({ navigation }: any) {
             placeholder={string.signIn.password}
             name="password"
             style={Styles.inputWidth}
+            secureTextEntry
           />
         </View>
 
@@ -118,6 +126,7 @@ const Styles = StyleSheet.create({
   },
 
   inputWidth: { width: '100%' },
+  selectCenter: { alignItems: 'center' },
   forgotPassWordContainer: {
     width: '80%',
     alignItems: 'flex-end',

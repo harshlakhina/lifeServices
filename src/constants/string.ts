@@ -35,6 +35,7 @@ export const string = {
   signIn: {
     email: 'E-Mail',
     password: 'Password',
+    chooseYourRole: 'Choose Your Role',
     forgotPassword: 'Forgot Password?',
     dontHaveAnAccountYet: "Don't have an account yet?",
     createRightNow: 'Create right now',

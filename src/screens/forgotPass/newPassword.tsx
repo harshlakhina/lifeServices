@@ -1,8 +1,9 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { string } from '../../constants';
+import { Button } from '../../components/button';
 
-export const NewPassWord = () => {
+export const NewPassWord = ({ onSubmit }: any) => {
   return (
     <View style={Styles.container}>
       <Text style={Styles.text}>{string.forgotPassword.enterANewPass}</Text>
@@ -19,6 +20,8 @@ export const NewPassWord = () => {
           secureTextEntry
         />
       </View>
+
+      <Button title="Save" handleBtn={onSubmit} />
     </View>
   );
 };

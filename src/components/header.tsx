@@ -44,7 +44,11 @@ export const Header = ({ title, handleFunction, setting }: any) => {
         {/* Left Side */}
         {title === 'Home' && (
           <TouchableOpacity onPress={handleFunction}>
-            <Image source={iconSource.mapIcon} style={styles.mapIcon} />
+            <Image
+              source={iconSource.profileWhiteColor}
+              style={styles.profileIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
         )}
 
@@ -108,9 +112,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 
-  mapIcon: {
-    height: 35,
-    width: 30,
+  profileIcon: {
+    height: 28,
+    width: 28,
+    color: '#fff',
   },
 
   editContainer: {

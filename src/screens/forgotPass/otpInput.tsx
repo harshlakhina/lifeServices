@@ -1,13 +1,38 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Controller, useFormContext } from 'react-hook-form';
 import OtpInputs from 'react-native-otp-inputs';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
 import { string } from '../../constants';
+import { Button } from '../../components/button';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPasswordStep2 } from '../auth/slice';
 
-export const OtpInput = () => {
-  const { control } = useFormContext();
+export const OtpInput = ({ setStep }: any) => {
+  const forPassOTPSuccess = useSelector(
+    (state: any) => state.auth.forPassOTPSuccess,
+  );
+  const dispatch = useDispatch();
+  const { control, watch } = useFormContext();
   const { theme } = useContext(ThemeContext);
+  const email = watch('email');
+  const OTP = watch('otp');
+
+  useEffect(() => {
+    if (forPassOTPSuccess) {
+      setStep(3);
+    }
+  }, [forPassOTPSuccess, setStep]);
+
+  function handleStep2() {
+    dispatch(
+      forgotPasswordStep2({
+        email,
+        otp: OTP,
+      }),
+    );
+  }
+
   return (
     <View style={Styles.container}>
       <Text style={Styles.text}>
@@ -33,6 +58,8 @@ export const OtpInput = () => {
           />
         )}
       />
+
+      <Button title="Send" handleBtn={handleStep2} />
     </View>
   );
 };
@@ -57,5 +84,6 @@ const Styles = StyleSheet.create({
     marginHorizontal: 5,
 
     elevation: 10,
+    marginBottom: 30,
   },
 });

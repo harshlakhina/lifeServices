@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from '../screens/splash';
 import OnboardingScreen from '../screens/onboarding';
-import SignIn from '../screens/signIn';
-import SignUp from '../screens/signup';
+import SignIn from '../screens/auth/view/signIn';
+import SignUp from '../screens/auth/view/signup';
 import { ForgotPassword } from '../screens/forgotPass/forgotPassword';
 import DrawerNavigation from './drawer-navigation';
 import TermOfUse from '../screens/TermOfUse/termOfUse';
