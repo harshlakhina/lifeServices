@@ -43,13 +43,13 @@ export const Header = ({ title, handleFunction, setting }: any) => {
       <View style={styles.topBar}>
         {/* Left Side */}
         {title === 'Home' && (
-          <TouchableOpacity onPress={handleFunction}>
+          <View style={styles.homeProfileContainer}>
             <Image
               source={iconSource.profileWhiteColor}
               style={styles.profileIcon}
               resizeMode="contain"
             />
-          </TouchableOpacity>
+          </View>
         )}
 
         {title === 'Profile' && !setting && (
@@ -112,10 +112,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 
+  homeProfileContainer: {
+    height: 35,
+    width: 35,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   profileIcon: {
-    height: 28,
-    width: 28,
-    color: '#fff',
+    height: 22,
+    width: 22,
+    tintColor: '#66737F',
   },
 
   editContainer: {
