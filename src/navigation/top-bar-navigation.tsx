@@ -8,9 +8,13 @@ import { Created } from '../screens/Application/created';
 import { Header } from '../components/header';
 import { string } from '../constants';
 import { View } from 'react-native';
+import Accepted from '../screens/Application/accepted';
+import Rejected from '../screens/Application/rejected';
 
 const TopTab = createMaterialTopTabNavigator();
 function TopNavigation() {
+  const userRole = 'client';
+
   const renderTabBar = (props: MaterialTopTabBarProps) => (
     <View>
       <Header title={string.application.applications} />
@@ -36,7 +40,15 @@ function TopNavigation() {
         }}
       >
         <TopTab.Screen name="Inbox" component={Inbox} />
-        <TopTab.Screen name="Created" component={Created} />
+
+        {userRole === 'client' ? (
+          <>
+            <TopTab.Screen name="Accpted" component={Accepted} />
+            <TopTab.Screen name="Rejected" component={Rejected} />
+          </>
+        ) : (
+          <TopTab.Screen name="Created" component={Created} />
+        )}
       </TopTab.Navigator>
     </>
   );
