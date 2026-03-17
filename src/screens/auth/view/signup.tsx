@@ -1,29 +1,38 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Select } from '../hookform/select';
-import { professions } from '../constants/profession';
-import { cities } from '../constants/cities';
+import { Select } from '../../../hookform/select';
+import { professions } from '../../../constants/profession';
+import { cities } from '../../../constants/cities';
 import { useContext, useState } from 'react';
 import { launchImageLibrary } from 'react-native-image-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { RHFTextInput } from '../hookform/rhfTextInput';
-import { Button } from '../components/button';
-import { SignUpStyles } from './styles';
+import { RHFTextInput } from '../../../hookform/rhfTextInput';
+import { Button } from '../../../components/button';
+import { SignUpStyles } from '../../styles';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SignUpSchema } from '../schema/SignUpSchema';
-import { ThemeContext } from '../theme/themecontext';
-import { iconSource, imageSource, string } from '../constants';
-import PhoneInput from '../components/country-picker';
+import { SignUpSchema } from '../../../schema/SignUpSchema';
+import { ThemeContext } from '../../../theme/themecontext';
+import { iconSource, imageSource, string } from '../../../constants';
+import PhoneInput from '../../../components/country-picker';
+import { useDispatch } from 'react-redux';
+import { signup } from '../slice';
+import { Role } from '../mock-data';
 
 export default function SignUp({ navigation }: any) {
+  const [isPhone, setIsPhone] = useState<boolean>(false);
+  const [image, setImage] = useState<string | null>(null);
+  const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const methods = useForm({
     resolver: yupResolver(SignUpSchema),
+    defaultValues: {
+      photo: '',
+      countryCode: 'IN',
+      phoneNumber1: '',
+    },
   });
-
-  const [isPhone, setIsPhone] = useState<boolean>(false);
-  const [image, setImage] = useState<string | null>(null);
+  const { setValue } = methods;
 
   const pickImage = () => {
     launchImageLibrary(
@@ -34,6 +43,7 @@ export default function SignUp({ navigation }: any) {
       response => {
         if (response.assets && response.assets.length > 0) {
           setImage(response.assets[0].uri || null);
+          setValue('photo', response.assets[0].uri);
         }
       },
     );
@@ -42,9 +52,8 @@ export default function SignUp({ navigation }: any) {
   const { handleSubmit } = methods;
   const onSubmit = (data: any) => {
     console.log(data);
-    navigation.navigate('Home');
+    dispatch(signup(data));
   };
-
   return (
     <FormProvider {...methods}>
       <View style={{ backgroundColor: theme.background, flex: 1 }}>
@@ -124,6 +133,14 @@ export default function SignUp({ navigation }: any) {
               name="name"
               style={SignUpStyles.inputWidth}
             />
+            <Select
+              title={string.signIn.chooseYourRole}
+              name="role"
+              options={Role}
+              multiple={false}
+              style={SignUpStyles.inputWidth}
+              wrapperStyle={SignUpStyles.selectCenter}
+            />
 
             <Select
               title={string.signUp.chooseYourProfession}
@@ -132,6 +149,7 @@ export default function SignUp({ navigation }: any) {
               style={SignUpStyles.inputWidth}
               wrapperStyle={SignUpStyles.selectCenter}
               selected={true}
+              multiple={true}
             />
 
             <Select
@@ -140,13 +158,7 @@ export default function SignUp({ navigation }: any) {
               name="city"
               style={SignUpStyles.inputWidth}
               wrapperStyle={SignUpStyles.selectCenter}
-              selected={true}
-            />
-
-            <RHFTextInput
-              placeholder={string.signUp.enterYourAddress}
-              name="address"
-              style={SignUpStyles.inputWidth}
+              // selected={true}
             />
 
             <PhoneInput phoneName="phoneNumber" countryName="countryCode" />
@@ -171,6 +183,12 @@ export default function SignUp({ navigation }: any) {
             )}
 
             <RHFTextInput
+              placeholder={string.signUp.enterYourAddress}
+              name="address"
+              style={SignUpStyles.inputWidth}
+            />
+
+            <RHFTextInput
               placeholder={string.signUp.email}
               name="email"
               style={SignUpStyles.inputWidth}
@@ -184,7 +202,7 @@ export default function SignUp({ navigation }: any) {
             />
             <RHFTextInput
               placeholder={string.signUp.confirmPassword}
-              name="confirmPassword"
+              name="confirm_password"
               secureTextEntry
               style={SignUpStyles.inputWidth}
             />

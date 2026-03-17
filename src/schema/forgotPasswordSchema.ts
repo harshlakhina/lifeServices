@@ -1,9 +1,11 @@
 import * as yup from 'yup';
 
 export const ForgotPasswordSchema = yup.object({
-  newPassword: yup.string().required('New Password is required'),
-  confirmNewPassword: yup
+  otp: yup.string(),
+  email: yup.string(),
+  new_password: yup.string().required('New Password is required'),
+  confirm_new_password: yup
     .string()
-    .oneOf([yup.ref('newPassword')], 'Password must be same')
+    .oneOf([yup.ref('new_password')], 'Password must be same')
     .required('Confirm New Password is required'),
 });

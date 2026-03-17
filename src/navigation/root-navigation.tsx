@@ -4,18 +4,17 @@ import { AuthStack } from './auth-section';
 
 import { ThemeContext } from '../theme/themecontext';
 import { StatusBar } from 'react-native';
-// import { MainStack } from './main-section';
+import { useSelector } from 'react-redux';
+import { MainStack } from './main-section';
 
 export default function RootNavigation() {
   const { isDark } = useContext(ThemeContext);
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
 
   return (
     <>
       <StatusBar barStyle={!isDark ? 'dark-content' : 'light-content'} />
-      <NavigationContainer>
-        <AuthStack />
-        {/* <MainStack /> */}
-      </NavigationContainer>
+      <NavigationContainer>{<MainStack />}</NavigationContainer>
     </>
   );
 }

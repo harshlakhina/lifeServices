@@ -14,14 +14,12 @@ import { professions } from '../../constants/profession';
 import { useState, useRef, useContext } from 'react';
 import { Header } from '../../components/header';
 import { HomeStyles } from './style';
-import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
 import { imageSource, string } from '../../constants';
-import { Routes } from '../../navigation';
+import { HomeCities } from './mock-data';
 
 export const Home = () => {
   const methods = useForm();
-  const navigation = useNavigation();
   const { theme } = useContext(ThemeContext);
 
   const [selectedHeart, setSelectedHeart] = useState<number[]>([]);
@@ -51,10 +49,7 @@ export const Home = () => {
   return (
     <FormProvider {...methods}>
       {/* Header */}
-      <Header
-        title={string.home.home}
-        handleFunction={() => navigation.navigate(Routes.Map as never)}
-      />
+      <Header title={string.home.home} />
 
       {/* Scrollable Content */}
       <ScrollView
@@ -255,7 +250,7 @@ export const Home = () => {
             <Select
               name="moscow"
               title={string.home.moscow}
-              options={professions}
+              options={HomeCities}
             />
           </View>
 

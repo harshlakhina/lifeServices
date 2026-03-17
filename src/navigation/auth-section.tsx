@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Routes } from './constants';
-import SignIn from '../screens/signIn';
-import SignUp from '../screens/signup';
+import SignIn from '../screens/auth/view/signIn';
+import SignUp from '../screens/auth/view/signup';
 import { ForgotPassword } from '../screens/forgotPass/forgotPassword';
 import { AuthStackParamList } from './type';
 import OnboardingScreen from '../screens/onboarding';

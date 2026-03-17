@@ -11,7 +11,7 @@ export const LightTheme = {
   heart: '#FE5050',
   btnBg: '#02D1AC',
   bottomTab: '#D5DDE5',
-  modalBg: 'rgba(0,0,0,0.5)',
+  modalBg: 'rgba(0,0,0,0.7)',
   endSessionBg: '#FFE2E2',
   map: 'rgba(255,255,255,0.8)',
   borderColor: '#FFF',
