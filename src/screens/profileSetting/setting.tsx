@@ -17,18 +17,30 @@ import { useNavigation } from '@react-navigation/native';
 import { Select } from '../../hookform/select';
 import { professions } from '../../constants/profession';
 import { Button } from '../../components/button';
-import { cities } from '../../constants/cities';
-import { countries } from '../../constants/countries';
 import { ThemeContext } from '../../theme/themecontext';
 import { iconSource, imageSource, string } from '../../constants';
 import { Routes } from '../../navigation';
+import { ProfileSettingCities } from './mock-data';
+import PhoneInput from '../../components/country-picker';
+import { IFormData } from './type';
 
 export const ProfileSetting = () => {
   const { theme } = useContext(ThemeContext);
+  const userRole = 'Service Provider';
   const navigation = useNavigation();
-  const methods = useForm();
+  const methods = useForm<IFormData>({
+    defaultValues: {
+      name: '',
+      countryCode: 'IN',
+      phoneNumber: '',
+      Cities: '',
+      email: '',
+      profession: [],
+    },
+  });
+
   const hideProfilePhto = useRef(true);
-  const [isHideProfile, setHideProfile] = useState<boolean>(true);
+  const [isShowProfile, setShowProfile] = useState<boolean>(true);
   const [image, setImage] = useState<string | null>(null);
 
   const pickImage = () => {
@@ -47,31 +59,30 @@ export const ProfileSetting = () => {
 
   return (
     <FormProvider {...methods}>
-      <Header
-        title={string.profileSetting.profile}
-        isExpanded={isHideProfile}
-        setting={true}
-      />
+      <Header title={string.profileSetting.profile} setting={true} />
 
       <KeyboardAwareScrollView
+        extraScrollHeight={50}
         contentContainerStyle={[
           {
             backgroundColor: theme.background2,
           },
           Styles.scrollContainer,
+          isShowProfile
+            ? Styles.scrollContainerExpandedPadding
+            : Styles.scrollContainerNotExpandedPadding,
         ]}
         enableOnAndroid={true}
         keyboardShouldPersistTaps="handled"
-        extraScrollHeight={150}
         onScroll={event => {
           const scrollY = event.nativeEvent.contentOffset.y;
 
-          if (scrollY > 60 && hideProfilePhto.current) {
+          if (scrollY > 80 && hideProfilePhto.current) {
             hideProfilePhto.current = false;
-            setHideProfile(false);
-          } else if (scrollY < 40 && !hideProfilePhto.current) {
+            setShowProfile(false);
+          } else if (scrollY < 60 && !hideProfilePhto.current) {
             hideProfilePhto.current = true;
-            setHideProfile(true);
+            setShowProfile(true);
           }
         }}
       >
@@ -81,22 +92,14 @@ export const ProfileSetting = () => {
           placeholder={string.profileSetting.name}
         />
 
-        <Select
-          title={string.profileSetting.country}
-          options={countries}
-          name="Country"
-          style={Styles.inputWidth}
-          wrapperStyle={Styles.selectCenter}
-          selected={true}
-        />
+        <PhoneInput phoneName="phoneNumber" countryName="countryCode" />
 
         <Select
           title={string.profileSetting.cities}
-          options={cities}
+          options={ProfileSettingCities}
           name="Cities"
           style={Styles.inputWidth}
           wrapperStyle={Styles.selectCenter}
-          selected={true}
         />
 
         <RHFTextInput
@@ -104,12 +107,18 @@ export const ProfileSetting = () => {
           style={Styles.inputWidth}
           placeholder={string.profileSetting.email}
         />
-        <RHFTextInput
-          name="phoneNo"
-          style={Styles.phonoNoInput}
-          placeholder={string.profile.phoneNoPlaceholder}
-          keyboardType="phone-pad"
-        />
+
+        {userRole === 'Service Provider' && (
+          <Select
+            title={string.profileSetting.chooseYourProfession}
+            options={professions}
+            name="profession"
+            style={Styles.inputWidth}
+            wrapperStyle={Styles.selectCenter}
+            selected={true}
+            multiple={true}
+          />
+        )}
 
         <View style={Styles.aboutMeContainer}>
           <Text style={[Styles.aboutMeTitle, { color: theme.text }]}>
@@ -127,93 +136,82 @@ export const ProfileSetting = () => {
           </Text>
         </View>
 
-        <View style={Styles.documentMainContainer}>
-          <View style={Styles.documentAndAddContainer}>
-            <Text style={[Styles.documentText, { color: theme.text }]}>
-              {string.profileSetting.documents}
-            </Text>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(Routes.AddNewDocumentProfile as never)
-              }
-            >
-              <Text style={Styles.AddText}>{string.profileSetting.add}</Text>
-            </TouchableOpacity>
-          </View>
+        {userRole === 'Service Provider' && (
+          <View style={Styles.documentMainContainer}>
+            <View style={Styles.documentAndAddContainer}>
+              <Text style={[Styles.documentText, { color: theme.text }]}>
+                {string.profileSetting.documents}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(Routes.AddNewDocumentProfile as never)
+                }
+              >
+                <Text style={Styles.AddText}>{string.profileSetting.add}</Text>
+              </TouchableOpacity>
+            </View>
 
-          <FlatList
-            horizontal
-            data={DiplomaMockData}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={item => item.id.toString()}
-            contentContainerStyle={Styles.documentCardMainContainer}
-            renderItem={({ item }) => {
-              return (
-                <View
-                  style={[
-                    Styles.documentCardContainer,
-                    { backgroundColor: theme.card },
-                  ]}
-                >
-                  <Image
-                    source={imageSource.diploma}
-                    resizeMode="cover"
-                    style={Styles.documentCardLeftImage}
-                  />
-                  <TouchableOpacity
-                    style={Styles.documentCardRightTrashContainer}
+            <FlatList
+              horizontal
+              data={DiplomaMockData}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={item => item.id.toString()}
+              contentContainerStyle={Styles.documentCardMainContainer}
+              renderItem={({ item }) => {
+                return (
+                  <View
+                    style={[
+                      Styles.documentCardContainer,
+                      { backgroundColor: theme.card },
+                    ]}
                   >
                     <Image
-                      source={iconSource.trashOutline}
-                      style={Styles.documentCardRightTrashImage}
-                      resizeMode="contain"
+                      source={imageSource.diploma}
+                      resizeMode="cover"
+                      style={Styles.documentCardLeftImage}
                     />
-                  </TouchableOpacity>
-
-                  <View style={Styles.documentCardContentContainer}>
-                    <Text
-                      style={[
-                        {
-                          color: theme.text,
-                        },
-                        Styles.documentCardNameText,
-                      ]}
+                    <TouchableOpacity
+                      style={Styles.documentCardRightTrashContainer}
                     >
-                      {item.diplomaName}
-                    </Text>
+                      <Image
+                        source={iconSource.trashOutline}
+                        style={Styles.documentCardRightTrashImage}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
 
-                    <Text
-                      numberOfLines={2}
-                      style={Styles.documentCardDescriptionText}
-                    >
-                      {item.description}
-                    </Text>
+                    <View style={Styles.documentCardContentContainer}>
+                      <Text
+                        style={[
+                          {
+                            color: theme.text,
+                          },
+                          Styles.documentCardNameText,
+                        ]}
+                      >
+                        {item.diplomaName}
+                      </Text>
+
+                      <Text
+                        numberOfLines={2}
+                        style={Styles.documentCardDescriptionText}
+                      >
+                        {item.description}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              );
-            }}
-          />
+                );
+              }}
+            />
+          </View>
+        )}
+
+        <View style={{ marginBottom: 30 }}>
+          <Button title={string.button.save} styleBtn={Styles.btnWidth} />
         </View>
-
-        <View style={Styles.sphereContainer}>
-          <Text style={[Styles.sphereTitle, { color: theme.text }]}>
-            {string.profileSetting.spheresOfActivity}
-          </Text>
-
-          <Select
-            title={string.profileSetting.chooseYourProfession}
-            options={professions}
-            name="profession"
-            style={Styles.inputWidth}
-            wrapperStyle={Styles.selectCenter}
-            selected={true}
-          />
-        </View>
-
-        <Button title={string.button.save} styleBtn={Styles.btnWidth} />
       </KeyboardAwareScrollView>
 
-      {isHideProfile && (
+      {isShowProfile && (
         <>
           <View style={Styles.mainProfileImageContainer}>
             {!image ? (
@@ -246,17 +244,22 @@ export const ProfileSetting = () => {
 const Styles = StyleSheet.create({
   scrollContainer: {
     padding: 20,
-    paddingTop: 420,
     gap: 20,
+  },
+  scrollContainerExpandedPadding: {
+    paddingTop: 420,
+  },
+  scrollContainerNotExpandedPadding: {
+    paddingTop: 130,
   },
   mainProfileImageContainer: {
     position: 'absolute',
-    top: 130,
+    top: 140,
     height: 410,
     width: 413,
     alignItems: 'center',
   },
-  mainProfileImage: { position: 'relative', height: '100%', width: '100%' },
+  mainProfileImage: { position: 'relative', height: '95%', width: '100%' },
   mainProfileImageTopContentContainer: {
     position: 'absolute',
     top: 20,
@@ -264,8 +267,7 @@ const Styles = StyleSheet.create({
   },
   changePhotoContainer: {
     position: 'absolute',
-    // alignSelf: 'center',
-    bottom: 18,
+    bottom: 50,
     backgroundColor: '#07C0E0',
     paddingHorizontal: 30,
     paddingVertical: 16,

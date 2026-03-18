@@ -17,14 +17,13 @@ export default function PhoneInput({ phoneName, countryName }: Props) {
   const { control, setValue } = useFormContext();
 
   const [country, setCountry] = useState<Country | null>(null);
-  const [number, setNumber] = useState('');
 
   return (
     <View style={{ width: '100%' }}>
       <Controller
         control={control}
         name={phoneName}
-        render={({ field: { onChange }, fieldState: { error } }) => (
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
           <View
             style={[
               styles.container,
@@ -52,10 +51,9 @@ export default function PhoneInput({ phoneName, countryName }: Props) {
               <TextInput
                 placeholder="Phone Number"
                 keyboardType="number-pad"
-                style={[styles.input, { color: theme.text }]}
-                value={number}
+                style={[styles.input]}
+                value={value}
                 onChangeText={text => {
-                  setNumber(text);
                   onChange(text);
                 }}
               />
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
   prefix: {
     fontSize: 16,
     paddingHorizontal: 10,
-    color: '#555',
+    color: '#fff',
   },
   input: {
     flex: 1,

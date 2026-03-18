@@ -17,8 +17,11 @@ import { HomeStyles } from './style';
 import { ThemeContext } from '../../theme/themecontext';
 import { imageSource, string } from '../../constants';
 import { HomeCities } from './mock-data';
+import { Routes } from '../../navigation';
+import { useNavigation } from '@react-navigation/native';
 
 export const Home = () => {
+  const navigation = useNavigation();
   const methods = useForm();
   const { theme } = useContext(ThemeContext);
 
@@ -149,6 +152,7 @@ export const Home = () => {
             }}
           />
         </View>
+
         <View style={HomeStyles.allOfferContainer}>
           <Text style={[HomeStyles.allOfferText, { color: theme.text }]}>
             {string.home.allOffers}
@@ -156,12 +160,15 @@ export const Home = () => {
           {HomeMockData.map(item => {
             const active = selectedHeart.includes(item.id);
             return (
-              <View
+              <TouchableOpacity
                 style={[
                   HomeStyles.allOfferListCard,
                   { backgroundColor: theme.card },
                 ]}
                 key={item.id}
+                onPress={() =>
+                  navigation.navigate(Routes.AddNewDocument as never)
+                }
               >
                 <View style={HomeStyles.allOfferListContent}>
                   <View>
@@ -219,7 +226,7 @@ export const Home = () => {
                     />
                   </TouchableOpacity>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>

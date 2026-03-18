@@ -75,7 +75,9 @@ export const ProfileBottom = () => {
               {string.profile.documents}
             </Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate(Routes.ViewAll as never)}
+              onPress={() =>
+                navigation.navigate(Routes.ViewAllDocument as never)
+              }
             >
               <Text style={Styles.viewAllText}>{string.profile.viewAll}</Text>
             </TouchableOpacity>

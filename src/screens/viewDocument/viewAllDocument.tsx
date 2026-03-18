@@ -94,7 +94,9 @@ function ViewAllDocument() {
         <Button
           title={string.button.addNewDocument}
           styleBtn={Styles.btn}
-          handleBtn={() => navigation.navigate(Routes.AddNewDocument as never)}
+          handleBtn={() =>
+            navigation.navigate(Routes.AddNewDocumentProfile as never)
+          }
         />
       </ScrollView>
     </>
