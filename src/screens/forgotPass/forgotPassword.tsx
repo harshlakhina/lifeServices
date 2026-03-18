@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { Email } from '../email';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { ForgotPassWordStyles } from '../styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ForgotPasswordSchema } from '../../schema/forgotPasswordSchema';
@@ -12,14 +12,11 @@ import { imageSource, string } from '../../constants';
 import { OtpInput } from './otpInput';
 import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { Button } from '../../components/button';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { forgotPasswordStep3 } from '../auth/slice';
-import { useNavigation } from '@react-navigation/native';
-import { Routes } from '../../navigation';
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const { theme } = useContext(ThemeContext);
   const [step, setStep] = useState<number>(1);
   const methods = useForm({
@@ -31,15 +28,7 @@ export const ForgotPassword = () => {
       confirm_new_password: '',
     },
   });
-  const forPassNewPassSuccess = useSelector(
-    (state: any) => state.auth.forPassNewPassSuccess,
-  );
 
-  useEffect(() => {
-    if (forPassNewPassSuccess) {
-      navigation.navigate(Routes.SignIn as never);
-    }
-  }, [forPassNewPassSuccess, navigation]);
   const onSubmit = (data: any) => {
     dispatch(
       forgotPasswordStep3({
@@ -78,8 +67,8 @@ export const ForgotPassword = () => {
           </Text>
         </View>
 
-        {step === 1 && <Email setStep={setStep} />}
-        {step === 2 && <OtpInput setStep={setStep} />}
+        {step === 1 && <Email />}
+        {step === 2 && <OtpInput />}
         {step === 3 && (
           <View style={Styles.container1}>
             <Text style={Styles.text}>

@@ -3,22 +3,21 @@ import { View, StyleSheet } from 'react-native';
 import { RHFTextInput } from '../hookform/rhfTextInput';
 import { string } from '../constants';
 import { Button } from '../components/button';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { forgotPasswordStep1 } from './auth/slice';
 import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
 
-export const Email = ({ setStep }: any) => {
-  const forPassEmailSuccess = useSelector(
-    (state: any) => state.auth.forPassEmailSuccess,
-  );
+export const Email = () => {
+  // const forPassEmailSuccess = useSelector(
+  //   (state: any) => state.auth.forPassEmailSuccess,
+  // );
 
   const { watch } = useFormContext();
-  useEffect(() => {
-    if (forPassEmailSuccess) {
-      setStep(2);
-    }
-  }, [forPassEmailSuccess, setStep]);
+  // useEffect(() => {
+  //   if (forPassEmailSuccess) {
+  //     setStep(2);
+  //   }
+  // }, [forPassEmailSuccess, setStep]);
   const email = watch('email');
   const dispatch = useDispatch();
 

@@ -51,6 +51,7 @@ export default function PhoneInput({ phoneName, countryName }: Props) {
               </Text>
               <TextInput
                 placeholder="Phone Number"
+                placeholderTextColor={error ? 'red' : '#66737F'}
                 keyboardType="number-pad"
                 style={[styles.input, { color: theme.text }]}
                 value={number}

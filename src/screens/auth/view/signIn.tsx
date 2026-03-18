@@ -9,14 +9,13 @@ import { imageSource, string } from '../../../constants';
 import { ThemeContext } from '../../../theme/themecontext';
 import { RHFTextInput } from '../../../hookform/rhfTextInput';
 import { Button } from '../../../components/button';
-import { useDispatch } from 'react-redux';
-import { signin } from '../slice';
 import { Select } from '../../../hookform/select';
 import { Role } from '../mock-data';
+import { useLoginMutation } from '../../../services/api';
 
 export default function SignIn({ navigation }: any) {
   const { theme } = useContext(ThemeContext);
-  const dispatch = useDispatch();
+  const [login] = useLoginMutation();
 
   const methods = useForm({
     resolver: yupResolver(SignInSchema),
@@ -29,7 +28,7 @@ export default function SignIn({ navigation }: any) {
   const { handleSubmit } = methods;
 
   const onSubmit = (data: any) => {
-    dispatch(signin(data));
+    login(data);
   };
 
   return (
