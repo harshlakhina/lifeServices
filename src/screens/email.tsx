@@ -3,26 +3,25 @@ import { View, StyleSheet } from 'react-native';
 import { RHFTextInput } from '../hookform/rhfTextInput';
 import { string } from '../constants';
 import { Button } from '../components/button';
-import { useDispatch } from 'react-redux';
-import { forgotPasswordStep1 } from './auth/slice';
 import { useFormContext } from 'react-hook-form';
+import { useRequestPasswordResetMutation } from '../redux/api/baseapi';
 
-export const Email = () => {
-  // const forPassEmailSuccess = useSelector(
-  //   (state: any) => state.auth.forPassEmailSuccess,
-  // );
-
+export const Email = ({ setStep }: { setStep: (step: number) => void }) => {
   const { watch } = useFormContext();
-  // useEffect(() => {
-  //   if (forPassEmailSuccess) {
-  //     setStep(2);
-  //   }
-  // }, [forPassEmailSuccess, setStep]);
   const email = watch('email');
-  const dispatch = useDispatch();
+  const [requestPasswordReset, { isLoading }] =
+    useRequestPasswordResetMutation();
 
   async function handleStep1() {
-    await dispatch(forgotPasswordStep1({ email }));
+    if (!email) {
+      return;
+    }
+    try {
+      await requestPasswordReset({ email }).unwrap();
+      setStep(2);
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <View style={[Styles.container]}>
@@ -30,7 +29,11 @@ export const Email = () => {
         name="email"
         placeholder={string.forgotPassword.enterYourEMail}
       />
-      <Button title="Send Link" handleBtn={handleStep1} />
+      <Button
+        title={isLoading ? 'Sending...' : 'Send Link'}
+        handleBtn={handleStep1}
+        disabled={isLoading}
+      />
     </View>
   );
 };

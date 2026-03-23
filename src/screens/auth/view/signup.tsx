@@ -15,21 +15,32 @@ import { SignUpSchema } from '../../../schema/SignUpSchema';
 import { ThemeContext } from '../../../theme/themecontext';
 import { iconSource, imageSource, string } from '../../../constants';
 import PhoneInput from '../../../components/country-picker';
-import { useDispatch } from 'react-redux';
-import { signup } from '../slice';
 import { Role } from '../mock-data';
+import { useSignupMutation } from '../../../redux/api/baseapi';
+import { setUserCredentials } from '../../../redux/services/userServices';
+// import { IFormData } from '../type';
 
 export default function SignUp({ navigation }: any) {
   const [isPhone, setIsPhone] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
-  const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
+  const [signup, { isLoading, error }] = useSignupMutation();
+
   const methods = useForm({
     resolver: yupResolver(SignUpSchema),
     defaultValues: {
-      photo: '',
+      photo: null,
+      name: '',
+      role: '',
+      profession: [],
+      city: '',
+      address: '',
       countryCode: 'IN',
+      phoneNumber: '',
       phoneNumber1: '',
+      email: '',
+      password: '',
+      confirm_password: '',
     },
   });
   const { setValue } = methods;
@@ -42,17 +53,31 @@ export default function SignUp({ navigation }: any) {
       },
       response => {
         if (response.assets && response.assets.length > 0) {
-          setImage(response.assets[0].uri || null);
-          setValue('photo', response.assets[0].uri);
+          const asset = response.assets[0];
+
+          setImage(asset.uri ?? null);
+          setValue('photo', asset);
         }
       },
     );
   };
 
   const { handleSubmit } = methods;
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
-    dispatch(signup(data));
+    try {
+      const response = await signup(data).unwrap();
+      console.log(response);
+
+      if (response.token) {
+        setUserCredentials(response.token);
+        return;
+      }
+
+      navigation.navigate('SignIn');
+    } catch (submitError) {
+      console.log(submitError);
+    }
   };
   return (
     <FormProvider {...methods}>
@@ -65,7 +90,7 @@ export default function SignUp({ navigation }: any) {
           />
 
           <Text style={[{ color: theme.text }, SignUpStyles.text]}>
-            <Text style={SignUpStyles.textLife}>{string.auth.life}</Text>{' '}
+            <Text style={SignUpStyles.textLife}>{string.auth.life}</Text>
             {string.auth.services}
           </Text>
         </View>
@@ -207,10 +232,17 @@ export default function SignUp({ navigation }: any) {
               style={SignUpStyles.inputWidth}
             />
             <Button
-              title={string.button.signUp}
+              title={
+                isLoading ? string.button.signUpLoading : string.button.signUp
+              }
               handleBtn={handleSubmit(onSubmit)}
               styleBtn={SignUpStyles.inputWidth}
+              disabled={isLoading}
             />
+
+            {error ? (
+              <Text style={SignUpStyles.errorText}>Something went wrong!</Text>
+            ) : null}
 
             <View style={SignUpStyles.doYouHaveAndSignInContainer}>
               <Text

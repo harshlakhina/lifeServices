@@ -11,15 +11,20 @@ import { RHFTextInput } from '../../../hookform/rhfTextInput';
 import { Button } from '../../../components/button';
 import { Select } from '../../../hookform/select';
 import { Role } from '../mock-data';
-import { useLoginMutation } from '../../../services/api';
-
-export default function SignIn({ navigation }: any) {
+import { useNavigation } from '@react-navigation/native';
+import { useLoginMutation } from '../../../redux/api/baseapi';
+import { setUserCredentials } from '../../../redux/services/userServices';
+import { LoginRequest } from '../type';
+export default function SignIn() {
   const { theme } = useContext(ThemeContext);
-  const [login] = useLoginMutation();
+  const [login, { isLoading, error }] = useLoginMutation();
 
-  const methods = useForm({
+  const navigation = useNavigation();
+
+  const methods = useForm<LoginRequest>({
     resolver: yupResolver(SignInSchema),
     defaultValues: {
+      role: '',
       email: '',
       password: '',
     },
@@ -27,8 +32,16 @@ export default function SignIn({ navigation }: any) {
 
   const { handleSubmit } = methods;
 
-  const onSubmit = (data: any) => {
-    login(data);
+  const onSubmit = async (data: LoginRequest) => {
+    try {
+      const res = await login(data).unwrap();
+      console.log('SIGNIN_RESPONSE--->', res);
+      if (res.token) {
+        setUserCredentials(res.token);
+      }
+    } catch (err) {
+      console.log('SIGNIN_ERRROR---->', err);
+    }
   };
 
   return (
@@ -72,11 +85,15 @@ export default function SignIn({ navigation }: any) {
             style={Styles.inputWidth}
             secureTextEntry
           />
+
+          {error ? (
+            <Text style={Styles.errorText}>Something went wrong!</Text>
+          ) : null}
         </View>
 
         <View style={Styles.forgotPassWordContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate(Routes.ForgotPassword)}
+            onPress={() => navigation.navigate(Routes.ForgotPassword as never)}
           >
             <Text style={Styles.forgotPasswordText}>
               {string.signIn.forgotPassword}
@@ -85,9 +102,10 @@ export default function SignIn({ navigation }: any) {
         </View>
 
         <Button
-          title={string.button.signIn}
+          title={isLoading ? string.button.signInLoading : string.button.signIn}
           handleBtn={handleSubmit(onSubmit)}
           styleBtn={Styles.signInbtn}
+          disabled={isLoading}
         />
 
         <View style={Styles.dontHaveAnAccountContainer}>
@@ -95,7 +113,9 @@ export default function SignIn({ navigation }: any) {
             {string.signIn.dontHaveAnAccountYet}
           </Text>
 
-          <TouchableOpacity onPress={() => navigation.navigate(Routes.SignUp)}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(Routes.SignUp as never)}
+          >
             <Text style={Styles.createRightNotBtn}>
               {string.signIn.createRightNow}
             </Text>
@@ -140,6 +160,7 @@ const Styles = StyleSheet.create({
     color: 'red',
     fontSize: 15,
     width: '80%',
+    textAlign: 'center',
   },
   text: {
     fontSize: 37,

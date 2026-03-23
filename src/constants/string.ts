@@ -2,7 +2,9 @@ export const string = {
   button: {
     add: 'Add',
     signIn: 'Sign In',
+    signInLoading: 'Signing In...',
     signUp: 'Sign Up',
+    signUpLoading: 'Creating Account...',
     addNewDocument: 'Add new document',
     confirmAnApplication: 'Confirm an application',
     save: 'Save',

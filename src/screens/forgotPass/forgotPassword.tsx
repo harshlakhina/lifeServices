@@ -12,13 +12,15 @@ import { imageSource, string } from '../../constants';
 import { OtpInput } from './otpInput';
 import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { Button } from '../../components/button';
-import { useDispatch } from 'react-redux';
-import { forgotPasswordStep3 } from '../auth/slice';
+import { useResetPasswordMutation } from '../../redux/api/baseapi';
+import { Routes } from '../../navigation';
+import { useNavigation } from '@react-navigation/native';
 
 export const ForgotPassword = () => {
-  const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
+  const navigation = useNavigation();
   const [step, setStep] = useState<number>(1);
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
   const methods = useForm({
     resolver: yupResolver(ForgotPasswordSchema),
     defaultValues: {
@@ -29,14 +31,15 @@ export const ForgotPassword = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
-    dispatch(
-      forgotPasswordStep3({
-        new_password: data.new_password,
-        email: data.email,
-      }),
-    );
-    console.log(data);
+  const { handleSubmit } = methods;
+
+  const onSubmit = async (data: any) => {
+    await resetPassword({
+      new_password: data.new_password,
+      email: data.email,
+    }).unwrap();
+
+    navigation.navigate(Routes.SignIn as never);
   };
 
   return (
@@ -67,8 +70,8 @@ export const ForgotPassword = () => {
           </Text>
         </View>
 
-        {step === 1 && <Email />}
-        {step === 2 && <OtpInput />}
+        {step === 1 && <Email setStep={setStep} />}
+        {step === 2 && <OtpInput setStep={setStep} />}
         {step === 3 && (
           <View style={Styles.container1}>
             <Text style={Styles.text}>
@@ -88,7 +91,11 @@ export const ForgotPassword = () => {
               />
             </View>
 
-            <Button title="Save" handleBtn={methods.handleSubmit(onSubmit)} />
+            <Button
+              title={isLoading ? 'Saving...' : 'Save'}
+              handleBtn={handleSubmit(onSubmit)}
+              disabled={isLoading}
+            />
           </View>
         )}
       </KeyboardAwareScrollView>

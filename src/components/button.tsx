@@ -1,8 +1,18 @@
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-export const Button = ({ styleBtn, styleText, handleBtn, title }: any) => {
+export const Button = ({
+  styleBtn,
+  styleText,
+  handleBtn,
+  title,
+  disabled = false,
+}: any) => {
   return (
-    <TouchableOpacity style={[Styles.btn, styleBtn]} onPress={handleBtn}>
+    <TouchableOpacity
+      style={[Styles.btn, disabled && Styles.disabled, styleBtn]}
+      onPress={handleBtn}
+      disabled={disabled}
+    >
       <Text style={[Styles.btnText, styleText]}>{title}</Text>
     </TouchableOpacity>
   );
@@ -16,6 +26,9 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     width: '80%',
     height: 55,
+  },
+  disabled: {
+    opacity: 0.6,
   },
   btnText: { color: '#FFFFFF', fontWeight: 700, fontSize: 18 },
 });

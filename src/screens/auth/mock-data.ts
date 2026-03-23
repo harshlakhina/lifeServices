@@ -1,1 +1,1 @@
-export const Role = ['Client', 'Service Provider'];
+export const Role = ['client', 'service_provider'];

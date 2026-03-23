@@ -1,36 +1,30 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Controller, useFormContext } from 'react-hook-form';
 import OtpInputs from 'react-native-otp-inputs';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from '../../theme/themecontext';
 import { string } from '../../constants';
 import { Button } from '../../components/button';
-import { useDispatch, useSelector } from 'react-redux';
-import { forgotPasswordStep2 } from '../auth/slice';
+import { useVerifyPasswordResetOtpMutation } from '../../redux/api/baseapi';
 
 export const OtpInput = ({ setStep }: any) => {
-  const forPassOTPSuccess = useSelector(
-    (state: any) => state.auth.forPassOTPSuccess,
-  );
-  const dispatch = useDispatch();
+  const [verifyPasswordResetOtp, { isLoading }] =
+    useVerifyPasswordResetOtpMutation();
   const { control, watch } = useFormContext();
   const { theme } = useContext(ThemeContext);
   const email = watch('email');
   const OTP = watch('otp');
 
-  useEffect(() => {
-    if (forPassOTPSuccess) {
-      setStep(3);
-    }
-  }, [forPassOTPSuccess, setStep]);
-
-  function handleStep2() {
-    dispatch(
-      forgotPasswordStep2({
+  async function handleStep2() {
+    try {
+      await verifyPasswordResetOtp({
         email,
         otp: OTP,
-      }),
-    );
+      }).unwrap();
+      setStep(3);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -59,7 +53,11 @@ export const OtpInput = ({ setStep }: any) => {
         )}
       />
 
-      <Button title="Send" handleBtn={handleStep2} />
+      <Button
+        title={isLoading ? 'Verifying...' : 'Send'}
+        handleBtn={handleStep2}
+        disabled={isLoading}
+      />
     </View>
   );
 };

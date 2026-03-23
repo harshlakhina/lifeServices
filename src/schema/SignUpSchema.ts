@@ -4,13 +4,16 @@ import { isValidPhoneNumber } from 'libphonenumber-js';
 export const SignUpSchema = yup.object({
   photo: yup.mixed().nullable(),
   name: yup.string().required('Name is Required'),
-  role: yup.string().required('Role is Required'),
-  profession: yup.array().of(yup.string()).required('Profession is Required'),
-  country: yup.string(),
-  city: yup.string().required('City is Required'),
-  address: yup.string().required('Address is Required'),
+
+  profession: yup
+    .array()
+    .of(yup.string().required())
+    .required('Profession is Required'),
 
   countryCode: yup.string().required('Country is required'),
+  city: yup.string().required('City is Required'),
+  role: yup.string().required('Role is Required'),
+  address: yup.string().required('Address is Required'),
   phoneNumber: yup
     .string()
     .required('Phone number is required')
@@ -19,8 +22,7 @@ export const SignUpSchema = yup.object({
       if (!value || !countryCode) return false;
       return isValidPhoneNumber(value, countryCode);
     }),
-  phoneNumber1: yup.string(),
-
+  phoneNumber1: yup.string().notRequired(),
   email: yup.string().required('Email is Required'),
   password: yup
     .string()

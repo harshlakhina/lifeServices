@@ -67,6 +67,12 @@ export const SignUpStyles = StyleSheet.create({
 
   btnText: { color: '#FFFFFF', fontWeight: 700, fontSize: 18 },
   signIn: { color: '#3EAEFF', fontSize: 18 },
+  errorText: {
+    color: 'red',
+    fontSize: 15,
+    width: '80%',
+    textAlign: 'center',
+  },
   text: {
     fontSize: 37,
   },
