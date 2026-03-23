@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { RHFTextInput } from '../../hookform/rhfTextInput';
 import { Select } from '../../hookform/select';
-import { countries } from '../../constants/countries';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,10 +19,26 @@ import RequestCameraPermission from '../../components/cameraPermission';
 import Header2 from '../../components/header2';
 import { ThemeContext } from '../../theme/themecontext';
 import { iconSource, imageSource, string } from '../../constants';
+import { professions } from './mock-data';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { NewDiplomaSchema } from '../../schema/newdiplomaSchema';
+import { IFormData } from './type';
+import { useNavigation } from '@react-navigation/native';
+import { Routes } from '../../navigation';
 
 function AddDocument() {
+  const navigation = useNavigation();
   const { theme } = useContext(ThemeContext);
-  const methods = useForm();
+  const methods = useForm<IFormData>({
+    resolver: yupResolver(NewDiplomaSchema),
+    defaultValues: {
+      document_name: '',
+      document_type: '',
+      document_description: '',
+      image: null,
+    },
+  });
+  const { handleSubmit, setValue } = methods;
   const [image, setImage] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -42,6 +57,7 @@ function AddDocument() {
       });
       console.log(ImageSelected.path);
       setImage(ImageSelected.path);
+      setValue('image', ImageSelected.path);
       setOpenModal(false);
     } catch (err) {
       console.log(err);
@@ -57,10 +73,16 @@ function AddDocument() {
       });
       console.log(ImageSelected.path);
       setImage(ImageSelected.path);
+      setValue('image', ImageSelected.path);
       setOpenModal(false);
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const onSubmit = (data: any) => {
+    console.log('newdocument', data);
+    navigation.navigate(Routes.ViewAllDocument as never);
   };
 
   return (
@@ -143,24 +165,23 @@ function AddDocument() {
       >
         <View style={Styles.mainContainer}>
           <RHFTextInput
-            name="name"
+            name="document_name"
             style={Styles.inputWidth}
             placeholder={string.addDocument.name}
           />
 
           <Select
             title={string.addDocument.documentType}
-            options={countries}
-            name="documentType"
+            options={professions}
+            name="document_type"
             style={Styles.inputWidth}
             wrapperStyle={Styles.selectWrapperStyle}
-            selected={true}
           />
 
           <RHFTextInput
-            name={string.addDocument.description}
+            name="document_description"
             style={Styles.inputWidth}
-            placeholder="Description"
+            placeholder={string.addDocument.description}
             multiline
           />
 
@@ -217,6 +238,7 @@ function AddDocument() {
           <Button
             title={string.button.submitForReview}
             styleBtn={Styles.btnWidth}
+            handleBtn={handleSubmit(onSubmit)}
           />
         </View>
       </KeyboardAwareScrollView>

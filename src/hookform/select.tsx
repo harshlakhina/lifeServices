@@ -165,7 +165,7 @@ const Styles = StyleSheet.create({
     color: 'red',
   },
   lightBorder: { borderColor: '#fff' },
-  darkBorder: { borderColor: '#000' },
+  darkBorder: { borderColor: '#0D0D0D' },
   errorBorder: { borderColor: 'red' },
   errorWidth: { width: '90%' },
   selectedItemContainer: {

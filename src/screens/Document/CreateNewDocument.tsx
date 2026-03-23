@@ -20,10 +20,24 @@ import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../../theme/themecontext';
 import { iconSource, string } from '../../constants';
 import { Routes } from '../../navigation';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { CreateNewApplicationSchema } from '../../schema/createnewapplication';
+import PhoneInput from '../../components/country-picker';
+import { IFormData } from './type';
 
 function CreateNewDocument() {
   const { theme } = useContext(ThemeContext);
-  const methods = useForm();
+  const methods = useForm<IFormData>({
+    resolver: yupResolver(CreateNewApplicationSchema),
+    defaultValues: {
+      profession_new: '',
+      countryCode_New: 'IN',
+      phoneNumber_new: '',
+      description_new: '',
+      image: [],
+    },
+  });
+  const { handleSubmit, setValue } = methods;
   const navigation = useNavigation();
   const [image, setImage] = useState<string[]>([]);
   const [activeTrash, setActiveTrash] = useState<number | null>(null);
@@ -35,13 +49,19 @@ function CreateNewDocument() {
         height: 400,
         cropping: false,
       });
-      console.log(ImageSelected.path);
       setImage(prev => {
-        return [...prev, ImageSelected.path];
+        const updated = [...prev, ImageSelected.path];
+        setValue('image', updated);
+        return updated;
       });
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const onSubmit = (data: any) => {
+    console.log('newapplication', data);
+    navigation.navigate(Routes.MainSection as never);
   };
   return (
     <FormProvider {...methods}>
@@ -62,20 +82,17 @@ function CreateNewDocument() {
           <Select
             title={string.createNewDocument.createAnApplication}
             options={professions}
-            name="profession"
+            name="profession_new"
             style={Styles.inputWidth}
             wrapperStyle={Styles.selectWrapperStyle}
-            selected={true}
           />
-          <RHFTextInput
-            placeholder={string.createNewDocument.phoneNoPlaceholder}
-            name="PhoneNo"
-            style={Styles.inputWidth}
-            keyboardType="phone-pad"
+          <PhoneInput
+            phoneName="phoneNumber_new"
+            countryName="countryCode_New"
           />
           <RHFTextInput
             placeholder={string.createNewDocument.description}
-            name="description"
+            name="description_new"
             style={Styles.inputWidth}
             multiline
           />
@@ -165,7 +182,7 @@ function CreateNewDocument() {
           <Button
             title={string.button.submitAnApplication}
             styleBtn={Styles.btnWidth}
-            handleBtn={() => navigation.navigate('ViewDocument' as never)}
+            handleBtn={handleSubmit(onSubmit)}
           />
         </View>
       </KeyboardAwareScrollView>

@@ -5,7 +5,7 @@ export const SignUpSchema = yup.object({
   photo: yup.mixed().nullable(),
   name: yup.string().required('Name is Required'),
   profession: yup.array().of(yup.string()).required('Profession is Required'),
-  country: yup.string(),
+  // country: yup.string(),
   city: yup.string().required('City is Required'),
   address: yup.string().required('Address is Required'),
 

@@ -11,7 +11,7 @@ enum Routes {
   Profile = 'Profile',
   ProfileSetting = 'ProfileSetting',
   AddNewDocumentProfile = 'AddNewDocumentProfile',
-  ViewAll = 'ViewAll',
+  ViewAllDocument = 'ViewAllDocument',
   EditDocument = 'EditDocument',
   AddNewDocument = 'AddNewDocument',
   ViewAllPhotos = 'ViewAllPhotos',

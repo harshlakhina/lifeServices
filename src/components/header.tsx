@@ -76,11 +76,13 @@ export const Header = ({ title, handleFunction, setting }: any) => {
         <Text style={styles.headerText}>{title}</Text>
 
         {/* Hamburger */}
-        <TouchableOpacity
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-        >
-          <MaterialCommunityIcons name="menu" size={35} color="#FFF" />
-        </TouchableOpacity>
+        {
+          <TouchableOpacity
+            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+          >
+            <MaterialCommunityIcons name="menu" size={35} color="#FFF" />
+          </TouchableOpacity>
+        }
       </View>
     </>
   );

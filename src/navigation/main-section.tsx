@@ -29,7 +29,7 @@ function MainStack() {
         name={Routes.AddNewDocumentProfile}
         component={AddDocument}
       />
-      <Stack.Screen name={Routes.ViewAll} component={ViewAllDocument} />
+      <Stack.Screen name={Routes.ViewAllDocument} component={ViewAllDocument} />
       <Stack.Screen name={Routes.EditDocument} component={EditDocument} />
 
       <Stack.Screen

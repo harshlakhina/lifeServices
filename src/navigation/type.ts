@@ -15,7 +15,7 @@ export type MainStackParamList = {
   [Routes.Profile]: undefined;
   [Routes.ProfileSetting]: undefined;
   [Routes.AddNewDocumentProfile]: undefined;
-  [Routes.ViewAll]: undefined;
+  [Routes.ViewAllDocument]: undefined;
   [Routes.EditDocument]: undefined;
   [Routes.AddNewDocument]: undefined;
   [Routes.ViewAllPhotos]: undefined;
